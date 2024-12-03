@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.app.restful.mapper.PetMapper">
-    <select id="getTime" resultType="string">
-        SELECT CURRENT_TIMESTAMP FROM DUAL
-    </select>
+
+    <insert id="insert" parameterType="PetVO">
+        INSERT INTO TBL_PET(ID, MEMBER_ID, PET_IMAGE, PET_NAME, PET_KIND, PET_GENDER, PET_BREED, PET_BIRTH, PET_WEIGHT, PET_NEUTER, PET_VET)
+        VALUES(SEQ_PET.NEXTVAL, #{memberId}, #{petImage}, #{petName}, #{petKind}, #{petGender}, #{petBreed}, #{petBirth}, #{petWeight}, #{petNeuter}, #{petVet})
+    </insert>
+
 </mapper>
