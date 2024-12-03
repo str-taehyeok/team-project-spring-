@@ -2,6 +2,7 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0/EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
+        <typeAlias type="com.app.springpowpow.domain.DefaultVO" alias="DefaultVO" />
         <typeAlias type="com.app.springpowpow.domain.MemberVO" alias="MemberVO" />
         <typeAlias type="com.app.springpowpow.domain.PostVO" alias="PostVO" />
         <typeAlias type="com.app.springpowpow.domain.AdjustmentDTO" alias="AdjustmentDTO"/>
@@ -9,6 +10,7 @@
         <typeAlias type="com.app.springpowpow.domain.BannerVO" alias="BannerVO" />
         <typeAlias type="com.app.springpowpow.domain.CartVO" alias="CartVO" />
         <typeAlias type="com.app.springpowpow.domain.CommentVO" alias="CommentVO" />
+        <typeAlias type="com.app.springpowpow.domain.CommentVO" alias="CommLikesVO" />
         <typeAlias type="com.app.springpowpow.domain.CouponVO" alias="CouponVO" />
         <typeAlias type="com.app.springpowpow.domain.DeliveryVO" alias="DeliveryVO" />
         <typeAlias type="com.app.springpowpow.domain.FollowsVO" alias="FollowsVO" />
