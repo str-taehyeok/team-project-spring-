@@ -1,10 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.app.restful.mapper.PetMapper">
+<mapper namespace="com.app.springpowpow.mapper.PetMapper">
 
     <insert id="insert" parameterType="PetVO">
+        <selectKey keyProperty="id" order="BEFORE" resultType="Long">
+            SELECT SEQ_PET.NEXTVAL FROM DUAL
+        </selectKey>
         INSERT INTO TBL_PET(ID, MEMBER_ID, PET_IMAGE, PET_NAME, PET_KIND, PET_GENDER, PET_BREED, PET_BIRTH, PET_WEIGHT, PET_NEUTER, PET_VET)
-        VALUES(SEQ_PET.NEXTVAL, #{memberId}, #{petImage}, #{petName}, #{petKind}, #{petGender}, #{petBreed}, #{petBirth}, #{petWeight}, #{petNeuter}, #{petVet})
+        VALUES(SEQ_PET.NEXTVAL, #{memberId}, #{petImage}, #{petName}, #{petKind}, #{petGender}, #{petBreed},  TO_DATE(#{petBirth}, 'YYYY-MM-DD'), #{petWeight}, #{petNeuter}, #{petVet})
     </insert>
+
+    <select id="selectAll" resultType="PetDTO">
+        SELECT TP.ID, TP.MEMBER_ID, TP.PET_KIND, TP.PET_IMAGE, TP.PET_NAME, TP.PET_GENDER, TP.PET_BREED, TP.PET_BIRTH, TP.PET_VET, TP.PET_WEIGHT, TP.PET_NEUTER, TP.PET_COLOR, TM.MEMBER_EMAIL, TM.MEMBER_NAME
+        FROM TBL_PET TP
+        JOIN TBL_MEMBER TM
+        ON TP.MEMBER_ID = TM.ID
+    </select>
+    
+    <select id="select" parameterType="Long" resultType="PetDTO">
+        SELECT TP.ID, TP.MEMBER_ID, TP.PET_KIND, TP.PET_IMAGE, TP.PET_NAME, TP.PET_GENDER, TP.PET_BREED, TP.PET_BIRTH, TP.PET_VET, TP.PET_WEIGHT, TP.PET_NEUTER, TP.PET_COLOR, TM.MEMBER_EMAIL, TM.MEMBER_NAME
+        FROM TBL_PET TP
+        JOIN TBL_MEMBER TM
+        ON TP.MEMBER_ID = TM.ID AND TP.ID = #{id}
+    </select>
+
+    <update id="update" parameterType="PetVO">
+        UPDATE TBL_PET
+        SET PET_IMAGE = #{petImage}, PET_NAME = #{petName}, PET_KIND = #{petKind}, PET_GENDER = #{petGender}, PET_BREED = #{petBreed}, PET_BIRTH = TO_DATE(#{petBirth}, 'YYYY-MM-DD'), PET_WEIGHT = #{petWeight}, PET_NEUTER = #{petNeuter}, PET_VET = #{petVet}
+        WHERE ID = #{id}
+    </update>
+
+    <delete id="delete" parameterType="Long">
+        DELETE FROM TBL_PET
+        WHERE ID = #{id}
+    </delete>
+
 
 </mapper>

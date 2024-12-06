@@ -20,6 +20,7 @@
         <typeAlias type="com.app.springpowpow.domain.PayVO" alias="PayVO" />
         <typeAlias type="com.app.springpowpow.domain.PetsonalVO" alias="PetsonalVO" />
         <typeAlias type="com.app.springpowpow.domain.PetVO" alias="PetVO" />
+        <typeAlias type="com.app.springpowpow.domain.PetDTO" alias="PetDTO" />
         <typeAlias type="com.app.springpowpow.domain.ProductLikesVO" alias="ProductLikesVO" />
         <typeAlias type="com.app.springpowpow.domain.ProductVO" alias="ProductVO" />
         <typeAlias type="com.app.springpowpow.domain.ReviewVO" alias="ReviewVO" />
