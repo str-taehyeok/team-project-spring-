@@ -8,11 +8,12 @@ import java.io.Serializable;
 @Component
 @Data
 //@Schema(description = "회원 정보")
-public class PetsonalVO implements Serializable {
-//    @Schema(description = "회원 번호", example = "21", required = true)
-//    private Long id;
+public class PetsonalDTO implements Serializable {
+    //    @Schema(description = "회원 번호", example = "21", required = true)
+    //    private Long id;
     private Long id;
     private Long petId;
+    private Long memberId;
     private int petsonalChic;
     private int petsonalCute;
     private int petsonalCalm;
@@ -21,4 +22,5 @@ public class PetsonalVO implements Serializable {
     private int petsonalDiligent;
     private int petsonalCoward;
     private int petsonalBrave;
+
 }

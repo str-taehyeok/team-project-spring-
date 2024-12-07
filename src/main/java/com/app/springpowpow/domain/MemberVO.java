@@ -12,5 +12,20 @@ import java.io.Serializable;
 public class MemberVO implements Serializable {
 //    @Schema(description = "회원 번호", example = "21", required = true)
 //    private Long id;
-
+    private Long id;
+    private String memberEmail;
+    private String memberPassword;
+    private String memberName;
+    private String memberPHone;
+    private String memberNickname;
+    private String memberZipcode;
+    private String memberAddress;
+    private String memberAddressDetail;
+    private String memberImage;
+    private char memberSmsCheck;
+    private char memberEmailCheck;
+    private String memberDate;
+    private String memberBusinessNumber;
+    private int memberAuth;
+    private String memberProvider;
 }
