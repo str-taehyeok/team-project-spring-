@@ -14,8 +14,6 @@ public class PetsonalVO implements Serializable {
     private Long id;
     @Schema(description = "펫 번호", example = "21", required = true)
     private Long petId;
-    @Schema(description = "회원 번호", example = "반려견", required = true)
-    private Long memberId;
     @Schema(description = "시크 점수", example = "1")
     private int petsonalChic;
     @Schema(description = "귀여움 점수", example = "1")
