@@ -11,6 +11,7 @@ import java.io.Serializable;
 public class CommLikesDTO implements Serializable {
 
     private Long id;
+    private Long memberId;
     private Long postId;
     private int commLikesCount;
 
