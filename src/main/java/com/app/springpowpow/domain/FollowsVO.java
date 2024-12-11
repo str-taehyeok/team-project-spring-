@@ -9,7 +9,10 @@ import java.io.Serializable;
 @Data
 //@Schema(description = "회원 정보")
 public class FollowsVO implements Serializable {
-//    @Schema(description = "회원 번호", example = "21", required = true)
-//    private Long id;
+
+    private Long id;
+    private Long followerMemberId;
+    private Long followingMemberId;
+    private String followsFollowState;
 
 }
