@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Slf4j
 @RestController
+@Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/community/api/*")
+@RequestMapping("/likeList/")
 public class CommLikesAPI {
 
     private final CommLikesService commLikesService;
@@ -60,4 +60,5 @@ public class CommLikesAPI {
     public List<CommLikesDTO> viewAllLikes() {
         return commLikesService.getAllLikes();
     }
+
 }
