@@ -36,7 +36,7 @@
     </update>
 
 <!--    제품 삭제-->
-    <delete id="">
+    <delete id="delete" parameterType="Long">
         DELETE FROM TBL_PRODUCT
         WHERE ID = #{id}
     </delete>
