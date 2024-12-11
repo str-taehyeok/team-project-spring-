@@ -15,6 +15,7 @@
         <typeAlias type="com.app.springpowpow.domain.DeliveryVO" alias="DeliveryVO" />
         <typeAlias type="com.app.springpowpow.domain.FollowsVO" alias="FollowsVO" />
         <typeAlias type="com.app.springpowpow.domain.NoticeVO" alias="NoticeVO" />
+        <typeAlias type="com.app.springpowpow.domain.NoticeDTO" alias="NoticeDTO" />
         <typeAlias type="com.app.springpowpow.domain.OrderCancelVO" alias="OrderCancelVO" />
         <typeAlias type="com.app.springpowpow.domain.OrderVO" alias="OrderVO" />
         <typeAlias type="com.app.springpowpow.domain.PayVO" alias="PayVO" />
@@ -25,5 +26,6 @@
         <typeAlias type="com.app.springpowpow.domain.ProductLikesVO" alias="ProductLikesVO" />
         <typeAlias type="com.app.springpowpow.domain.ProductVO" alias="ProductVO" />
         <typeAlias type="com.app.springpowpow.domain.ReviewVO" alias="ReviewVO" />
+<!--        <typeAlias type="com.app.springpowpow.domain.ProductLikesDTO" alias="ProductLikesDTO" />-->
     </typeAliases>
 </configuration>
