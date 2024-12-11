@@ -3,6 +3,7 @@ package com.app.springpowpow.controller;
 import com.app.springpowpow.domain.MemberVO;
 import com.app.springpowpow.service.MemberService;
 import com.app.springpowpow.util.JwtTokenUtil;
+import com.app.springpowpow.util.SmsUtil;
 import io.jsonwebtoken.Claims;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -12,12 +13,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.nurigo.sdk.message.model.Message;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,6 +30,7 @@ public class MemberAPI {
 
     private final JwtTokenUtil jwtTokenUtil;
     private final MemberService memberService;
+
 
     //    회원가입
     @Operation(summary = "회원가입", description = "회원가입을 할 수 있는 API")
@@ -135,6 +139,24 @@ public class MemberAPI {
         response.put("message", "토큰이 만료되었습니다.");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
+
+//    public ResponseEntity<Map<String, Object>> sendSmsToFindEmail(MemberVO memberVO) {
+//        String name = memberVO.getMemberName();
+//        //수신번호 형태에 맞춰 "-"을 ""로 변환
+//        String phoneNum = memberVO.getMemberPhone().replaceAll("-","");
+//
+//        MemberVO foundUser = userRepository.findByNameAndPhone(name, phoneNum).orElseThrow(()->
+//                new NoSuchElementException("회원이 존재하지 않습니다."));
+//
+//        String receiverEmail = foundUser.getMemberEmail();
+//        String verificationCode = validationUtil.createCode();
+//        smsUtil.sendOne(phoneNum, verificationCode);
+//
+//        //인증코드 유효기간 5분 설정
+//        redisUtil.setDataExpire(verificationCode, receiverEmail, 60 * 5L);
+//
+//        return ResponseEntity.ok(new Message("SMS 전송 성공"));
+//    }
 
 
 }

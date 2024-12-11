@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.app.springpowpow.mapper.ProductMapper">
 <!--    제품 추가-->
-    <insert id="" parameterType="ProductVO">
+    <insert id="insert" parameterType="ProductVO">
         INSERT INTO TBL_PRODUCT (ID, MEMBER_ID, PRODUCT_NAME, PRODUCT_CODE, PRODUCT_DETAIL, PRODUCT_IMAGE1, PRODUCT_IMAGE2, PRODUCT_IMAGE3, PRODUCT_IMAGE4, PRODUCT_ANIMAL, PRODUCT_CATEGORY, PRODUCT_COLOR, PRODUCT_SIZE)
         VALUES (SEQ_PRODUCT.NEXTVAL, #{memberId}, #{productName}, #{productCode}, #{productDetail}, #{productImage1}, #{productImage2}, #{productImage3}, #{productImage4}, #{productAnimal}, #{productCategory}, #{productColor}, #{productSize})
     </insert>
