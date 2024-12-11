@@ -9,7 +9,6 @@ import java.util.Optional;
 public interface CommLikesService {
 
     // 좋아요 추가
-<<<<<<< HEAD
     public void addLike(CommLikesDTO commLikesDTO);
 
     // 좋아요 취소
@@ -20,16 +19,4 @@ public interface CommLikesService {
 
     // 모든 좋아요 기록 조회
     public List<CommLikesDTO> getAllLikes();
-=======
-    void addLike(CommLikesDTO commLikesDTO);
-
-    // 좋아요 취소
-    void removeLike(CommLikesDTO commLikesDTO);
-
-    // 내가 누른 좋아요 게시글 보기
-    List<PostVO> getLikedPostsByMember(Long memberId);
-
-    // 모든 좋아요 기록 조회
-    List<CommLikesDTO> getAllLikes();
->>>>>>> master
 }

@@ -21,8 +21,8 @@ public class CommLikesAPI {
 
     @GetMapping("list")
     public void goToList(Model model) {
-        List<CommLikesDTO> commLikes = commLikesService.getList();
-        model.addAttribute("commLike", commLikes);
+//        List<CommLikesDTO> commLikes = commLikesService.getList();
+//        model.addAttribute("commLike", commLikes);
     }
 
 }
