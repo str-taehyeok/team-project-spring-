@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.security.Timestamp;
 
 @Component
 @Data
@@ -11,9 +12,15 @@ import java.io.Serializable;
 public class PostVO implements Serializable {
 
     private long id;
+    private long memberId;
     private String postTitle;
     private String postContent;
-    private long memberId;
-    private int postReadCount;
+    private Timestamp postCreateAt;
+    private Timestamp postModifiedAt;
+    private String postImage1;
+    private String postImage2;
+    private String postImage3;
+    private String postImage4;
+    private String postImage5;
 
 }
