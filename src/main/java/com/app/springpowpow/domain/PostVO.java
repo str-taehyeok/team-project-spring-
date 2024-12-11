@@ -11,8 +11,13 @@ import java.security.Timestamp;
 //@Schema(description = "회원 정보")
 public class PostVO implements Serializable {
 
+<<<<<<< HEAD
     private Long id;
     private Long memberId;
+=======
+    private long id;
+    private long memberId;
+>>>>>>> master
     private String postTitle;
     private String postContent;
     private Timestamp postCreateAt;

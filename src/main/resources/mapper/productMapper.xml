@@ -1,7 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.app.restful.mapper.ProductMapper">
-    <select id="getTime" resultType="string">
-        SELECT CURRENT_TIMESTAMP FROM DUAL
+<mapper namespace="com.app.springpowpow.mapper.ProductMapper">
+<!--    제품 추가-->
+    <insert id="insert" parameterType="ProductVO">
+        INSERT INTO TBL_PRODUCT (ID, MEMBER_ID, PRODUCT_NAME, PRODUCT_CODE, PRODUCT_DETAIL, PRODUCT_IMAGE1, PRODUCT_IMAGE2, PRODUCT_IMAGE3, PRODUCT_IMAGE4, PRODUCT_ANIMAL, PRODUCT_CATEGORY, PRODUCT_COLOR, PRODUCT_SIZE)
+        VALUES (SEQ_PRODUCT.NEXTVAL, #{memberId}, #{productName}, #{productCode}, #{productDetail}, #{productImage1}, #{productImage2}, #{productImage3}, #{productImage4}, #{productAnimal}, #{productCategory}, #{productColor}, #{productSize})
+    </insert>
+
+<!--    제품 전체-->
+    <select id="selectAll" resultType="ProductVO">
+        SELECT ID, MEMBER_ID, PRODUCT_NAME, PRODUCT_CODE, PRODUCT_DETAIL, PRODUCT_IMAGE1, PRODUCT_IMAGE2, PRODUCT_IMAGE3, PRODUCT_IMAGE4, PRODUCT_ANIMAL, PRODUCT_CATEGORY, PRODUCT_COLOR, PRODUCT_SIZE
+        FROM TBL_PRODUCT
     </select>
+
+<!--    판매자의 모든 제품-->
+    <select id="selectAllBySeller" resultType="ProductVO">
+        SELECT ID, MEMBER_ID, PRODUCT_NAME, PRODUCT_CODE, PRODUCT_DETAIL, PRODUCT_IMAGE1, PRODUCT_IMAGE2, PRODUCT_IMAGE3, PRODUCT_IMAGE4, PRODUCT_ANIMAL, PRODUCT_CATEGORY, PRODUCT_COLOR, PRODUCT_SIZE
+        FROM TBL_PRODUCT
+        WHERE MEMBER_ID = #{memberId}
+    </select>
+
+<!--    제품 단일-->
+    <select id="select" parameterType="Long" resultType="ProductVO">
+        SELECT ID, MEMBER_ID, PRODUCT_NAME, PRODUCT_CODE, PRODUCT_DETAIL, PRODUCT_IMAGE1, PRODUCT_IMAGE2, PRODUCT_IMAGE3, PRODUCT_IMAGE4, PRODUCT_ANIMAL, PRODUCT_CATEGORY, PRODUCT_COLOR, PRODUCT_SIZE
+        FROM TBL_PRODUCT
+        WHERE ID = #{id}
+    </select>
+
+<!--    제품 수정-->
+    <update id="update" parameterType="ProductVO">
+        UPDATE TBL_PRODUCT
+        SET PRODUCT_NAME = #{productName}, PRODUCT_PRICE = #{productPrice}, PRODUCT_CODE = #{productCode}, PRODUCT_DATE = #{productDate}, PRODUCT_STOCK = #{productStock},
+            PRODUCT_EDIT_DATE = #{productEditDate}, PRODUCT_DETAIL = #{productDetial}, PRODUCT_IMAGE1 = #{productImage1}, PRODUCT_IMAGE2 = #{productImage2}, PRODUCT_IMAGE3 = #{productImage3},
+            PRODUCT_IMAGE4 = #{productImage4}, PRODUCT_ANIMAL = #{productAnimal}, PRODUCT_CATEGORY = #{productCategory}, PRODUCT_COLOR = #{productColor}, PRODUCT_SIZE = #{productSize}
+    </update>
+
+<!--    제품 삭제-->
+    <delete id="">
+        DELETE FROM TBL_PRODUCT
+        WHERE ID = #{id}
+    </delete>
+
 </mapper>
