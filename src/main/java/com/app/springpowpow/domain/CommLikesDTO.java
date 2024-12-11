@@ -10,9 +10,9 @@ import java.io.Serializable;
 //@Schema(description = "회원 정보")
 public class CommLikesDTO implements Serializable {
 
-    private long id;
-    private long memberId;
-    private long postId;
+    private Long id;
+    private Long memberId;
+    private Long postId;
     private int commLikesCount;
 
 }
