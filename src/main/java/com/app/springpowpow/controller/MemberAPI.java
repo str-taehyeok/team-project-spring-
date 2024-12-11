@@ -75,7 +75,7 @@ public class MemberAPI {
 
         // 아니라면 소설 로그인 사용자인지 검사한다
         if (memberVO.getMemberProvider() == null) {
-            memberVO.setMemberProvider("자사로그인");
+            memberVO.setMemberProvider("구매자");
         }
 
         memberService.register(memberVO);
