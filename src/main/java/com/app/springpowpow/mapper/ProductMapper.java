@@ -15,7 +15,7 @@ public interface ProductMapper {
 //    제품 리스트
     public List<ProductVO> selectAll();
 //    판매자의 모든 제품
-    public List<ProductVO> selectAllBySeller(ProductVO productVO);
+    public List<ProductVO> selectAllBySeller(Long memberId);
 //    수정
     public void update(ProductVO productVO);
 //    삭제

@@ -14,7 +14,7 @@
     </select>
 
 <!--    판매자의 모든 제품-->
-    <select id="selectAllBySeller" resultType="ProductVO">
+    <select id="selectAllBySeller" resultType="ProductVO" parameterType="Long">
         SELECT ID, MEMBER_ID, PRODUCT_NAME, PRODUCT_CODE, PRODUCT_DETAIL, PRODUCT_IMAGE1, PRODUCT_IMAGE2, PRODUCT_IMAGE3, PRODUCT_IMAGE4, PRODUCT_ANIMAL, PRODUCT_CATEGORY, PRODUCT_COLOR, PRODUCT_SIZE
         FROM TBL_PRODUCT
         WHERE MEMBER_ID = #{memberId}
