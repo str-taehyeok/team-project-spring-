@@ -2,8 +2,8 @@ package com.app.springpowpow.controller;
 
 import com.app.springpowpow.domain.MemberVO;
 import com.app.springpowpow.service.MemberService;
+import com.app.springpowpow.service.SnsService;
 import com.app.springpowpow.util.JwtTokenUtil;
-import com.app.springpowpow.util.SmsUtil;
 import io.jsonwebtoken.Claims;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -13,14 +13,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.nurigo.sdk.message.model.Message;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,6 +29,7 @@ public class MemberAPI {
 
     private final JwtTokenUtil jwtTokenUtil;
     private final MemberService memberService;
+    private final SnsService snsService;
 
 
     //    회원가입
@@ -75,7 +75,7 @@ public class MemberAPI {
 
         // 아니라면 소설 로그인 사용자인지 검사한다
         if (memberVO.getMemberProvider() == null) {
-            memberVO.setMemberProvider("자사로그인");
+            memberVO.setMemberProvider("구매자");
         }
 
         memberService.register(memberVO);
@@ -140,23 +140,13 @@ public class MemberAPI {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 
-//    public ResponseEntity<Map<String, Object>> sendSmsToFindEmail(MemberVO memberVO) {
-//        String name = memberVO.getMemberName();
-//        //수신번호 형태에 맞춰 "-"을 ""로 변환
-//        String phoneNum = memberVO.getMemberPhone().replaceAll("-","");
-//
-//        MemberVO foundUser = userRepository.findByNameAndPhone(name, phoneNum).orElseThrow(()->
-//                new NoSuchElementException("회원이 존재하지 않습니다."));
-//
-//        String receiverEmail = foundUser.getMemberEmail();
-//        String verificationCode = validationUtil.createCode();
-//        smsUtil.sendOne(phoneNum, verificationCode);
-//
-//        //인증코드 유효기간 5분 설정
-//        redisUtil.setDataExpire(verificationCode, receiverEmail, 60 * 5L);
-//
-//        return ResponseEntity.ok(new Message("SMS 전송 성공"));
-//    }
+    //  Sms 인증
+    @PostMapping("sms")
+    public ResponseEntity<Map<String, Object>> transferSms(@RequestBody String memberPhone) throws IOException {
+
+
+        return snsService.transferMessage(memberPhone);
+    }
 
 
 }

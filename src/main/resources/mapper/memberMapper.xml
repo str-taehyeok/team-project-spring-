@@ -37,19 +37,24 @@
         <if test="memberPassword == null">NULL</if>,
         #{memberName},
         #{memberPhone},
-        #{memberNickname},
+        <if test="memberNickname != null">#{memberNickname}</if>
+        <if test="memberNickname == null">DEFAULT</if>,
         #{memberZipcode},
         #{memberAddress},
         #{memberAddressDetail},
         <if test="memberImage != null">#{memberImage}</if>
-        <if test="memberImage == null">NULL</if>,
-        #{memberSmsCheck},
-        #{memberEmailCheck},
-        #{memberDate},
+        <if test="memberImage == null">DEFAULT</if>,
+        <if test="memberSmsCheck != null">#{memberSmsCheck}</if>
+        <if test="memberSmsCheck == null">DEFAULT</if>,
+        <if test="memberEmailCheck != null">#{memberEmailCheck}</if>
+        <if test="memberEmailCheck == null">DEFAULT</if>,
+        <if test="memberDate != null">#{memberDate}</if>
+        <if test="memberDate == null">DEFAULT</if>,
         #{memberBusinessNumber},
-        #{memberAuth},
+        <if test="memberAuth != null">#{memberAuth}</if>
+        <if test="memberAuth == null">DEFAULT</if>,
         <if test="memberProvider != null">#{memberProvider}</if>
-        <if test="memberProvider == null">NULL</if>,
+        <if test="memberProvider == null">DEFAULT</if>
         )
     </insert>
 
