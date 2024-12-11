@@ -61,7 +61,7 @@ public class SecurityConfig {
                                     response.sendRedirect(redirectUrl);
                                 }else  {
                                     // 신규 회원이라면 리다이렉트 성공페이지 -> 마이페이지 -> 회원가입 -> 백엔드로 회원가입 처리 요청 보낸다.
-                                    String redirectUrl = "http://localhost:3000/sign-up?email=" + email + "&provider=" + provider;
+                                    String redirectUrl = "http://localhost:3000/join?email=" + email + "&provider=" + provider;
                                     response.sendRedirect(redirectUrl);
                                 }
 
@@ -76,7 +76,7 @@ public class SecurityConfig {
                             if (session != null) {
                                 session.invalidate(); // 세션 비우기
                             }
-                            response.sendRedirect("http://localhost:3000/sign-in");
+                            response.sendRedirect("http://localhost:3000/login");
                         })
                         .permitAll()
                 );
