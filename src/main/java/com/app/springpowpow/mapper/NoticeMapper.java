@@ -1,5 +1,6 @@
 package com.app.springpowpow.mapper;
 
+import com.app.springpowpow.domain.NoticeDTO;
 import com.app.springpowpow.domain.NoticeVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,10 +14,10 @@ public interface NoticeMapper {
     public void insert(NoticeVO  noticeVO);
 
 //    공지사항 전체 리스트
-    public List<NoticeVO> selectAll();
+    public List<NoticeDTO> selectAll();
 
 //    공지사항 개별 리스트
-    public Optional<NoticeVO> select(Long id);
+    public Optional<NoticeDTO> select(Long id);
 
 //    공지사항 수정
     public void update(NoticeVO noticeVO);
