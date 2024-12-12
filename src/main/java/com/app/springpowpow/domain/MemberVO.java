@@ -44,4 +44,8 @@ public class MemberVO implements Serializable {
     private String memberProvider;
     @Schema(description = "판매자 업체명", example = "포포")
     private String memberBusinessName;
+    @Schema(description = "은행명", example = "기업")
+    private String memberBank;
+    @Schema(description = "계좌번호", example = "471010000000")
+    private String memberBankAccount;
 }
