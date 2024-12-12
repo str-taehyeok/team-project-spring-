@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -15,6 +16,7 @@ import java.util.List;
 public class CommentAPI {
 
     private final CommentService commentService;
+    private final CommentVO commentVO;
 
     // 댓글 추가
     @PostMapping("/add")
@@ -39,7 +41,7 @@ public class CommentAPI {
 
     // 단일 댓글 조회
     @GetMapping("/get")
-    public CommentVO getCommentById(@RequestParam Long id) {
+    public Optional<CommentVO> getCommentById(@RequestParam Long id) {
         return commentService.getCommentById(id);
     }
 
