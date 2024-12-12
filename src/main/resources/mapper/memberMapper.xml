@@ -60,11 +60,11 @@
         <if test="memberAuth != null">#{memberAuth}</if>
         <if test="memberAuth == null">DEFAULT</if>,
         <if test="memberProvider != null">#{memberProvider}</if>
-        <if test="memberProvider == null">DEFAULT</if>
+        <if test="memberProvider == null">DEFAULT</if>,
         <if test="memberBusinessName != null">#{memberBusinessName}</if>
-        <if test="memberBusinessName == null">NULL</if>
+        <if test="memberBusinessName == null">NULL</if>,
         <if test="memberBank != null">#{memberBank}</if>
-        <if test="memberBank == null">NULL</if>
+        <if test="memberBank == null">NULL</if>,
         <if test="memberBankAccount != null">#{memberBankAccount}</if>
         <if test="memberBankAccount == null">NULL</if>
         )
