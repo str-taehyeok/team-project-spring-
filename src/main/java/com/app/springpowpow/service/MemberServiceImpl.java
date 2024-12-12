@@ -45,4 +45,11 @@ public class MemberServiceImpl implements MemberService {
     public void withdraw(Long id) {
         memberDAO.delete(id);
     }
+
+    @Override
+    public boolean checkDuplicate(String memberEmail) {
+        int count = memberDAO.checkDuplicate(memberEmail);
+
+        return count > 0;
+    }
 }
