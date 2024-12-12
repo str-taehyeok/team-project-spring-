@@ -2,9 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.app.springpowpow.mapper.ProductMapper">
 <!--    제품 추가-->
-    <insert id="insert" parameterType="ProductVO">
-        INSERT INTO TBL_PRODUCT (ID, MEMBER_ID, PRODUCT_NAME, PRODUCT_CODE, PRODUCT_DETAIL, PRODUCT_IMAGE1, PRODUCT_IMAGE2, PRODUCT_IMAGE3, PRODUCT_IMAGE4, PRODUCT_ANIMAL, PRODUCT_CATEGORY, PRODUCT_COLOR, PRODUCT_SIZE)
-        VALUES (SEQ_PRODUCT.NEXTVAL, #{memberId}, #{productName}, #{productCode}, #{productDetail}, #{productImage1}, #{productImage2}, #{productImage3}, #{productImage4}, #{productAnimal}, #{productCategory}, #{productColor}, #{productSize})
+<!--    <insert id="insert" parameterType="ProductVO">-->
+<!--        INSERT INTO TBL_PRODUCT (ID, MEMBER_ID, PRODUCT_NAME, PRODUCT_CODE, PRODUCT_DETAIL, PRODUCT_IMAGE1, PRODUCT_IMAGE2, PRODUCT_IMAGE3, PRODUCT_IMAGE4, PRODUCT_ANIMAL, PRODUCT_CATEGORY, PRODUCT_COLOR, PRODUCT_SIZE)-->
+<!--        VALUES (SEQ_PRODUCT.NEXTVAL, #{memberId}, #{productName}, #{productCode}, #{productDetail}, #{productImage1}, #{productImage2}, #{productImage3}, #{productImage4}, #{productAnimal}, #{productCategory}, #{productColor}, #{productSize})-->
+<!--    </insert>-->
+
+    <!-- 상품과 배송 정보 INSERT -->
+    <insert id="insertProductAndDelivery" parameterType="com.app.springpowpow.domain.ProductDTO">
+        <!-- TBL_PRODUCT 삽입 -->
+        INSERT INTO TBL_PRODUCT (
+        ID, MEMBER_ID, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_CODE, PRODUCT_DATE, PRODUCT_STOCK,
+        PRODUCT_EDIT_DATE, PRODUCT_DETAIL, PRODUCT_IMAGE1, PRODUCT_IMAGE2, PRODUCT_IMAGE3,
+        PRODUCT_IMAGE4, PRODUCT_ANIMAL, PRODUCT_CATEGORY, PRODUCT_COLOR, PRODUCT_SIZE
+        ) VALUES (
+        SEQ_PRODUCT.NEXTVAL, #{memberId}, #{productName}, #{productPrice}, #{productCode}, CURRENT_TIMESTAMP, #{productStock},
+        CURRENT_TIMESTAMP, #{productDetail}, #{productImage1}, #{productImage2}, #{productImage3},
+        #{productImage4}, #{productAnimal}, #{productCategory}, #{productColor}, #{productSize}
+        );
+
+        <!-- TBL_DELIVERY 삽입 -->
+        INSERT INTO TBL_DELIVERY (
+        ID, PRODUCT_ID, DELIVERY_FEE, DELIVERY_FEE_KIND, DELIVERY_FEE_FREE, DELIVERY_HOW, DELIVERY_PAY_WHEN, DELIVERY_COMPANY
+        ) VALUES (
+        SEQ_DELIVERY.NEXTVAL, SEQ_PRODUCT.CURRVAL, #{deliveryFee}, #{deliveryFeeKind}, #{deliveryFeeFree},
+        #{deliveryHow}, #{deliveryPayWhen}, #{deliveryCompany}
+        );
     </insert>
 
 <!--    제품 전체-->
@@ -28,11 +50,45 @@
     </select>
 
 <!--    제품 수정-->
-    <update id="update" parameterType="ProductVO">
+<!--    <update id="update" parameterType="ProductVO">-->
+<!--        UPDATE TBL_PRODUCT-->
+<!--        SET PRODUCT_NAME = #{productName}, PRODUCT_PRICE = #{productPrice}, PRODUCT_CODE = #{productCode}, PRODUCT_DATE = #{productDate}, PRODUCT_STOCK = #{productStock},-->
+<!--            PRODUCT_EDIT_DATE = #{productEditDate}, PRODUCT_DETAIL = #{productDetail}, PRODUCT_IMAGE1 = #{productImage1}, PRODUCT_IMAGE2 = #{productImage2}, PRODUCT_IMAGE3 = #{productImage3},-->
+<!--            PRODUCT_IMAGE4 = #{productImage4}, PRODUCT_ANIMAL = #{productAnimal}, PRODUCT_CATEGORY = #{productCategory}, PRODUCT_COLOR = #{productColor}, PRODUCT_SIZE = #{productSize}-->
+<!--    </update>-->
+
+
+    <!-- 상품과 배송 정보 UPDATE -->
+    <update id="updateProductAndDelivery" parameterType="com.app.springpowpow.domain.ProductDTO">
+        <!-- TBL_PRODUCT 수정 -->
         UPDATE TBL_PRODUCT
-        SET PRODUCT_NAME = #{productName}, PRODUCT_PRICE = #{productPrice}, PRODUCT_CODE = #{productCode}, PRODUCT_DATE = #{productDate}, PRODUCT_STOCK = #{productStock},
-            PRODUCT_EDIT_DATE = #{productEditDate}, PRODUCT_DETAIL = #{productDetial}, PRODUCT_IMAGE1 = #{productImage1}, PRODUCT_IMAGE2 = #{productImage2}, PRODUCT_IMAGE3 = #{productImage3},
-            PRODUCT_IMAGE4 = #{productImage4}, PRODUCT_ANIMAL = #{productAnimal}, PRODUCT_CATEGORY = #{productCategory}, PRODUCT_COLOR = #{productColor}, PRODUCT_SIZE = #{productSize}
+        SET
+        PRODUCT_NAME = #{productName},
+        PRODUCT_PRICE = #{productPrice},
+        PRODUCT_CODE = #{productCode},
+        PRODUCT_STOCK = #{productStock},
+        PRODUCT_EDIT_DATE = CURRENT_TIMESTAMP,
+        PRODUCT_DETAIL = #{productDetail},
+        PRODUCT_IMAGE1 = #{productImage1},
+        PRODUCT_IMAGE2 = #{productImage2},
+        PRODUCT_IMAGE3 = #{productImage3},
+        PRODUCT_IMAGE4 = #{productImage4},
+        PRODUCT_ANIMAL = #{productAnimal},
+        PRODUCT_CATEGORY = #{productCategory},
+        PRODUCT_COLOR = #{productColor},
+        PRODUCT_SIZE = #{productSize}
+        WHERE ID = #{id};
+
+        <!-- TBL_DELIVERY 수정 -->
+        UPDATE TBL_DELIVERY
+        SET
+        DELIVERY_FEE = #{deliveryFee},
+        DELIVERY_FEE_KIND = #{deliveryFeeKind},
+        DELIVERY_FEE_FREE = #{deliveryFeeFree},
+        DELIVERY_HOW = #{deliveryHow},
+        DELIVERY_PAY_WHEN = #{deliveryPayWhen},
+        DELIVERY_COMPANY = #{deliveryCompany}
+        WHERE PRODUCT_ID = #{id};
     </update>
 
 <!--    제품 삭제-->
