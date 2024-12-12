@@ -42,5 +42,6 @@ public class MemberVO implements Serializable {
     private int memberAuth;
     @Schema(description = "회원 프로바이더", example = "구매자")
     private String memberProvider;
-
+    @Schema(description = "판매자 업체명", example = "포포")
+    private String memberBusinessName;
 }
