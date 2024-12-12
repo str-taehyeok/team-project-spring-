@@ -10,6 +10,7 @@
         <typeAlias type="com.app.springpowpow.domain.BannerVO" alias="BannerVO" />
         <typeAlias type="com.app.springpowpow.domain.CartVO" alias="CartVO" />
         <typeAlias type="com.app.springpowpow.domain.CommentVO" alias="CommentVO" />
+        <typeAlias type="com.app.springpowpow.domain.CommLikesVO" alias="CommLikesVO" />
         <typeAlias type="com.app.springpowpow.domain.CommLikesDTO" alias="CommLikesDTO" />
         <typeAlias type="com.app.springpowpow.domain.CouponVO" alias="CouponVO" />
         <typeAlias type="com.app.springpowpow.domain.DeliveryVO" alias="DeliveryVO" />
