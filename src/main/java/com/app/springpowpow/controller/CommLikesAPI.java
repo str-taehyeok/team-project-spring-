@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/likes/")
+@RequestMapping("/likes/*")
 public class CommLikesAPI {
 
     private final CommLikesService commLikesService;
@@ -24,7 +24,7 @@ public class CommLikesAPI {
     // 좋아요 추가
     @Operation(summary = "좋아요 추가", description = "좋아요 추가 API")
     @ApiResponse(responseCode = "200", description = "좋아요 추가 완료")
-    @PostMapping("/like")
+    @PostMapping("like")
     public void likePost(@RequestBody CommLikesDTO commLikesDTO) {
         commLikesService.addLike(commLikesDTO);
     }
@@ -32,7 +32,7 @@ public class CommLikesAPI {
     // 좋아요 취소
     @Operation(summary = "좋아요 취소", description = "좋아요 취소 API")
     @ApiResponse(responseCode = "200", description = "좋아요 취소 완료")
-    @PostMapping("/cancelLike")
+    @PostMapping("cancelLike")
     public void cancelLike(@RequestParam Long memberId, @RequestParam Long postId) {
         commLikesService.removeLike(memberId, postId);
     }
@@ -40,7 +40,7 @@ public class CommLikesAPI {
     // 내가 누른 좋아요 게시글 보기
     @Operation(summary = "좋아요 게시글 조회", description = "좋아요 게시글 단일 조회 API")
     @Parameter(name = "memberId", description = "회원 ID", schema = @Schema(type = "number"), in = ParameterIn.QUERY)
-    @GetMapping("/likedPosts")
+    @GetMapping("likedPosts")
     public List<CommLikesDTO> viewLikedPosts(@RequestParam Long memberId) {
         return commLikesService.getLikedPostsByMember(memberId);
     }
@@ -48,7 +48,7 @@ public class CommLikesAPI {
     // 모든 좋아요 기록 조회
     @Operation(summary = "좋아요 전체 조회", description = "좋아요 전체 조회할 수 있는 API")
     @Parameter(name = "memberId", description = "회원 ID", schema = @Schema(type = "number"), in = ParameterIn.QUERY)
-    @GetMapping("/allLikes")
+    @GetMapping("allLikes")
     public List<CommLikesDTO> viewAllLikes(@RequestParam Long memberId) {
         return commLikesService.getAllLikes(memberId);
     }
