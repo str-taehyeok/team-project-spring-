@@ -144,9 +144,35 @@ public class MemberAPI {
     @PostMapping("sms")
     public ResponseEntity<Map<String, Object>> transferSms(@RequestBody String memberPhone) throws IOException {
 
-
         return snsService.transferMessage(memberPhone);
     }
 
+    // 이메일 중복검사
+    @PostMapping("/check-email")
+    public ResponseEntity<Map<String, Object>> checkEmail(@RequestBody Map<String, String> req) {
+        String memberEmail = req.get("memberEmail");
+
+        // 이메일 형식 유효성 검증
+        boolean isValid = memberEmail != null && memberEmail.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+
+        Map<String, Object> response = new HashMap<>();
+        if (isValid) {
+            // DB에서 이메일 존재 여부 확인
+            boolean exists = memberService.checkDuplicate(memberEmail);
+
+            if (exists) {
+                response.put("isValid", false);
+                response.put("message", "이미 사용 중인 이메일입니다.");
+            } else {
+                response.put("isValid", true);
+                response.put("memberEmail", memberEmail);
+            }
+        } else {
+            response.put("isValid", false);
+            response.put("message", "유효하지 않은 이메일입니다.");
+        }
+
+        return ResponseEntity.ok(response);
+    }
 
 }

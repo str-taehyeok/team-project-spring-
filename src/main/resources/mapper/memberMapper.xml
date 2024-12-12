@@ -39,9 +39,12 @@
         #{memberPhone},
         <if test="memberNickname != null">#{memberNickname}</if>
         <if test="memberNickname == null">DEFAULT</if>,
-        #{memberZipcode},
-        #{memberAddress},
-        #{memberAddressDetail},
+        <if test="memberZipcode != null">#{memberZipcode}</if>
+        <if test="memberZipcode == null">NULL</if>,
+        <if test="memberAddress != null">#{memberAddress}</if>
+        <if test="memberAddress == null">NULL</if>,
+        <if test="memberAddressDetail != null">#{memberAddressDetail}</if>
+        <if test="memberAddressDetail == null">NULL</if>,
         <if test="memberImage != null">#{memberImage}</if>
         <if test="memberImage == null">DEFAULT</if>,
         <if test="memberSmsCheck != null">#{memberSmsCheck}</if>
@@ -50,7 +53,8 @@
         <if test="memberEmailCheck == null">DEFAULT</if>,
         <if test="memberDate != null">#{memberDate}</if>
         <if test="memberDate == null">DEFAULT</if>,
-        #{memberBusinessNumber},
+        <if test="memberBusinessNumber != null">#{memberBusinessNumber}</if>
+        <if test="memberBusinessNumber == null">NULL</if>,
         <if test="memberAuth != null">#{memberAuth}</if>
         <if test="memberAuth == null">DEFAULT</if>,
         <if test="memberProvider != null">#{memberProvider}</if>
@@ -71,5 +75,12 @@
         DELETE FROM TBL_MEMBER
         WHERE ID = #{id}
     </delete>
+
+<!-- 이메일 중복체크 -->
+    <select id="checkEmailExists" resultType="int">
+        SELECT COUNT(*)
+        FROM TBL_MEMBER
+        WHERE MEMBER_EMAIL = #{memberEmail}
+    </select>
 
 </mapper>
