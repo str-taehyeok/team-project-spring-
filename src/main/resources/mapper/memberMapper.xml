@@ -64,6 +64,7 @@
             MEMBER_PHONE = #{memberPhone}, MEMBER_NICKNAME = #{memberNickname}, MEMBER_ZIPCODE = #{memberZipcode},
             MEMBER_ADDRESS = #{memberAddress}, MEMBER_ADDRESS_DETAIL = #{memberAddressDetail}, MEMBER_IMAGE = #{memberImage},
             MEMBER_SMSCHECK = #{memberSmsCheck}, MEMBER_EMAILCHECK = #{memberEmailCheck}, MEMBER_BUSINESS_NUMBER = #{memberBusinessNumber}
+        WHERE ID = #{id}
     </update>
 
     <delete id="delete" parameterType="Long">
