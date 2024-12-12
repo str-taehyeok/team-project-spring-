@@ -1,11 +1,9 @@
 package com.app.springpowpow.controller;
 
 import com.app.springpowpow.domain.CommLikesDTO;
-import com.app.springpowpow.domain.PostVO;
 import com.app.springpowpow.service.CommLikesService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -18,13 +16,12 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/likeList/")
+@RequestMapping("/likes/")
 public class CommLikesAPI {
 
     private final CommLikesService commLikesService;
 
     // 좋아요 추가
-
     @Operation(summary = "좋아요 추가", description = "좋아요 추가 API")
     @ApiResponse(responseCode = "200", description = "좋아요 추가 완료")
     @PostMapping("/like")
@@ -36,29 +33,23 @@ public class CommLikesAPI {
     @Operation(summary = "좋아요 취소", description = "좋아요 취소 API")
     @ApiResponse(responseCode = "200", description = "좋아요 취소 완료")
     @PostMapping("/cancelLike")
-    public void cancelLike(@RequestBody CommLikesDTO commLikesDTO) {
-        commLikesService.removeLike(commLikesDTO);
+    public void cancelLike(@RequestParam Long memberId, @RequestParam Long postId) {
+        commLikesService.removeLike(memberId, postId);
     }
 
     // 내가 누른 좋아요 게시글 보기
     @Operation(summary = "좋아요 게시글 조회", description = "좋아요 게시글 단일 조회 API")
-    @Parameter( name = "id", description = "게시글 번호", schema = @Schema(type="number"), in = ParameterIn.HEADER)
-    @GetMapping("/likedPosts/{id}")
-    public List<PostVO> viewLikedPosts(@RequestParam Long memberId) {
+    @Parameter(name = "memberId", description = "회원 ID", schema = @Schema(type = "number"), in = ParameterIn.QUERY)
+    @GetMapping("/likedPosts")
+    public List<CommLikesDTO> viewLikedPosts(@RequestParam Long memberId) {
         return commLikesService.getLikedPostsByMember(memberId);
     }
 
     // 모든 좋아요 기록 조회
     @Operation(summary = "좋아요 전체 조회", description = "좋아요 전체 조회할 수 있는 API")
-    @Parameters({
-            @Parameter( name = "id", description = "번호", schema = @Schema(type="number"), in = ParameterIn.HEADER, required = true ),
-            @Parameter( name = "memberId", description = "멤버 아이디", schema = @Schema(type="number"), in = ParameterIn.HEADER ),
-            @Parameter( name = "postId", description = "포스트 아이디", schema = @Schema(type="number"), in = ParameterIn.HEADER),
-            @Parameter( name = "commLikesCount", description = "포스트 카운트", schema = @Schema(type="number"), in = ParameterIn.HEADER ),
-    })
+    @Parameter(name = "memberId", description = "회원 ID", schema = @Schema(type = "number"), in = ParameterIn.QUERY)
     @GetMapping("/allLikes")
-    public List<CommLikesDTO> viewAllLikes() {
-        return commLikesService.getAllLikes();
+    public List<CommLikesDTO> viewAllLikes(@RequestParam Long memberId) {
+        return commLikesService.getAllLikes(memberId);
     }
-
 }
