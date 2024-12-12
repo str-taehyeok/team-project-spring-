@@ -26,4 +26,7 @@ public interface MemberMapper {
 
     //    회원 탈퇴
     public void delete(Long id);
+
+    //  이메일 중복체크
+    public int checkEmailExists(String memberEmail);
 }
