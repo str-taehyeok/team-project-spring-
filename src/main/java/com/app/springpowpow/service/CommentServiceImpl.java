@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +38,7 @@ public class CommentServiceImpl implements CommentService {
 
     // 단일 댓글 조회
     @Override
-    public CommentVO getCommentById(Long id) {
+    public Optional<CommentVO> getCommentById(Long id) {
         return commentDAO.getCommentById(id);
     }
 

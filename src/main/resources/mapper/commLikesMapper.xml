@@ -4,27 +4,29 @@
 
     <!-- 좋아요 추가 -->
     <insert id="insertLike" parameterType="CommLikesDTO">
-        INSERT INTO TBL_COMM_LIKES (ID, MEMBER_ID, POST_ID, COMM_LIKES_COUNT)
-        VALUES (SEQ_COMM_LIKES.NEXTVAL, #{memberId}, #{postId}, 1)
+        INSERT INTO TBL_COMM_LIKES (ID, MEMBER_ID, POST_ID)
+        VALUES (SEQ_COMM_LIKES.NEXTVAL, #{memberId}, #{postId})
     </insert>
 
     <!-- 좋아요 취소 -->
-    <delete id="deleteLike" parameterType="CommLikesDTO">
+    <delete id="deleteLike" parameterType="Long">
         DELETE FROM TBL_COMM_LIKES
-        WHERE MEMBER_ID = #{memberId} AND POST_ID = #{postId}
+        WHERE POST_ID = #{postId} AND MEMBER_ID = #{memberId}
     </delete>
 
     <!-- 내가 누른 좋아요 게시글 보기 -->
-    <select id="selectLikedPosts" parameterType="long" resultType="PostVO">
-        SELECT TP.ID, TP.POST_TITLE, TP.POST_CONTENT, TP.MEMBER_ID, TP.POST_READ_COUNT
+    <select id="selectLikedPosts" parameterType="Long" resultType="CommLikesDTO">
+        SELECT TCL.ID, TCL.MEMBER_ID, TCL.POST_ID
         FROM TBL_COMM_LIKES TCL
-        JOIN TBL_POST TP ON TCL.POST_ID = TP.ID
         WHERE TCL.MEMBER_ID = #{memberId}
     </select>
 
     <!-- 모든 좋아요 기록 조회 -->
     <select id="selectAllLikes" resultType="CommLikesDTO">
-        SELECT * FROM TBL_COMM_LIKES
+        SELECT TP.ID, TP.POST_TITLE, TP.POST_CONTENT, TP.MEMBER_ID
+        FROM TBL_COMM_LIKES TCL
+        JOIN TBL_POST TP ON TCL.POST_ID = TP.ID
+        WHERE TCL.MEMBER_ID = #{memberId}
     </select>
 
 </mapper>

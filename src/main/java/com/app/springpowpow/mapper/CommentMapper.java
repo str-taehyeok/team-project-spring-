@@ -4,6 +4,7 @@ import com.app.springpowpow.domain.CommentVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Optional;
 
 @Mapper
 public interface CommentMapper {
@@ -18,7 +19,7 @@ public interface CommentMapper {
     public void deleteComment(Long id);
 
     // 단일 댓글 조회
-    public CommentVO selectCommentById(Long id);
+    public Optional<CommentVO> selectCommentById(Long id);
 
     // 전체 댓글 조회
     public List<CommentVO> selectCommentsByPostId(Long postId);

@@ -1,7 +1,6 @@
 package com.app.springpowpow.mapper;
 
 import com.app.springpowpow.domain.CommLikesDTO;
-import com.app.springpowpow.domain.PostVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -13,12 +12,11 @@ public interface CommLikesMapper {
     public void insertLike(CommLikesDTO commLikesDTO);
 
     // 좋아요 취소
-    public void deleteLike(CommLikesDTO commLikesDTO);
+    public void deleteLike(Long memberId, Long postId);
 
     // 내가 누른 좋아요 게시글 보기
-    public List<PostVO> selectLikedPosts(Long memberId);
+    public List<CommLikesDTO> selectLikedPosts(Long memberId);
 
-    // 모든 좋아요 기록 조회
-    public List<CommLikesDTO> selectAllLikes();
-
+    // 모든 좋아요 기록 조회 (특정 회원의 좋아요 기록 조회)
+    public List<CommLikesDTO> selectAllLikes(Long memberId);
 }
