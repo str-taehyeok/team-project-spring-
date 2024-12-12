@@ -3,6 +3,7 @@ package com.app.springpowpow.service;
 import com.app.springpowpow.domain.CommentVO;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CommentService {
 
@@ -16,7 +17,7 @@ public interface CommentService {
     public void removeComment(Long id);
 
     // 단일 댓글 조회
-    public CommentVO getCommentById(Long id);
+    public Optional<CommentVO> getCommentById(Long id);
 
     // 특정 게시글에 달린 모든 댓글 조회
     public List<CommentVO> getCommentsByPostId(Long postId);

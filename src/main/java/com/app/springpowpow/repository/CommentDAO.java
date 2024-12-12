@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -29,7 +30,7 @@ public class CommentDAO {
     }
 
     // 단일 댓글 조회
-    public CommentVO getCommentById(Long id) {
+    public Optional<CommentVO> getCommentById(Long id) {
         return commentMapper.selectCommentById(id);
     }
 

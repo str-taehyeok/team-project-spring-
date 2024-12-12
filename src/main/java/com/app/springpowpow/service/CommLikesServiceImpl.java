@@ -1,7 +1,7 @@
 package com.app.springpowpow.service;
 
 import com.app.springpowpow.domain.CommLikesDTO;
-import com.app.springpowpow.domain.PostVO;
+import com.app.springpowpow.domain.CommLikesVO;
 import com.app.springpowpow.repository.CommLikesDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,25 +20,25 @@ public class CommLikesServiceImpl implements CommLikesService {
 
     // 좋아요 추가
     @Override
-    public void addLike(CommLikesDTO commLikesDTO) {
-        commLikesDAO.addLike(commLikesDTO);
+    public void addLike(CommLikesVO commLikesVO) {
+        commLikesDAO.addLike(commLikesVO);
     }
 
     // 좋아요 취소
     @Override
-    public void removeLike(CommLikesDTO commLikesDTO) {
-        commLikesDAO.removeLike(commLikesDTO);
+    public void removeLike(CommLikesVO commLikesVO) {
+        commLikesDAO.removeLike(commLikesVO);
     }
 
     // 내가 누른 좋아요 게시글 보기
     @Override
-    public List<PostVO> getLikedPostsByMember(Long memberId) {
+    public List<CommLikesDTO> getLikedPostsByMember(Long memberId) {
         return commLikesDAO.getLikedPostsByMember(memberId);
     }
 
     // 모든 좋아요 기록 조회
     @Override
-    public List<CommLikesDTO> getAllLikes() {
-        return commLikesDAO.getAllLikes();
+    public List<CommLikesDTO> getAllLikes(Long memberId) {
+        return commLikesDAO.getAllLikes(memberId);
     }
 }
