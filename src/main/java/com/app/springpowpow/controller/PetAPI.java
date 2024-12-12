@@ -55,7 +55,7 @@ public class PetAPI {
         @Parameter( name = "MemberEmail", description = "회원 이메일", schema = @Schema(type="string"), in = ParameterIn.HEADER ),
         @Parameter( name = "MemberName", description = "회원 이름", schema = @Schema(type="string"), in = ParameterIn.HEADER )
 })
-@GetMapping("List")
+@GetMapping("list")
 public List<PetDTO> getPet(){
     return petService.getList();
 }

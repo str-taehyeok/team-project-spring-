@@ -23,6 +23,7 @@ public class PetDTO implements Serializable {
     private double petWeight;
     private String petNeuter;
     private String petColor;
+    private Long memberId;
     private String MemberEmail;
     private String MemberName;
 }
