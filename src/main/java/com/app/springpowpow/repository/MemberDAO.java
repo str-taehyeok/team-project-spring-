@@ -37,4 +37,8 @@ public class MemberDAO {
     public void delete(Long id){
         memberMapper.delete(id);
     }
+
+    public int checkDuplicate(String memberEmail){
+        return memberMapper.checkEmailExists(memberEmail);
+    }
 }

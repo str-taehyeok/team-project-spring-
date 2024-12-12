@@ -13,7 +13,7 @@ public class PetVO implements Serializable {
     @Schema(description = "마이펫 번호", example = "1", required = true)
     private Long id;
     @Schema(description = "반려종류", example = "반려견")
-    private char petKind;
+    private String petKind;
     @Schema(description = "이미지", example = "사진")
     private String petImage;
     @Schema(description = "반려 이름", example = "레오")
@@ -29,7 +29,7 @@ public class PetVO implements Serializable {
     @Schema(description = "반려 몸무게", example = "12kg")
     private double petWeight;
     @Schema(description = "반려 중성화", example = "했어요")
-    private char petNeuter;
+    private String petNeuter;
     @Schema(description = "반려 색상", example = "yellow")
     private String petColor;
     @Schema(description = "회원 번호", example = "23")

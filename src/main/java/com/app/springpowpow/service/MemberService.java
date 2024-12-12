@@ -17,4 +17,6 @@ public interface MemberService {
     public void modify(MemberVO memberVO);
 
     public void withdraw(Long id);
+
+    public boolean checkDuplicate(String memberEmail);
 }
