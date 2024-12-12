@@ -11,6 +11,7 @@ import java.util.Date;
 @Data
 public class NoticeDTO implements Serializable {
     private Long id;
+    private Long memberId;
     private String noticeTitle;
     private String noticeContent;
     private Date noticeDate;
