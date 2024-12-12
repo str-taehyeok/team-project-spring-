@@ -70,7 +70,7 @@ public class SecurityConfig {
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("http://localhost:3000/sign-in")
+                        .logoutSuccessUrl("http://localhost:3000/login")
                         .logoutSuccessHandler((request, response, authentication) -> {
                             HttpSession session = request.getSession(false);  // 세션이 있으면 가져오기
                             if (session != null) {
