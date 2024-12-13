@@ -8,6 +8,7 @@
         <typeAlias type="com.app.springpowpow.domain.AdjustmentDTO" alias="AdjustmentDTO"/>
         <typeAlias type="com.app.springpowpow.domain.AdjustmentVO" alias="AdjustmentVO" />
         <typeAlias type="com.app.springpowpow.domain.BannerVO" alias="BannerVO" />
+        <typeAlias type="com.app.springpowpow.domain.BannerDTO" alias="BannerDTO" />
         <typeAlias type="com.app.springpowpow.domain.CartVO" alias="CartVO" />
         <typeAlias type="com.app.springpowpow.domain.CommentVO" alias="CommentVO" />
         <typeAlias type="com.app.springpowpow.domain.CommLikesVO" alias="CommLikesVO" />

@@ -10,7 +10,7 @@ import java.util.Date;
 @Component
 @Data
 @Schema(description = "공지사항 정보")
-public class NoticeVO implements Serializable {
+public class NoticeVO {
 
     @Schema(description = "공지사항 번호", example = "1", required = true)
     private Long id;

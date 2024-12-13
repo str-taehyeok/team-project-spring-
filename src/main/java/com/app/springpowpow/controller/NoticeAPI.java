@@ -29,12 +29,6 @@ public class NoticeAPI {
 
     //    공지사항 작성
     @Operation(summary = "공지사항 작성", description = "공지사항 새로 작성 할 수 있는 API")
-//    @Parameters({
-//            @Parameter(name = "id", description = "공지사항 번호", schema = @Schema(type = "number"), in = ParameterIn.HEADER, required = true),
-//            @Parameter(name = "noticeTitle", description = "공지사항 제목", schema = @Schema(type = "string"), in = ParameterIn.HEADER, required = true),
-//            @Parameter(name = "noticeContent", description = "공지사항 내용", schema = @Schema(type = "string"), in = ParameterIn.HEADER, required = true),
-//            @Parameter(name = "noticeDate", description = "공지사항 등록일자", schema = @Schema(type = "string", format = "date"), in = ParameterIn.HEADER, required = true)
-//    })
     @ApiResponse(responseCode = "200", description = "공지사항 작성 완료")
     @PostMapping("write")
     public NoticeDTO write(@RequestBody NoticeVO noticeVO) {
@@ -54,7 +48,7 @@ public class NoticeAPI {
             @Parameter(name = "noticeContent", description = "공지사항 내용", schema = @Schema(type = "string"), in = ParameterIn.HEADER, required = true),
             @Parameter(name = "noticeDate", description = "공지사항 등록일자", schema = @Schema(type = "string", format = "date"), in = ParameterIn.HEADER, required = true)
     })
-    @GetMapping("notices")
+    @GetMapping("list-all")
     public List<NoticeDTO> getList() {
         return noticeService.getList();
     }
@@ -62,8 +56,8 @@ public class NoticeAPI {
     //    공지사항 단일 조회
     @Operation(summary = "공지사항 단일 정보", description = "공지사항 단일 정보를 볼 수 있는 API")
     @Parameter( name = "id", description = "공지사항 번호", schema = @Schema(type="number"), in = ParameterIn.PATH, required = true )
-    @GetMapping("notice/{id}")
-    public NoticeDTO getPet(@PathVariable Long id){
+    @GetMapping("list/{id}")
+    public NoticeDTO read(@PathVariable Long id){
         Optional<NoticeDTO> foundPost = noticeService.read(id);
         if(foundPost.isPresent()){
             return foundPost.get();
@@ -75,11 +69,12 @@ public class NoticeAPI {
     @Operation(summary = "공지사항 수정", description = "공지사항 수정할 수 있는 API")
     @Parameter( name = "id", description = "공지사항 번호", schema = @Schema(type="number"), in = ParameterIn.PATH, required = true )
     @ApiResponse(responseCode = "200", description = "공지사항 수정 완료")
-    @PutMapping("notice/{id}")
+    @PutMapping("update/{id}")
     public NoticeDTO modify(@PathVariable Long id, @RequestBody NoticeVO noticeVO){
         noticeVO.setId(id);
         noticeService.edit(noticeVO);
         Optional<NoticeDTO> foundPet = noticeService.read(noticeVO.getId());
+
         if(foundPet.isPresent()){
             return foundPet.get();
         }
@@ -90,7 +85,7 @@ public class NoticeAPI {
     @Operation(summary = "공지사항 삭제", description = "공지사항 삭제 할 수 있는 API")
     @Parameter( name = "id", description = "게시글 번호", schema = @Schema(type="number"), in = ParameterIn.PATH, required = true )
     @ApiResponse(responseCode = "200", description = "공지사항 삭제 완료")
-    @DeleteMapping("notice/{id}")
+    @DeleteMapping("list/{id}")
     public void delete(@PathVariable Long id){
         noticeService.remove(id);
     }

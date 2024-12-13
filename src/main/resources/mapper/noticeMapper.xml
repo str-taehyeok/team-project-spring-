@@ -8,12 +8,12 @@
     </insert>
 
     <select id="selectAll" resultType="NoticeDTO">
-        SELECT ID, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_COUNT
+        SELECT ID, NOTICE_TITLE, NOTICE_CONTENT, TO_CHAR(NOTICE_DATE, 'YYYY-MM-DD') AS NOTICE_DATE, NOTICE_COUNT
         FROM TBL_NOTICE
     </select>
 
     <select id="select" resultType="NoticeDTO" parameterType="Long">
-        SELECT ID, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_COUNT
+        SELECT ID, NOTICE_TITLE, NOTICE_CONTENT, TO_CHAR(NOTICE_DATE, 'YYYY-MM-DD') AS NOTICE_DATE, NOTICE_COUNT
         FROM TBL_NOTICE
         WHERE ID = #{id}
     </select>

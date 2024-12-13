@@ -9,14 +9,13 @@ import java.util.Date;
 
 @Component
 @Data
-public class NoticeDTO implements Serializable {
+public class NoticeDTO {
     private Long id;
     private Long memberId;
     private String noticeTitle;
     private String noticeContent;
-    private Date noticeDate;
+    private String noticeDate;
     private Long noticeCount;
     private String MemberEmail;
     private String MemberPassword;
-
 }

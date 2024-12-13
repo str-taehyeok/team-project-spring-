@@ -22,7 +22,7 @@ public interface NoticeMapper {
 //    공지사항 수정
     public void update(NoticeVO noticeVO);
 
-//    공지사항 등록
+//    공지사항 삭제
     public void delete(Long id);
 
 }
