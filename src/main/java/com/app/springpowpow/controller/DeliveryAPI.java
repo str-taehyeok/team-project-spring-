@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/delivery/*")
+@RequestMapping("/deliveries/*")
 public class DeliveryAPI {
 
     private final DeliveryService deliveryService;
