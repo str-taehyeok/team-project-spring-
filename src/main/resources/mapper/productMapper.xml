@@ -3,8 +3,8 @@
 <mapper namespace="com.app.springpowpow.mapper.ProductMapper">
 <!--    제품 추가-->
     <insert id="insert" parameterType="ProductDTO">
-        INSERT INTO TBL_PRODUCT (ID, MEMBER_ID, PRODUCT_NAME, PRODUCT_CODE, PRODUCT_DETAIL, PRODUCT_IMAGE1, PRODUCT_IMAGE2, PRODUCT_IMAGE3, PRODUCT_IMAGE4, PRODUCT_ANIMAL, PRODUCT_CATEGORY, PRODUCT_COLOR, PRODUCT_SIZE)
-        VALUES (SEQ_PRODUCT.NEXTVAL, #{memberId}, #{productName}, #{productCode}, #{productDetail}, #{productImage1}, #{productImage2}, #{productImage3}, #{productImage4}, #{productAnimal}, #{productCategory}, #{productColor}, #{productSize})
+        INSERT INTO TBL_PRODUCT (ID, MEMBER_ID, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_CODE, PRODUCT_DETAIL, PRODUCT_IMAGE1, PRODUCT_IMAGE2, PRODUCT_IMAGE3, PRODUCT_IMAGE4, PRODUCT_ANIMAL, PRODUCT_CATEGORY, PRODUCT_COLOR, PRODUCT_SIZE)
+        VALUES (SEQ_PRODUCT.NEXTVAL, #{memberId}, #{productName}, #{productPrice}, #{productCode}, #{productDetail}, #{productImage1}, #{productImage2}, #{productImage3}, #{productImage4}, #{productAnimal}, #{productCategory}, #{productColor}, #{productSize})
     </insert>
 
 <!--    제품 전체-->
