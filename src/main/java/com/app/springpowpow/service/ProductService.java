@@ -14,10 +14,10 @@ public interface ProductService {
     public Optional<ProductDTO> selectProductById(Long id);
 
 //    상품 전체
-    public List<ProductVO> selectAllProducts();
+    public List<ProductDTO> selectAllProducts();
 
 //    특정 판매자의 상품전체
-    public List<ProductVO> selectAllProductsBySellerId(Long memberId);
+    public List<ProductDTO> selectAllProductsBySellerId(Long memberId);
 
 //    상품 수정
     public void updateProduct(ProductDTO productDTO);
