@@ -1,5 +1,6 @@
 package com.app.springpowpow.service;
 
+import com.app.springpowpow.domain.NoticeDTO;
 import com.app.springpowpow.domain.NoticeVO;
 
 import java.util.List;
@@ -9,9 +10,9 @@ public interface NoticeService {
 
     public void write(NoticeVO noticeVO);
 
-    public List<NoticeVO> getList();
+    public List<NoticeDTO> getList();
 
-    public Optional<NoticeVO> read(Long id);
+    public Optional<NoticeDTO> read(Long id);
 
     public void edit(NoticeVO noticeVO);
 
