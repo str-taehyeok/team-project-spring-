@@ -9,17 +9,18 @@ import java.io.Serializable;
 @Component
 @Data
 @Schema(description = "배너 정보")
-//@Schema(description = "회원 정보")
 public class BannerVO {
 
     @Schema(description = "배너 번호", example = "1", required = true)
     private Long id;
     @Schema(description = "관리자 정보", example = "1", required = true)
     private Long memberId;
-    @Schema(description = "배너 제목", example = "POWPOW 공지사항 제목", required = true)
+    @Schema(description = "배너 제목", example = "제목 입니다", required = true)
     private String bannerTitle;
-    @Schema(description = "배너 타입", example = "POWPOW 공지사항 내용", required = true)
+    @Schema(description = "배너 타입", example = "타입 입니다", required = true)
     private String bannerType;
+    @Schema(description = "배너 링크", example = "https://www.powpow.com", required = true)
+    private String bannerLink;
     @Schema(description = "배너 등록일자", example = "2012-11-07")
     private String bannerStart;
     @Schema(description = "배너 종료일자", example = "2012-12-24")

@@ -11,6 +11,7 @@ public class BannerDTO {
     private Long memberId;
     private String bannerTitle;
     private String bannerType;
+    private String bannerLink;
     private String bannerStart;
     private String bannerEnd;
     private String bannerImage;
