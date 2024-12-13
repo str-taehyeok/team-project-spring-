@@ -13,7 +13,7 @@ public interface ProductMapper {
 //    public void insert(ProductVO productVO);
     public void insertProductAndDelivery(ProductDTO productDTO);
 //    제품 단일
-    public Optional<ProductVO> select(Long id);
+    public Optional<ProductDTO> select(Long id);
 //    제품 리스트
     public List<ProductVO> selectAll();
 //    판매자의 모든 제품

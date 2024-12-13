@@ -36,17 +36,19 @@
     </select>
 
 <!--    판매자의 모든 제품-->
-    <select id="selectAllBySeller" resultType="ProductVO" parameterType="Long">
+    <select id="selectAllBySeller" resultType="ProductDTO" parameterType="Long">
         SELECT ID, MEMBER_ID, PRODUCT_NAME, PRODUCT_CODE, PRODUCT_DETAIL, PRODUCT_IMAGE1, PRODUCT_IMAGE2, PRODUCT_IMAGE3, PRODUCT_IMAGE4, PRODUCT_ANIMAL, PRODUCT_CATEGORY, PRODUCT_COLOR, PRODUCT_SIZE
         FROM TBL_PRODUCT
         WHERE MEMBER_ID = #{memberId}
     </select>
 
 <!--    제품 단일-->
-    <select id="select" parameterType="Long" resultType="ProductVO">
-        SELECT ID, MEMBER_ID, PRODUCT_NAME, PRODUCT_CODE, PRODUCT_DETAIL, PRODUCT_IMAGE1, PRODUCT_IMAGE2, PRODUCT_IMAGE3, PRODUCT_IMAGE4, PRODUCT_ANIMAL, PRODUCT_CATEGORY, PRODUCT_COLOR, PRODUCT_SIZE
-        FROM TBL_PRODUCT
-        WHERE ID = #{id}
+    <select id="select" parameterType="Long" resultType="ProductDTO">
+        SELECT TBP.ID, TBP.MEMBER_ID, TBP.PRODUCT_NAME, TBP.PRODUCT_CODE, TBP.PRODUCT_DETAIL, TBP.PRODUCT_IMAGE1, TBP.PRODUCT_IMAGE2, TBP.PRODUCT_IMAGE3, TBP.PRODUCT_IMAGE4, TBP.PRODUCT_ANIMAL,
+               TBP.PRODUCT_CATEGORY, TBP.PRODUCT_COLOR, TBP.PRODUCT_SIZE, TBD.DELIVERY_FEE_KIND, TBD.DELIVERY_FEE, TBD.DELIVERY_FEE_FREE, TBD.DELIVERY_HOW, TBD.DELIVERY_PAY_WHEN, TBD.DELIVERY_COMPANY
+        FROM TBL_PRODUCT TBP
+                 LEFT JOIN TBL_DELIVERY TBD ON TBP.ID = TBD.PRODUCT_ID
+        WHERE TBP.ID = #{id}
     </select>
 
 <!--    제품 수정-->
@@ -62,32 +64,13 @@
     <update id="updateProductAndDelivery" parameterType="com.app.springpowpow.domain.ProductDTO">
         <!-- TBL_PRODUCT 수정 -->
         UPDATE TBL_PRODUCT
-        SET
-        PRODUCT_NAME = #{productName},
-        PRODUCT_PRICE = #{productPrice},
-        PRODUCT_CODE = #{productCode},
-        PRODUCT_STOCK = #{productStock},
-        PRODUCT_EDIT_DATE = CURRENT_TIMESTAMP,
-        PRODUCT_DETAIL = #{productDetail},
-        PRODUCT_IMAGE1 = #{productImage1},
-        PRODUCT_IMAGE2 = #{productImage2},
-        PRODUCT_IMAGE3 = #{productImage3},
-        PRODUCT_IMAGE4 = #{productImage4},
-        PRODUCT_ANIMAL = #{productAnimal},
-        PRODUCT_CATEGORY = #{productCategory},
-        PRODUCT_COLOR = #{productColor},
-        PRODUCT_SIZE = #{productSize}
+        SET PRODUCT_NAME = #{productName}, PRODUCT_PRICE = #{productPrice}, PRODUCT_CODE = #{productCode}, PRODUCT_STOCK = #{productStock}, PRODUCT_EDIT_DATE = CURRENT_TIMESTAMP, PRODUCT_DETAIL = #{productDetail}, PRODUCT_IMAGE1 = #{productImage1},
+            PRODUCT_IMAGE2 = #{productImage2}, PRODUCT_IMAGE3 = #{productImage3}, PRODUCT_IMAGE4 = #{productImage4}, PRODUCT_ANIMAL = #{productAnimal}, PRODUCT_CATEGORY = #{productCategory}, PRODUCT_COLOR = #{productColor}, PRODUCT_SIZE = #{productSize}
         WHERE ID = #{id};
 
         <!-- TBL_DELIVERY 수정 -->
         UPDATE TBL_DELIVERY
-        SET
-        DELIVERY_FEE = #{deliveryFee},
-        DELIVERY_FEE_KIND = #{deliveryFeeKind},
-        DELIVERY_FEE_FREE = #{deliveryFeeFree},
-        DELIVERY_HOW = #{deliveryHow},
-        DELIVERY_PAY_WHEN = #{deliveryPayWhen},
-        DELIVERY_COMPANY = #{deliveryCompany}
+        SET DELIVERY_FEE = #{deliveryFee}, DELIVERY_FEE_KIND = #{deliveryFeeKind}, DELIVERY_FEE_FREE = #{deliveryFeeFree}, DELIVERY_HOW = #{deliveryHow}, DELIVERY_PAY_WHEN = #{deliveryPayWhen}, DELIVERY_COMPANY = #{deliveryCompany}
         WHERE PRODUCT_ID = #{id};
     </update>
 

@@ -26,7 +26,7 @@ public class ProductDAO {
     }
 
 //        단일 제품
-        public Optional<ProductVO> findProductById(Long id) {
+        public Optional<ProductDTO> findProductById(Long id) {
             return productMapper.select(id);
         }
 

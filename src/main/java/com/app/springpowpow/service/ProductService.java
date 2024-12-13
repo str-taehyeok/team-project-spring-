@@ -12,7 +12,7 @@ public interface ProductService {
 //    public void insertNewProduct(ProductVO productVO);
 public void insertProduct(ProductDTO productDTO);
 //    상품 단일
-    public Optional<ProductVO> selectProductById(Long id);
+    public Optional<ProductDTO> selectProductById(Long id);
 
 //    상품 전체
     public List<ProductVO> selectAllProducts();

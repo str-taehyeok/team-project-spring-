@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<ProductVO> selectProductById(Long id) {
+    public Optional<ProductDTO> selectProductById(Long id) {
         return productDAO.findProductById(id);
     }
 
