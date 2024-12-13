@@ -180,14 +180,17 @@ public class MemberAPI {
 
     ////////////////////////////////////////////////////////////////////////////////////////// 아이디 찾기
 
+    // 아이디 찾기
     @Operation(summary = "이메일(아이디) 찾기", description = "회원 아이디(이메일)를 찾을 수 있는 API")
     @ApiResponse(responseCode = "200", description = "아이디 찾기 성공")
     @PostMapping("/find-id")
-    public Optional<MemberVO> findId(@RequestBody MemberVO memberVO) {
-
-    // 이름과 전화번호로 회원을 조회
+    public ResponseEntity<MemberVO> findId(@RequestBody MemberVO memberVO) {
+        // 이름과 전화번호로 회원을 조회
         Optional<MemberVO> foundUser = memberService.findMemberByNameAndPhone(memberVO);
-        return foundUser;
+
+        // 회원을 찾지 못하면 404 반환
+        return foundUser.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // SMS 전송
@@ -196,16 +199,38 @@ public class MemberAPI {
         return snsService.transferMessage(memberPhone);
     }
 
+    // 회원 정보 조회 (휴대폰 번호로 이메일 찾고, 이메일로 회원 조회)
+    @Operation(summary = "회원 조회", description = "휴대폰 번호로 회원 이메일을 찾고, 이메일로 회원 정보를 조회할 수 있는 API")
+    @PostMapping("find-id/{memberPhone}")
+    public ResponseEntity<MemberVO> findMemberByIdAndPhone(@PathVariable String memberPhone) {
+
+        // 1) 휴대폰 번호로 이메일 찾기
+        Optional<String> foundEmail = memberService.getEmailById(memberPhone);
+
+        // 이메일을 찾을 수 없으면 "회원이 아닙니다."
+        if (!foundEmail.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        // 2) 이메일로 유저를 찾기
+        String memberEmail = foundEmail.get();
+        Optional<MemberVO> foundUser = memberService.findMemberByEmail(memberEmail);
+
+        // 3) 이메일로 회원을 찾을 수 있으면 회원 정보 반환, 없으면 "회원이 아닙니다."
+        return foundUser.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
+    }
+
     // 이메일 조회 (단일)
     @Operation(summary = "이메일 조회(단일)", description = "이메일을 조회할 수 있는 API")
-    @Parameter(name = "id", description = "아이디", schema = @Schema(type = "number"), in = ParameterIn.HEADER, required = true)
+    @Parameter(name = "memberPhone", description = "멤버전화번호", schema = @Schema(type = "string"), in = ParameterIn.HEADER, required = true)
     @GetMapping("find-id/{id}")
-    public MemberVO getEmailById(@PathVariable Long id) {
-        Optional<MemberVO> foundUser = memberService.getEmailById(id);
+    public String getEmailById(@PathVariable String memberPhone) {
+        Optional<String> foundUser = memberService.getEmailById(memberPhone);
         if (foundUser.isPresent()) {
             return foundUser.get();
         }
-        return new MemberVO();
+        return new String();
     }
 }
 

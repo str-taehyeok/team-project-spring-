@@ -49,4 +49,12 @@ public class MemberDAO {
     public Optional<MemberVO> findEmailById(Long id) {
         return memberMapper.selectByEmail(id);
     }
+
+    public Optional<String> findEmailByPhone(String memberPhone) {
+        return memberMapper.findEmailByPhone(memberPhone);
+    }
+
+    public Optional<MemberVO> findEmailByEmail(String memberEmail) {
+        return memberMapper.findPhoneByEmail(memberEmail);
+    }
 }

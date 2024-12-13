@@ -55,16 +55,30 @@ public class MemberServiceImpl implements MemberService {
         return count > 0;
     }
 
+    // 이름 & 휴대번호 ID 조회
     @Override
     public Optional<MemberVO> findMemberByNameAndPhone(MemberVO memberVO) {
         Long memberId = memberDAO.selectByNameAndPhone(memberVO);
-         return memberDAO.findEmailById(memberId);
-
+        return memberDAO.findById(memberId);
     }
 
+    // 이메일 조회
     @Override
-    public Optional<MemberVO> getEmailById(Long id) {
-        return memberDAO.findEmailById(id);
+    public Optional<MemberVO> findById(Long id) {
+        return memberDAO.findById(id);
     }
+
+    // 휴대폰 번호로 이메일 조회
+    @Override
+    public Optional<String> getEmailById(String memberPhone) {
+        return memberDAO.findEmailByPhone(memberPhone);
+    }
+
+    // 이메일로 회원 조회
+    @Override
+    public Optional<MemberVO> findMemberByEmail(String memberEmail) {
+        return memberDAO.findEmailByEmail(memberEmail);
+    }
+
 }
 
