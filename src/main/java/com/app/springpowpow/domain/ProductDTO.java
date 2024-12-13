@@ -19,7 +19,7 @@ public class ProductDTO {
     private int productPrice;
     @Schema(description = "제품 소비자 가격", example = "45000")
     private int productRealPrice;
-    @Schema(description = "제품 할인 가격", example = "4000")
+    @Schema(description = "제품 할인율", example = "20")
     private int productDiscount;
     @Schema(description = "제품 코드", example = "000000")
     private String productCode;
