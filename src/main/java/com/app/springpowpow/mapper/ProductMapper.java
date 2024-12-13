@@ -14,9 +14,9 @@ public interface ProductMapper {
 //    제품 단일
     public Optional<ProductDTO> select(Long id);
 //    제품 리스트
-    public List<ProductVO> selectAll();
+    public List<ProductDTO> selectAll();
 //    판매자의 모든 제품
-    public List<ProductVO> selectAllBySeller(Long memberId);
+    public List<ProductDTO> selectAllBySeller(Long memberId);
 //    수정
     public void update(ProductDTO productDTO);
 //    삭제

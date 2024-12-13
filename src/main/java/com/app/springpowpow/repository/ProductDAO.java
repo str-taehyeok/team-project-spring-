@@ -28,12 +28,12 @@ public class ProductDAO {
         }
 
 //        제품 전체
-        public List<ProductVO> findAllProduct() {
+        public List<ProductDTO> findAllProduct() {
             return productMapper.selectAll();
         }
 
 //        판매자의 모든 제품
-        public List<ProductVO> findAllProductBySeller(Long memberId) {
+        public List<ProductDTO> findAllProductBySeller(Long memberId) {
             return productMapper.selectAllBySeller(memberId);
         }
 
