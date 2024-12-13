@@ -10,8 +10,7 @@ import java.util.Optional;
 @Mapper
 public interface ProductMapper {
 //    제품 추가
-//    public void insert(ProductVO productVO);
-    public void insertProductAndDelivery(ProductDTO productDTO);
+    public void insert(ProductDTO productDTO);
 //    제품 단일
     public Optional<ProductDTO> select(Long id);
 //    제품 리스트
@@ -19,8 +18,7 @@ public interface ProductMapper {
 //    판매자의 모든 제품
     public List<ProductVO> selectAllBySeller(Long memberId);
 //    수정
-//    public void update(ProductVO productVO);
-void updateProductAndDelivery(ProductDTO productDTO);
+    public void update(ProductDTO productDTO);
 //    삭제
     public void delete(Long id);
 

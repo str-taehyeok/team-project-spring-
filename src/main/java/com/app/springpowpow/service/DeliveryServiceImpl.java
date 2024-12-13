@@ -1,6 +1,7 @@
 package com.app.springpowpow.service;
 
 import com.app.springpowpow.domain.DeliveryVO;
+import com.app.springpowpow.domain.ProductDTO;
 import com.app.springpowpow.repository.DeliveryDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,12 +17,17 @@ public class DeliveryServiceImpl implements DeliveryService {
 
 
     @Override
-    public void insertDeliveryInfo(DeliveryVO deliveryVO) {
-        deliveryDAO.save(deliveryVO);
+    public void insertDeliveryInfo(ProductDTO productDTO) {
+        deliveryDAO.save(productDTO);
     }
 
     @Override
-    public void updateDeliveryInfo(DeliveryVO deliveryVO) {
-        deliveryDAO.updateDelivery(deliveryVO);
+    public void updateDeliveryInfo(ProductDTO productDTO) {
+        deliveryDAO.updateDelivery(productDTO);
+    }
+
+    @Override
+    public void deleteDeliveryInfo(Long id) {
+        deliveryDAO.deleteDelivery(id);
     }
 }

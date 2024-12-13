@@ -17,13 +17,10 @@ public class ProductDAO {
 
 
 //        제품 등록
-//        public void save(ProductVO productVO) {
-//            productMapper.insert(productVO);
-//        }
+        public void save(ProductDTO productDTO) {
+            productMapper.insert(productDTO);
+        }
 
-    public void saveProductAndDelivery(ProductDTO productDTO) {
-        productMapper.insertProductAndDelivery(productDTO);
-    }
 
 //        단일 제품
         public Optional<ProductDTO> findProductById(Long id) {
@@ -41,13 +38,10 @@ public class ProductDAO {
         }
 
 //        제품 수정
-//        public void updateProduct(ProductVO productVO) {
-//            productMapper.update(productVO);
-//        }
+        public void updateProduct(ProductDTO productDTO) {
+            productMapper.update(productDTO);
+        }
 
-    public void updateProductAndDelivery(ProductDTO productDTO) {
-        productMapper.updateProductAndDelivery(productDTO);
-    }
 
 //        제품 삭제
         public void deleteProduct(Long id) {

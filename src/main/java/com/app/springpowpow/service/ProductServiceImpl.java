@@ -18,15 +18,11 @@ public class ProductServiceImpl implements ProductService {
     private final ProductDAO productDAO;
     private final ProductDTO productDTO;
 
-//    @Override
-//    public void insertNewProduct(ProductVO productVO) {
-//        productDAO.save(productVO);
-//    }
-
     @Override
-    public void insertProduct(ProductDTO productDTO) {
-        productDAO.saveProductAndDelivery(productDTO);
+    public void insertNewProduct(ProductDTO productDTO) {
+        productDAO.save(productDTO);
     }
+
 
     @Override
     public Optional<ProductDTO> selectProductById(Long id) {
@@ -43,15 +39,11 @@ public class ProductServiceImpl implements ProductService {
         return productDAO.findAllProductBySeller(memberId);
     }
 
-//    @Override
-//    public void updateProduct(ProductVO productVO) {
-//        productDAO.updateProduct(productVO);
-//    }
-
     @Override
-    public void updateProductAndDelivery(ProductDTO productDTO) {
-        productDAO.updateProductAndDelivery(productDTO);
+    public void updateProduct(ProductDTO productDTO) {
+        productDAO.updateProduct(productDTO);
     }
+
 
     @Override
     public void deleteProduct(Long id) {

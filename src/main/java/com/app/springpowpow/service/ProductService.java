@@ -9,8 +9,7 @@ import java.util.Optional;
 public interface ProductService {
 
 //     상품 등록
-//    public void insertNewProduct(ProductVO productVO);
-public void insertProduct(ProductDTO productDTO);
+    public void insertNewProduct(ProductDTO productDTO);
 //    상품 단일
     public Optional<ProductDTO> selectProductById(Long id);
 
@@ -21,8 +20,7 @@ public void insertProduct(ProductDTO productDTO);
     public List<ProductVO> selectAllProductsBySellerId(Long memberId);
 
 //    상품 수정
-//    public void updateProduct(ProductVO productVO);
-    public void updateProductAndDelivery(ProductDTO productDTO);
+    public void updateProduct(ProductDTO productDTO);
 
 //    상품 삭제
     public void deleteProduct(Long id);
