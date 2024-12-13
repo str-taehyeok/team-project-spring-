@@ -54,7 +54,7 @@ public class ProductAPI {
 
     @Operation(summary = "제품 전체 조회", description = "모든 제품을 리스트로 볼수 있는 API")
     @GetMapping("products")
-    public List<ProductVO> products() {
+    public List<ProductDTO> products() {
         return productService.selectAllProducts();
     }
 

@@ -30,12 +30,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductVO> selectAllProducts() {
+    public List<ProductDTO> selectAllProducts() {
         return productDAO.findAllProduct();
     }
 
     @Override
-    public List<ProductVO> selectAllProductsBySellerId(Long memberId) {
+    public List<ProductDTO> selectAllProductsBySellerId(Long memberId) {
         return productDAO.findAllProductBySeller(memberId);
     }
 
