@@ -47,7 +47,10 @@ public class MemberAPI {
             @Parameter(name = "memberImage", description = "회원 프로필이미지", schema = @Schema(type = "string"), in = ParameterIn.HEADER),
             @Parameter(name = "memberSmsCheck", description = "회원 문자수신동의", schema = @Schema(type = "char"), in = ParameterIn.HEADER),
             @Parameter(name = "memberEmailCheck", description = "회원 이메일수신동의", schema = @Schema(type = "char"), in = ParameterIn.HEADER),
-            @Parameter(name = "memberBusinessNumber", description = "사업자번호", schema = @Schema(type = "string"), in = ParameterIn.HEADER)
+            @Parameter(name = "memberBusinessNumber", description = "사업자번호", schema = @Schema(type = "string"), in = ParameterIn.HEADER),
+            @Parameter(name = "memberBusinessName", description = "업체명", schema = @Schema(type = "string"), in = ParameterIn.HEADER),
+            @Parameter(name = "memberBank", description = "은행명", schema = @Schema(type = "string"), in = ParameterIn.HEADER),
+            @Parameter(name = "memberBankAccount", description = "은행계좌번호", schema = @Schema(type = "string"), in = ParameterIn.HEADER)
     })
     @ApiResponse(responseCode = "200", description = "회원가입 완료")
     @PostMapping("register")

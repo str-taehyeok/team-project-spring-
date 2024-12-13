@@ -1,5 +1,6 @@
 package com.app.springpowpow.service;
 
+import com.app.springpowpow.domain.ProductDTO;
 import com.app.springpowpow.domain.ProductVO;
 import com.app.springpowpow.repository.ProductDAO;
 import lombok.RequiredArgsConstructor;
@@ -15,31 +16,34 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductDAO productDAO;
+    private final ProductDTO productDTO;
 
     @Override
-    public void insertNewProduct(ProductVO productVO) {
-        productDAO.save(productVO);
+    public void insertNewProduct(ProductDTO productDTO) {
+        productDAO.save(productDTO);
     }
 
+
     @Override
-    public Optional<ProductVO> selectProductById(Long id) {
+    public Optional<ProductDTO> selectProductById(Long id) {
         return productDAO.findProductById(id);
     }
 
     @Override
-    public List<ProductVO> selectAllProducts() {
+    public List<ProductDTO> selectAllProducts() {
         return productDAO.findAllProduct();
     }
 
     @Override
-    public List<ProductVO> selectAllProductsBySellerId(Long memberId) {
+    public List<ProductDTO> selectAllProductsBySellerId(Long memberId) {
         return productDAO.findAllProductBySeller(memberId);
     }
 
     @Override
-    public void updateProduct(ProductVO productVO) {
-        productDAO.updateProduct(productVO);
+    public void updateProduct(ProductDTO productDTO) {
+        productDAO.updateProduct(productDTO);
     }
+
 
     @Override
     public void deleteProduct(Long id) {
