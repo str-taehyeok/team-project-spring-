@@ -1,6 +1,7 @@
 package com.app.springpowpow.controller;
 
 import com.app.springpowpow.domain.MemberVO;
+import com.app.springpowpow.domain.PetDTO;
 import com.app.springpowpow.service.MemberService;
 import com.app.springpowpow.service.SnsService;
 import com.app.springpowpow.util.JwtTokenUtil;
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,6 +33,7 @@ public class MemberAPI {
     private final JwtTokenUtil jwtTokenUtil;
     private final MemberService memberService;
     private final SnsService snsService;
+    private final MemberVO memberVO;
 
 
     //    회원가입
@@ -143,7 +147,6 @@ public class MemberAPI {
     //  Sms 인증
     @PostMapping("sms")
     public ResponseEntity<Map<String, Object>> transferSms(@RequestBody String memberPhone) throws IOException {
-
         return snsService.transferMessage(memberPhone);
     }
 
@@ -175,4 +178,34 @@ public class MemberAPI {
         return ResponseEntity.ok(response);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////// 아이디 찾기
+
+    @Operation(summary = "이메일(아이디) 찾기", description = "회원 아이디(이메일)를 찾을 수 있는 API")
+    @ApiResponse(responseCode = "200", description = "아이디 찾기 성공")
+    @PostMapping("/find-id")
+    public Optional<MemberVO> findId(@RequestBody MemberVO memberVO) {
+
+    // 이름과 전화번호로 회원을 조회
+        Optional<MemberVO> foundUser = memberService.findMemberByNameAndPhone(memberVO);
+        return foundUser;
+    }
+
+    // SMS 전송
+    @PostMapping("sms/find-id")
+    public ResponseEntity<Map<String, Object>> transferSmsForFindId(@RequestBody String memberPhone) throws IOException {
+        return snsService.transferMessage(memberPhone);
+    }
+
+    // 이메일 조회 (단일)
+    @Operation(summary = "이메일 조회(단일)", description = "이메일을 조회할 수 있는 API")
+    @Parameter(name = "id", description = "아이디", schema = @Schema(type = "number"), in = ParameterIn.HEADER, required = true)
+    @GetMapping("find-id/{id}")
+    public MemberVO getEmailById(@PathVariable Long id) {
+        Optional<MemberVO> foundUser = memberService.getEmailById(id);
+        if (foundUser.isPresent()) {
+            return foundUser.get();
+        }
+        return new MemberVO();
+    }
 }
+

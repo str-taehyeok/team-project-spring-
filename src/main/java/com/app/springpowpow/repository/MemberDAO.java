@@ -41,4 +41,12 @@ public class MemberDAO {
     public int checkDuplicate(String memberEmail){
         return memberMapper.checkEmailExists(memberEmail);
     }
+
+    public Long selectByNameAndPhone(MemberVO memberVO) {
+        return memberMapper.selectByNameAndPhone(memberVO);
+    }
+
+    public Optional<MemberVO> findEmailById(Long id) {
+        return memberMapper.selectByEmail(id);
+    }
 }

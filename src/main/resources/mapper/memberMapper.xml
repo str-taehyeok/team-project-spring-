@@ -83,4 +83,18 @@
         WHERE MEMBER_EMAIL = #{memberEmail}
     </select>
 
+    <!-- 이름 & 휴대번호 id 조회 -->
+    <select id="selectByNameAndPhone" parameterType="MemberVO" resultType="Long">
+        SELECT ID
+        FROM TBL_MEMBER
+        WHERE MEMBER_NAME = #{memberName} AND MEMBER_PHONE = #{memberPhone}
+    </select>
+
+    <!-- 이메일 조회 -->
+    <select id="selectByEmail" parameterType="Long" resultType="MemberVO">
+        SELECT MEMBER_EMAIL
+        FROM TBL_MEMBER
+        WHERE ID = #{id}
+    </select>
+
 </mapper>

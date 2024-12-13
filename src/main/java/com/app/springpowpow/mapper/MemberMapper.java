@@ -29,4 +29,10 @@ public interface MemberMapper {
 
     //  이메일 중복체크
     public int checkEmailExists(String memberEmail);
+
+    // 이름 & 휴대번호 ID 조회
+    public Long selectByNameAndPhone(MemberVO memberVO);
+
+    // 이메일 조회
+    public Optional<MemberVO> selectByEmail(Long id);
 }

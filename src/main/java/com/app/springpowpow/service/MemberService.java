@@ -19,4 +19,9 @@ public interface MemberService {
     public void withdraw(Long id);
 
     public boolean checkDuplicate(String memberEmail);
+
+    public Optional<MemberVO> findMemberByNameAndPhone(MemberVO memberVO);
+
+    public Optional<MemberVO> getEmailById(Long id);
+
 }
