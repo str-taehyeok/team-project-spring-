@@ -39,6 +39,17 @@ public class MemberMapperTests {
         memberService.register(memberVO);
     }
 
+    @Test
+    public void getMemberTest(){
+        memberService.getMemberById(24L).map(MemberVO::toString).ifPresent(log::info);
+    }
+
+    @Test
+    public void deleteMemberTest(){
+
+        memberService.withdraw(23L);
+    }
+
 
 
 }
