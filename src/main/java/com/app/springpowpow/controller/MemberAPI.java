@@ -196,7 +196,10 @@ public class MemberAPI {
     }
 
     // 회원 정보 조회 (휴대폰 번호로 이메일 찾고, 이메일로 회원 조회)
-    @Operation(summary = "회원 조회", description = "휴대폰 번호로 회원 이메일을 찾고, 이메일로 회원 정보를 조회할 수 있는 API")
+    @Operation( summary = "회원 조회", description = "휴대폰 번호로 회원 이메일을 찾고, 이메일로 회원 정보를 조회할 수 있는 API")
+    @Parameters({
+            @Parameter(name = "memberPhone", description = "회원의 휴대폰 번호", schema = @Schema(type = "string", example = "010-1234-5678", description = "회원의 전화번호를 입력해주세요."), required = true)
+    })
     @ApiResponse(responseCode = "200", description = "회원 정보 조회 성공")
     @ApiResponse(responseCode = "404", description = "회원이 존재하지 않음")
     @GetMapping("find-id/{memberPhone}")
@@ -226,6 +229,7 @@ public class MemberAPI {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
+
 
 
 }
