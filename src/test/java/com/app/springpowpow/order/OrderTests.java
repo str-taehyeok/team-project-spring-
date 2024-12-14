@@ -2,6 +2,7 @@ package com.app.springpowpow.order;
 
 
 import com.app.springpowpow.domain.OrderDTO;
+import com.app.springpowpow.domain.OrderVO;
 import com.app.springpowpow.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -17,23 +18,29 @@ public class OrderTests {
 
     @Test
     public void insertTest() {
-        OrderDTO orderDTO = new OrderDTO();
+        OrderVO orderVO = new OrderVO();
 
-        orderDTO.setId(1L);
-        orderDTO.setMemberId(1L);
-        orderDTO.setProductId(1L);
-        orderDTO.setDeliveryId(1L);
-        orderDTO.setOrderAddress("서초구 방배동 123");
-        orderDTO.setOrderNumber("123455678");
-        orderDTO.setProductCount(3);
-//        orderDTO.setOrderDate("2024-12-12");
-
-        orderService.insertOrder(orderDTO);
-
+        orderVO.setId(1L);
+        orderVO.setProductId(1L);
+        orderVO.setMemberId(1L);
+        orderVO.setDeliveryId(1L);
+        orderVO.setOrderNumber("1234556");
+        orderVO.setOrderDate("2024-12-14");
+        orderVO.setOrderAddress("서초구 방배동 123");
+        orderVO.setProductCount(3);
+        orderService.insertOrder(orderVO);
     }
 
+
+//    통과
     @Test
-    public void selectTest() {
-        log.info(orderService.getOrders().toString());
+    public void selectAllTest() {
+        log.info(orderService.selectAllOrders().toString());
+    }
+
+//    통과
+    @Test
+    public void selectOneTest() {
+        log.info(orderService.getOrderById(1L).toString());
     }
 }

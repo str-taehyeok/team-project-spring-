@@ -1,6 +1,7 @@
 package com.app.springpowpow.service;
 
 import com.app.springpowpow.domain.OrderDTO;
+import com.app.springpowpow.domain.OrderVO;
 import com.app.springpowpow.domain.ProductDTO;
 import com.app.springpowpow.repository.OrderDAO;
 import com.app.springpowpow.repository.ProductDAO;
@@ -17,16 +18,15 @@ import java.util.Optional;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderDAO orderDAO;
-    private final OrderDTO orderDTO;
 
 
     @Override
-    public void insertOrder(OrderDTO orderDTO) {
-        orderDAO.save(orderDTO);
+    public void insertOrder(OrderVO orderVO) {
+        orderDAO.save(orderVO);
     }
 
     @Override
-    public List<OrderDTO> getOrders() {
+    public List<OrderDTO> selectAllOrders() {
         return orderDAO.findAll();
     }
 
