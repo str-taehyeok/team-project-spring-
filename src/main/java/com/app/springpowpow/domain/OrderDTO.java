@@ -4,12 +4,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
-import java.io.Serializable;
-
 @Component
 @Data
 //@Schema(description = "회원 정보")
-public class OrderVO {
+public class OrderDTO {
     @Schema(description = "주문 ID", example = "1", required = true)
     private Long id;
 
@@ -33,5 +31,14 @@ public class OrderVO {
 
     @Schema(description = "상품 개수", example = "3")
     private Integer productCount;
+
+    private String memberEmail;
+
+    private String memberName;
+
+    private int productPrice;
+
+    private int totalPrice;
+
 
 }
