@@ -19,4 +19,7 @@ public interface MemberService {
     public void withdraw(Long id);
 
     public boolean checkDuplicate(String memberEmail);
+
+//    판매자 회원탈퇴
+    public void withdrawSeller(Long id);
 }

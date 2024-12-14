@@ -23,4 +23,7 @@ public interface PetMapper {
 
 //    마이펫 삭제
     public void delete(Long id);
+
+//    회원탈퇴시 모든 pet 삭제
+    public void deleteAll(Long memberId);
 }

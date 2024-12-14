@@ -20,4 +20,7 @@ public interface PetService {
 
 //    마이펫 삭제
     public void remove(Long id);
+
+//    모든 pet 삭제
+    public void removeAll(Long memberId);
 }

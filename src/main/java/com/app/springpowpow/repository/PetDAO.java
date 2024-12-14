@@ -31,4 +31,7 @@ public class PetDAO {
     public void delete(Long id) {
         petMapper.delete(id);
     }
+    public void deleteAll(Long memberId){
+        petMapper.deleteAll(memberId);
+    }
 }
