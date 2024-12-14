@@ -23,4 +23,7 @@ public interface PetService {
 
 //    모든 pet 삭제
     public void removeAll(Long memberId);
+
+//    펫컬러 등록
+    public void registerPetColor(Long id);
 }

@@ -2,6 +2,7 @@ package com.app.springpowpow.controller;
 
 import com.app.springpowpow.domain.PetsonalDTO;
 import com.app.springpowpow.domain.PetsonalVO;
+import com.app.springpowpow.service.PetService;
 import com.app.springpowpow.service.PetsonalService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -21,6 +22,7 @@ import java.util.Optional;
 public class PetsonalAPI {
 
     private final PetsonalService petsonalService;
+    private final PetService petService;
 
 
     //    설문결과 등록
@@ -30,6 +32,7 @@ public class PetsonalAPI {
     public PetsonalDTO registerSurvey(@RequestBody PetsonalVO petsonalVO){
 
         petsonalService.registerSurvey(petsonalVO);
+
         Optional<PetsonalDTO> foundSurveyResult = petsonalService.getSurveyByPetId(petsonalVO.getPetId());
 
         if(foundSurveyResult.isPresent()){
