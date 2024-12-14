@@ -6,7 +6,7 @@
         VALUES (SEQ_NOTICE.NEXTVAL, #{memberId}, #{postContent}, #{postTitle}, #{postCreateAt}, #{postModifiedAt}, #{postImage1}#{postImage2} #{postImage3} #{postImage4} #{postImage5} #{postColor})
     </insert>
 
-    <delete id="deleteAll" parameterType="Long id">
+    <delete id="deleteAll" parameterType="Long">
         DELETE FROM TBL_POST
         WHERE MEMBER_ID = #{memberId}
     </delete>
