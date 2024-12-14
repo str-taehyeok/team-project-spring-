@@ -1,6 +1,7 @@
 package com.app.springpowpow.service;
 
 import com.app.springpowpow.domain.MemberVO;
+import com.app.springpowpow.repository.CartDAO;
 import com.app.springpowpow.repository.MemberDAO;
 import com.app.springpowpow.repository.PetDAO;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberDAO memberDAO;
     private final PetDAO petDAO;
+    private final CartDAO cartDAO;
 
     @Override
     public Optional<MemberVO> getMemberById(Long id) {
@@ -46,6 +48,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void withdraw(Long id) {
         petDAO.deleteAll(id);
+        cartDAO.removeMember(id);
         memberDAO.delete(id);
     }
 
