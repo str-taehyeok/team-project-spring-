@@ -50,6 +50,12 @@ public class MemberMapperTests {
         memberService.withdraw(23L);
     }
 
+    @Test
+    public void findEmailByPhoneTest(){
+        String memberPhone = "010-1234-5678";
+        String email = memberService.findEmailByMemberPhone(memberPhone);
+        log.info(email);
+    }
 
 
 }

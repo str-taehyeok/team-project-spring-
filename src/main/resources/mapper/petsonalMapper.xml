@@ -27,4 +27,5 @@
         DELETE FROM TBL_PETSONAL
         WHERE ID = #{id}
     </delete>
+
 </mapper>
