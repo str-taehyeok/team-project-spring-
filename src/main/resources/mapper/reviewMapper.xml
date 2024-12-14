@@ -2,8 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.app.springpowpow.mapper.ReviewMapper">
 
-    <insert id="" parameterType="ReviewDTO">
 
+<!--    리뷰달기-->
+    <insert id="insert" parameterType="ReviewDTO">
+        INSERT INTO TBL_PRODUCT_REVIEW (ID, PRODUCT_ID, MEMBER_ID, REVIEW_STAR, REVIEW_CONTANT)
+        VALUES (SEQ_PRODUCT_REVIEW.NEXTVAL, #{productId}, #{memberId}, #{reviewStar}, #{reviewContant})
     </insert>
+
+<!--   리뷰 수정하기 -->
+
+    <update id="update" parameterType="ReviewDTO">
+        UPDATE TBL_PRODUCT_REVIEW
+        SET REVIEW_STAR = #{reviewStar}, REVIEW_DATE = #{reviewDate}, REVIEW_CONTANT = #{reviewContant}
+    </update>
+
+<!--    리뷰 삭제하기-->
+
+    <delete id="delete">
+        DELETE FROM TBL_PRODUCT_REVIEW
+        WHERE ID = #{id}
+    </delete>
 
 </mapper>
