@@ -5,7 +5,7 @@ import com.app.springpowpow.domain.ProductDTO;
 
 public interface DeliveryService {
 
-    public void insertDeliveryInfo(ProductDTO productDTO);
+    public void insertDeliveryInfo(DeliveryVO deliveryVO);
 
     public void updateDeliveryInfo(ProductDTO productDTO);
 

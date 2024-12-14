@@ -17,8 +17,8 @@ public class ProductDAO {
 
 
 //        제품 등록
-        public void save(ProductDTO productDTO) {
-            productMapper.insert(productDTO);
+        public void save(ProductVO productVO) {
+            productMapper.insert(productVO);
         }
 
 

@@ -1,5 +1,6 @@
 package com.app.springpowpow.service;
 
+import com.app.springpowpow.domain.DeliveryVO;
 import com.app.springpowpow.domain.ProductDTO;
 import com.app.springpowpow.domain.ProductVO;
 
@@ -9,7 +10,7 @@ import java.util.Optional;
 public interface ProductService {
 
 //     상품 등록
-    public void insertNewProduct(ProductDTO productDTO);
+    public void insertNewProduct(ProductVO productVO);
 //    상품 단일
     public Optional<ProductDTO> selectProductById(Long id);
 

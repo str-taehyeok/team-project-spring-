@@ -17,8 +17,8 @@ public class DeliveryServiceImpl implements DeliveryService {
 
 
     @Override
-    public void insertDeliveryInfo(ProductDTO productDTO) {
-        deliveryDAO.save(productDTO);
+    public void insertDeliveryInfo(DeliveryVO deliveryVO) {
+        deliveryDAO.save(deliveryVO);
     }
 
     @Override
