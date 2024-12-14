@@ -19,6 +19,7 @@
         <typeAlias type="com.app.springpowpow.domain.NoticeDTO" alias="NoticeDTO" />
         <typeAlias type="com.app.springpowpow.domain.OrderCancelVO" alias="OrderCancelVO" />
         <typeAlias type="com.app.springpowpow.domain.OrderVO" alias="OrderVO" />
+        <typeAlias type="com.app.springpowpow.domain.OrderDTO" alias="OrderDTO" />
         <typeAlias type="com.app.springpowpow.domain.PayVO" alias="PayVO" />
         <typeAlias type="com.app.springpowpow.domain.PetsonalVO" alias="PetsonalVO" />
         <typeAlias type="com.app.springpowpow.domain.PetsonalDTO" alias="PetsonalDTO" />
