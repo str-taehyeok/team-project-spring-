@@ -209,30 +209,29 @@ public class MemberAPI {
     public ResponseEntity<Map<String, Object>> findMemberByIdAndPhone(@PathVariable String memberPhone) throws IOException {
         Map<String, Object> response = new HashMap<>();
 
-        // 1) 휴대폰 번호로 이메일 찾기
+        // 1) 휴대폰 번호를 화면에서 가져온다. (이메일 찾기)
         Optional<String> foundUser = memberService.getEmailById(memberPhone);
 
-        // 2) 이메일이 없으면 예외를 던진다
+        // 2) 휴대폰 번호로 이메일을 찾을 수 있는 쿼리 생성
         if (foundUser.isEmpty()) {
             response.put("message", "이름 또는 휴대폰 번호가 일치하지 않습니다.");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
 
-        // 3) 이메일로 회원 정보 조회
         String memberEmail = foundUser.get();
+
+        // 3) 이메일로 유저를 찾을 수 있는 쿼리를 만든다. (정보 조회)
         List<MemberVO> members = memberService.findMemberByEmail(memberEmail);
 
-        // 4) 회원이 존재하면 첫 번째 회원 반환
-        Optional<MemberVO> foundUserFromEmail = members.stream().findFirst();
-        if (foundUserFromEmail.isPresent()) {
-            response.put("memberInfo", foundUserFromEmail.get());
-            return ResponseEntity.ok(response);
-        } else {
-            response.put("message", "이 이메일에 해당하는 회원을 찾을 수 없습니다: " + memberEmail);
+        // 4) 이메일이 있으면 리턴, 없으면 회원이 아닙니다.
+        if (members.isEmpty()) {
+            response.put("message", "회원이 존재하지 않습니다.");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
+
+        response.put("message", "회원 정보 조회 성공");
+//        response.put("member", members.get(0));
+        return ResponseEntity.ok(response);
     }
-
-
 
 }

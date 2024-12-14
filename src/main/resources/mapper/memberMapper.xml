@@ -103,7 +103,7 @@
     <select id="selectByEmail" parameterType="Long" resultType="MemberVO">
         SELECT MEMBER_EMAIL
         FROM TBL_MEMBER
-        WHERE ID = #{id}
+        WHERE MEMBER_EMAIL = #{memberEmail}
     </select>
 
     <!-- 휴대폰 번호로 이메일 조회 -->
