@@ -36,12 +36,6 @@ public class CommentServiceImpl implements CommentService {
         commentDAO.removeComment(id);
     }
 
-    // 단일 댓글 조회
-    @Override
-    public Optional<CommentVO> getCommentById(Long id) {
-        return commentDAO.getCommentById(id);
-    }
-
     // 특정 게시글에 달린 모든 댓글 조회
     @Override
     public List<CommentVO> getCommentsByPostId(Long postId) {

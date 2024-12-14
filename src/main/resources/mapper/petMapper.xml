@@ -30,6 +30,12 @@
         WHERE ID = #{id}
     </update>
 
+    <update id="updateColor" parameterType="petVO">
+        UPDATE TBL_PET
+        SET PET_COLOR = #{petColor}
+        WHERE ID = #{id}
+    </update>
+
     <delete id="delete" parameterType="Long">
         DELETE FROM TBL_PET
         WHERE ID = #{id}

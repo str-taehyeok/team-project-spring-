@@ -8,13 +8,6 @@
         VALUES (SEQ_COMMENT.NEXTVAL, #{memberId}, #{postId}, #{commentContent}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
     </insert>
 
-    <!-- 단일 댓글 조회 -->
-    <select id="selectCommentById" resultType="CommentVO" parameterType="Long">
-        SELECT ID, MEMBER_ID, POST_ID, COMMENT_CONTENT, COMMENT_CREATE_AT, COMMENT_MODIFIED_AT
-        FROM TBL_COMMENT
-        WHERE ID = #{id}
-    </select>
-
     <!-- 전체 댓글 조회 -->
     <select id="selectCommentsByPostId" parameterType="Long" resultType="CommentVO">
         SELECT ID, MEMBER_ID, POST_ID, COMMENT_CONTENT, COMMENT_CREATE_AT, COMMENT_MODIFIED_AT

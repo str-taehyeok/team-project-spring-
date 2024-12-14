@@ -4,6 +4,7 @@ import com.app.springpowpow.domain.MemberVO;
 import com.app.springpowpow.repository.CartDAO;
 import com.app.springpowpow.repository.MemberDAO;
 import com.app.springpowpow.repository.PetDAO;
+import com.app.springpowpow.repository.PostDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,11 +20,14 @@ public class MemberServiceImpl implements MemberService {
     private final MemberDAO memberDAO;
     private final PetDAO petDAO;
     private final CartDAO cartDAO;
+    private final PostDAO postDAO;
 
     @Override
     public Optional<MemberVO> getMemberById(Long id) {
         return memberDAO.findById(id);
-    };
+    }
+
+    ;
 
     @Override
     public List<MemberVO> getAllMembers() {
@@ -47,6 +51,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void withdraw(Long id) {
+        postDAO.removeAll(id);
         petDAO.deleteAll(id);
         cartDAO.removeMember(id);
         memberDAO.delete(id);
@@ -65,4 +70,30 @@ public class MemberServiceImpl implements MemberService {
 
         memberDAO.delete(id);
     }
+
+    // 이름 & 휴대번호 ID 조회
+    @Override
+    public Optional<MemberVO> findMemberByNameAndPhone(MemberVO memberVO) {
+        Long memberId = memberDAO.selectByNameAndPhone(memberVO);
+        return memberDAO.findById(memberId);
+    }
+
+    // 휴대폰 번호로 이메일 조회
+    @Override
+    public Optional<String> getEmailById(String memberPhone) {
+        return memberDAO.findEmailByPhone(memberPhone);
+    }
+
+    // 이메일로 회원 정보 조회
+    @Override
+    public List<MemberVO> findMemberByEmail(String memberEmail) {
+        return memberDAO.findEmailByEmail(memberEmail);
+    }
+
+    // 이메일 단일 조회
+    @Override
+    public Optional<MemberVO> findById(Long id) {
+        return memberDAO.findById(id);
+    }
 }
+

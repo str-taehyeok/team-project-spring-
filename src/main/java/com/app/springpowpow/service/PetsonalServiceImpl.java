@@ -2,6 +2,7 @@ package com.app.springpowpow.service;
 
 import com.app.springpowpow.domain.PetsonalDTO;
 import com.app.springpowpow.domain.PetsonalVO;
+import com.app.springpowpow.repository.PetDAO;
 import com.app.springpowpow.repository.PetsonalDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,9 +16,12 @@ import java.util.Optional;
 public class PetsonalServiceImpl implements PetsonalService {
 
     private final PetsonalDAO petsonalDAO;
+    private final PetDAO petDAO;
 
     @Override
     public void registerSurvey(PetsonalVO petsonalVO) {
+
+//        petDAO.update(petsonalVO.getPetId());
         petsonalDAO.save(petsonalVO);
     }
 
@@ -26,5 +30,8 @@ public class PetsonalServiceImpl implements PetsonalService {
         return petsonalDAO.findById(petId);
     }
 
-
+    @Override
+    public void deleteSurveyResult(Long id) {
+        petsonalDAO.deleteSurveyResult(id);
+    }
 }

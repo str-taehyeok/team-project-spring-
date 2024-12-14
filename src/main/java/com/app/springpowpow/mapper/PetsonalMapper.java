@@ -11,4 +11,6 @@ public interface PetsonalMapper {
     public void insert(PetsonalVO petsonalVO);
 
     public Optional<PetsonalDTO> select(Long petId);
+
+    public void delete(Long id);
 }
