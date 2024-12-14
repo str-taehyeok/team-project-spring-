@@ -3,8 +3,8 @@
 <mapper namespace="com.app.springpowpow.mapper.OrderMapper">
 
     <insert id="insert" parameterType="OrderDTO">
-        INSERT INTO TBL_ORDER (ID, PRODUCT_ID, MEMBER_ID, DELIVERY_ID, ORDER_NUMBER, ORDER_ADDRESS)
-        VALUES (SEQ_ORDER.NEXTVAL, #{productId}, #{memberId}, #{deliveryId}, #{ordernumber}, #{orderAddress})
+        INSERT INTO TBL_ORDER (ID, PRODUCT_ID, MEMBER_ID, DELIVERY_ID, ORDER_NUMBER, ORDER_ADDRESS, PRODUCT_COUNT)
+        VALUES (SEQ_ORDER.NEXTVAL, #{productId}, #{memberId}, #{deliveryId}, #{ordernumber}, #{orderAddress}, #{productCount})
     </insert>
 
     <select id="selectAll" resultType="OrderDTO">

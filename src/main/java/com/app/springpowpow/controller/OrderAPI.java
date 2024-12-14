@@ -25,12 +25,14 @@ public class OrderAPI {
 
     @Operation(summary = "주문 등록", description = "주문 API")
     @ApiResponse(responseCode = "200", description = "주문 완료")
-//    @Parameters({
-//            @Parameter(name = "memberId", description = "회원 id", schema = @Schema(type = "number"), in = ParameterIn.HEADER, required = true),
-//            @Parameter(name = "productId", description = "제품 id", schema = @Schema(type = "number"), in = ParameterIn.HEADER, required = true),
-//            @Parameter(name = "reviewStar", description = "별점", schema = @Schema(type = "number"), in = ParameterIn.HEADER),
-//            @Parameter(name = "reviewContent", description = "리뷰", schema = @Schema(type = "string"), in = ParameterIn.HEADER),
-//    })
+    @Parameters({
+            @Parameter(name = "productId", description = "제품 id", schema = @Schema(type = "number"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "memberId", description = "회원 id", schema = @Schema(type = "number"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "deliveryId", description = "배송종류 id", schema = @Schema(type = "number"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "orderNumber", description = "주문번호", schema = @Schema(type = "String"), in = ParameterIn.HEADER),
+            @Parameter(name = "orderAddress", description = "주소", schema = @Schema(type = "String"), in = ParameterIn.HEADER),
+            @Parameter(name = "productCount", description = "제품 개수", schema = @Schema(type = "String"), in = ParameterIn.HEADER),
+    })
     @PostMapping("write")
     public void insert(@RequestBody OrderDTO orderDTO) {
         orderService.insertOrder(orderDTO);
