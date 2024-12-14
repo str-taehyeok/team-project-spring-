@@ -1,7 +1,9 @@
 package com.app.springpowpow.controller;
 
+import com.app.springpowpow.domain.DeliveryVO;
 import com.app.springpowpow.domain.ProductDTO;
 import com.app.springpowpow.domain.ProductVO;
+import com.app.springpowpow.service.DeliveryService;
 import com.app.springpowpow.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -24,6 +26,7 @@ import java.util.Optional;
 @RequestMapping("/products/*")
 public class ProductAPI {
     private final ProductService productService;
+    private final DeliveryService deliveryService;
 
 
 //    제품 등록
@@ -47,8 +50,10 @@ public class ProductAPI {
             @Parameter(name = "productSize", description = "제품 사이즈", schema = @Schema(type = "char"), in = ParameterIn.HEADER),
     })
     @PostMapping("write")
-    public void insert(@RequestBody ProductDTO productDTO) {
-        productService.insertNewProduct(productDTO);
+    public void insert(@RequestBody ProductVO productVO, DeliveryVO deliveryVO) {
+
+        deliveryService.insertDeliveryInfo(deliveryVO);
+        productService.insertNewProduct(productVO);
     }
 
 

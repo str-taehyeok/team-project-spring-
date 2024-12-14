@@ -13,8 +13,9 @@ public class DeliveryDAO {
 
     private final DeliveryMapper deliveryMapper;
 
-    public void save(ProductDTO productDTO) {
-        deliveryMapper.insert(productDTO);
+//    여기도 배송 vo추가
+    public void save(DeliveryVO deliveryVO) {
+        deliveryMapper.insert(deliveryVO);
     }
 
     public void updateDelivery(ProductDTO productDTO) {

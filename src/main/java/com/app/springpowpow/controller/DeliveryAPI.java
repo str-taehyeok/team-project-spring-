@@ -32,8 +32,8 @@ public class DeliveryAPI {
             @Parameter(name = "deliveryCompany", description = "택배사", schema = @Schema(type = "string"), in = ParameterIn.HEADER),
     })
     @PostMapping("write")
-    public void insert(@RequestBody ProductDTO productDTO) {
-        deliveryService.insertDeliveryInfo(productDTO);
+    public void insert(@RequestBody DeliveryVO deliveryVO) {
+        deliveryService.insertDeliveryInfo(deliveryVO);
     }
 
 
