@@ -1,7 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.app.restful.mapper.CartMapper">
-    <select id="getTime" resultType="string">
-        SELECT CURRENT_TIMESTAMP FROM DUAL
+<mapper namespace="com.app.springpowpow.mapper.CartMapper">
+    <select id="selectAll" parameterType="Long" resultType="com.app.springpowpow.domain.CartDTO">
+        SELECT TP.ID, TC.MEMBER_ID, TP.PRODUCT_NAME, TP.PRODUCT_PRICE,
+               TP.PRODUCT_REAL_PRICE, TP.PRODUCT_CODE, TP.PRODUCT_DATE, TP.PRODUCT_STOCK,
+               TP.PRODUCT_DETAIL, TP.PRODUCT_IMAGE1, TP.PRODUCT_IMAGE2, TP.PRODUCT_IMAGE3,
+               TP.PRODUCT_IMAGE4, TP.PRODUCT_ANIMAL, TP.PRODUCT_CATEGORY, TP.PRODUCT_COLOR,
+               TP.PRODUCT_SIZE
+            FROM TBL_CART TC
+            JOIN TBL_PRODUCT TP
+            ON TC.PRODUCT_ID = TP.ID AND TC.MEMBER_ID = #{memberId}
     </select>
+
+<!--  단일 상품 선택 조회 -->
+    <select id="select" parameterType="Long" resultType="com.app.springpowpow.domain.CartDTO">
+        SELECT TC.ID, TC.MEMBER_ID, TC.PRODUCT_ID
+        FROM TBL_CART TC
+        WHERE TC.MEMBER_ID = #{memberId}
+    </select>
+
+<!--  상품 추가 -->
+    <insert id="insert" parameterType="com.app.springpowpow.domain.CartVO">
+        INSERT INTO TBL_CART(ID, MEMBER_ID, PRODUCT_ID)
+        VALUES (SEQ_CART.NEXTVAL, #{memberId}, #{productId})
+    </insert>
+
+<!--  상품 취소 -->
+    <delete id="delete" parameterType="com.app.springpowpow.domain.CartVO">
+        DELETE FROM TBL_CART
+        WHERE PRODUCT_ID = #{productId} AND MEMBER_ID = #{memberId}
+    </delete>
+
+<!--  회원 탈퇴시 카트 바구니에서 회원 자체를 드롭 -->
+    <delete id="deleteAll" parameterType="Long">
+        DELETE FROM TBL_CART
+        WHERE MEMBER_ID = #{memberId}
+    </delete>
+
 </mapper>

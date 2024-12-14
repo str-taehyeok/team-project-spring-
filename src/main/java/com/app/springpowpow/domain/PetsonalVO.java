@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Component
 @Data
 @Schema(description = "펫스널 정보")
-public class PetsonalVO implements Serializable {
+public class PetsonalVO {
     @Schema(description = "펫스널 번호", example = "21", required = true)
     private Long id;
     @Schema(description = "펫 번호", example = "21", required = true)
