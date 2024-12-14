@@ -206,53 +206,53 @@ public class MemberAPI {
     @Operation(summary = "이메일(아이디) 찾기", description = "이메일(아이디)를 찾을 수 있는 API")
     @ApiResponse(responseCode = "200", description = "아이디 찾기 성공")
     @PostMapping("/find-id")
-    public Optional<MemberVO> findId(@RequestBody MemberVO memberVO) {
+    public String findId(@RequestBody String memberPhone) {
 
     // 이름과 전화번호로 회원을 조회
-    Optional<MemberVO> foundUser = memberService.findMemberByNameAndPhone(memberVO);
-    return foundUser;
+        String memberEmail = memberService.findEmailByMemberPhone(memberPhone);
+    return memberEmail;
     }
-
-    // SMS 전송
-    @PostMapping("sms/find-id")
-    public ResponseEntity<Map<String, Object>> transferSmsForFindId(@RequestBody String memberPhone) throws IOException {
-        return snsService.transferMessage(memberPhone);
-    }
-
-    // 회원 정보 조회 (휴대폰 번호로 이메일 찾고, 이메일로 회원 조회)
-    @Operation( summary = "회원 조회", description = "휴대폰 번호로 회원 이메일을 찾고, 이메일로 회원 정보를 조회할 수 있는 API")
-    @Parameters({
-            @Parameter(name = "memberPhone", description = "회원의 휴대폰 번호", schema = @Schema(type = "string", example = "010-1234-5678", description = "회원의 전화번호를 입력해주세요."), required = true)
-    })
-    @ApiResponse(responseCode = "200", description = "회원 정보 조회 성공")
-    @ApiResponse(responseCode = "404", description = "회원이 존재하지 않음")
-    @GetMapping("find-id/{memberPhone}")
-    public ResponseEntity<Map<String, Object>> findMemberByIdAndPhone(@PathVariable String memberPhone) throws IOException {
-        Map<String, Object> response = new HashMap<>();
-
-        // 1) 휴대폰 번호를 화면에서 가져온다. (이메일 찾기)
-        Optional<String> foundUser = memberService.getEmailById(memberPhone);
-
-        // 2) 휴대폰 번호로 이메일을 찾을 수 있는 쿼리 생성
-        if (foundUser.isEmpty()) {
-            response.put("message", "이름 또는 휴대폰 번호가 일치하지 않습니다.");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        }
-
-        String memberEmail = foundUser.get();
-
-        // 3) 이메일로 유저를 찾을 수 있는 쿼리를 만든다. (정보 조회)
-        List<MemberVO> members = memberService.findMemberByEmail(memberEmail);
-
-        // 4) 이메일이 있으면 리턴, 없으면 회원이 아닙니다.
-        if (members.isEmpty()) {
-            response.put("message", "회원이 존재하지 않습니다.");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        }
-
-        response.put("message", "회원 정보 조회 성공");
-//        response.put("member", members.get(0));
-        return ResponseEntity.ok(response);
-    }
+//
+//    // SMS 전송
+//    @PostMapping("sms/find-id")
+//    public ResponseEntity<Map<String, Object>> transferSmsForFindId(@RequestBody String memberPhone) throws IOException {
+//        return snsService.transferMessage(memberPhone);
+//    }
+//
+//    // 회원 정보 조회 (휴대폰 번호로 이메일 찾고, 이메일로 회원 조회)
+//    @Operation( summary = "회원 조회", description = "휴대폰 번호로 회원 이메일을 찾고, 이메일로 회원 정보를 조회할 수 있는 API")
+//    @Parameters({
+//            @Parameter(name = "memberPhone", description = "회원의 휴대폰 번호", schema = @Schema(type = "string", example = "010-1234-5678", description = "회원의 전화번호를 입력해주세요."), required = true)
+//    })
+//    @ApiResponse(responseCode = "200", description = "회원 정보 조회 성공")
+//    @ApiResponse(responseCode = "404", description = "회원이 존재하지 않음")
+//    @GetMapping("find-id/{memberPhone}")
+//    public ResponseEntity<Map<String, Object>> findMemberByIdAndPhone(@PathVariable String memberPhone) throws IOException {
+//        Map<String, Object> response = new HashMap<>();
+//
+//        // 1) 휴대폰 번호를 화면에서 가져온다. (이메일 찾기)
+//        Optional<String> foundUser = memberService.getEmailById(memberPhone);
+//
+//        // 2) 휴대폰 번호로 이메일을 찾을 수 있는 쿼리 생성
+//        if (foundUser.isEmpty()) {
+//            response.put("message", "이름 또는 휴대폰 번호가 일치하지 않습니다.");
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+//        }
+//
+//        String memberEmail = foundUser.get();
+//
+//        // 3) 이메일로 유저를 찾을 수 있는 쿼리를 만든다. (정보 조회)
+//        List<MemberVO> members = memberService.findMemberByEmail(memberEmail);
+//
+//        // 4) 이메일이 있으면 리턴, 없으면 회원이 아닙니다.
+//        if (members.isEmpty()) {
+//            response.put("message", "회원이 존재하지 않습니다.");
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+//        }
+//
+//        response.put("message", "회원 정보 조회 성공");
+////        response.put("member", members.get(0));
+//        return ResponseEntity.ok(response);
+//    }
 
 }
