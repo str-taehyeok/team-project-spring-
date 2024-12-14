@@ -10,7 +10,7 @@ import java.util.Optional;
 @Mapper
 public interface ProductMapper {
 //    제품 추가
-    public void insert(ProductDTO productDTO);
+    public void insert(ProductVO productVO);
 //    제품 단일
     public Optional<ProductDTO> select(Long id);
 //    제품 리스트

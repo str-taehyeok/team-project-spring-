@@ -31,36 +31,32 @@ public class ProductTests {
     }
 
 
-//    @Test
-//    public void ProductTest() {
-//
-//        ProductDTO productDTO = new ProductDTO();
-//
-//        productDTO.setId(1L);
-//        productDTO.setProductName("test");
-//        productDTO.setProductPrice(2000);
-//        productDTO.setProductCode("101010");
-//        productDTO.setProductDate("2024-01-01");
-//        productDTO.setProductStock(300);
-//        productDTO.setProductEditDate("2024-12-12");
-//        productDTO.setProductDetail("detail");
-//        productDTO.setProductImage1("test.png");
-//        productDTO.setProductImage2("test2.png");
-//        productDTO.setProductImage3("test3.png");
-//        productDTO.setProductImage4("test4.png");
-//        productDTO.setProductAnimal("dog");
-//        productDTO.setProductCategory("healthcare");
-//        productDTO.setProductColor("orange");
-//        productDTO.setProductSize('m');
-//        productDTO.setDeliveryFeeFree(0);
-//        productDTO.setDeliveryFee(0);
-//        productDTO.setDeliveryFeeKind("free");
-//        productDTO.setDeliveryHow("normalDelivery");
-//        productDTO.setDeliveryPayWhen("prePay");
-//        productDTO.setDeliveryCompany("lotte");
-//
-//
-//        productService.insertProduct(productDTO);
-//
-//    }
+//    productService 테스트 통과
+    @Test
+    public void ProductTest() {
+
+        ProductVO productVO = new ProductVO();
+
+        productVO.setId(50L);
+        productVO.setMemberId(30L);
+        productVO.setProductName("test12412");
+        productVO.setProductPrice(2000);
+        productVO.setProductCode("101010");
+        productVO.setProductDate("2024-01-01");
+        productVO.setProductStock(300);
+        productVO.setProductEditDate("2024-12-12");
+        productVO.setProductDetail("detail");
+        productVO.setProductImage1("test.png");
+        productVO.setProductImage2("test2.png");
+        productVO.setProductImage3("test3.png");
+        productVO.setProductImage4("test4.png");
+        productVO.setProductAnimal("dog");
+        productVO.setProductCategory("healthcare");
+        productVO.setProductColor("orange");
+        productVO.setProductSize('m');
+
+
+        productService.insertNewProduct(productVO);
+
+    }
 }

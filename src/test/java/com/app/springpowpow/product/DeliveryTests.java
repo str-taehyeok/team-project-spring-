@@ -1,5 +1,6 @@
 package com.app.springpowpow.product;
 
+import com.app.springpowpow.domain.DeliveryVO;
 import com.app.springpowpow.domain.ProductDTO;
 import com.app.springpowpow.service.DeliveryService;
 import lombok.extern.slf4j.Slf4j;
@@ -14,19 +15,21 @@ public class DeliveryTests {
     @Autowired
     private DeliveryService deliveryService;
 
+
+//    배송 서비스 테스트 통과 완료
     @Test
     public void testInsertDelivery() {
-        ProductDTO productDTO = new ProductDTO();
+        DeliveryVO deliveryVO = new DeliveryVO();
 
-        productDTO.setId(1L);
-        productDTO.setMemberId(1L);
-        productDTO.setDeliveryFeeKind("free");
-        productDTO.setDeliveryFee(2000);
-        productDTO.setDeliveryFeeFree(0);
-        productDTO.setDeliveryHow("normalDelivery");
-        productDTO.setDeliveryPayWhen("prePay");
-        productDTO.setDeliveryCompany("lotte");
+        deliveryVO.setId(1L);
+        deliveryVO.setProductId(30L);
+        deliveryVO.setDeliveryFeeKind("free");
+        deliveryVO.setDeliveryFee(2000);
+        deliveryVO.setDeliveryFeeFree(0);
+        deliveryVO.setDeliveryHow("normalDelivery");
+        deliveryVO.setDeliveryPayWhen("prePay");
+        deliveryVO.setDeliveryCompany("lotte");
 
-        deliveryService.insertDeliveryInfo(productDTO);
+        deliveryService.insertDeliveryInfo(deliveryVO);
     }
 }
