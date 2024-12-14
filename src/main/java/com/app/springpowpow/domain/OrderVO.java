@@ -4,11 +4,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
-import java.io.Serializable;
 
 @Component
 @Data
-//@Schema(description = "회원 정보")
+@Schema(description = "회원 정보")
 public class OrderVO {
     @Schema(description = "주문 ID", example = "1", required = true)
     private Long id;
@@ -22,7 +21,7 @@ public class OrderVO {
     @Schema(description = "배송 ID", example = "301", required = true)
     private Long deliveryId;
 
-    @Schema(description = "주문 번호", example = "ORD20240001")
+    @Schema(description = "주문 번호", example = "1000100")
     private String orderNumber;
 
     @Schema(description = "주문 날짜", example = "2024-06-01T12:00:00")

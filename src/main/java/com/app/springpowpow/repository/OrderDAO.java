@@ -1,6 +1,7 @@
 package com.app.springpowpow.repository;
 
 import com.app.springpowpow.domain.OrderDTO;
+import com.app.springpowpow.domain.OrderVO;
 import com.app.springpowpow.domain.ProductDTO;
 import com.app.springpowpow.mapper.OrderMapper;
 import com.app.springpowpow.mapper.ProductMapper;
@@ -17,8 +18,8 @@ public class OrderDAO {
         private final OrderMapper orderMapper;
 
 
-        public void save(OrderDTO orderDTO) {
-            orderMapper.insert(orderDTO);
+        public void save(OrderVO orderVO) {
+            orderMapper.insert(orderVO);
         }
 
         public List<OrderDTO> findAll() {
