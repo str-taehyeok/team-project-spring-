@@ -34,9 +34,4 @@ public class FollowsServiceImpl implements FollowsService {
     public List<FollowsVO> getFollowerList(Long memberId) {
         return followsMapper.selectFollowerList(memberId);
     }
-
-    @Override
-    public boolean isFollowing(FollowsVO followsVO) {
-        return followsMapper.selectFollowState(followsVO) > 0;
-    }
 }

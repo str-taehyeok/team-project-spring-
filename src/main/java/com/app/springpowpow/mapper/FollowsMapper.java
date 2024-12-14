@@ -20,7 +20,4 @@ public interface FollowsMapper {
     // 특정 유저의 팔로워 리스트 조회
     public List<FollowsVO> selectFollowerList(Long followingMemberId);
 
-    // 팔로우 상태 조회
-    public Long selectFollowState(FollowsVO followsVO);
-
 }

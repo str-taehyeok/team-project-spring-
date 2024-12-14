@@ -30,11 +30,6 @@ public class FollowsDAO {
 
     // 팔로워 리스트 조회
     public List<FollowsVO> getFollowerList(Long followingMemberId) {
-        return followsMapper.selectFollowerList(followingMemberId);
-    }
+        return followsMapper.selectFollowerList(followingMemberId);}
 
-    // 팔로우 상태 조회
-    public boolean checkFollowState(FollowsVO followsVO) {
-        return followsMapper.selectFollowState(followsVO) > 0;
-    }
 }
