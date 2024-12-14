@@ -92,4 +92,35 @@
         WHERE MEMBER_EMAIL = #{memberEmail}
     </select>
 
+    <!-- 이름 & 휴대번호 id 조회 -->
+    <select id="selectByNameAndPhone" parameterType="MemberVO" resultType="Long">
+        SELECT ID
+        FROM TBL_MEMBER
+        WHERE MEMBER_NAME = #{memberName} AND MEMBER_PHONE = #{memberPhone}
+    </select>
+
+    <!-- 이메일 조회 -->
+    <select id="selectByEmail" parameterType="Long" resultType="MemberVO">
+        SELECT MEMBER_EMAIL
+        FROM TBL_MEMBER
+        WHERE ID = #{id}
+    </select>
+
+    <!-- 휴대폰 번호로 이메일 조회 -->
+    <select id="findEmailByPhone" parameterType="String" resultType="String">
+        SELECT MEMBER_EMAIL
+        FROM TBL_MEMBER
+        WHERE MEMBER_PHONE = #{memberPhone}
+    </select>
+
+    <!-- 이메일로 회원 조회 -->
+    <select id="findMemberByEmail" parameterType="String" resultType="MemberVO">
+        SELECT ID, MEMBER_EMAIL, MEMBER_PASSWORD, MEMBER_NAME,
+               MEMBER_PHONE, MEMBER_NICKNAME, MEMBER_ZIPCODE, MEMBER_ADDRESS,
+               MEMBER_ADDRESS_DETAIL, MEMBER_IMAGE, MEMBER_SMSCHECK, MEMBER_EMAILCHECK,
+               MEMBER_DATE, MEMBER_BUSINESS_NUMBER, MEMBER_AUTH, MEMBER_PROVIDER
+        FROM TBL_MEMBER
+        WHERE MEMBER_EMAIL = #{memberEmail}
+    </select>
+
 </mapper>

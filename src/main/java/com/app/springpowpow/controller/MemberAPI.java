@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,6 +32,7 @@ public class MemberAPI {
     private final JwtTokenUtil jwtTokenUtil;
     private final MemberService memberService;
     private final SnsService snsService;
+    private final MemberVO memberVO;
 
 
     //    회원가입
@@ -146,7 +149,6 @@ public class MemberAPI {
     //  Sms 인증
     @PostMapping("sms")
     public ResponseEntity<Map<String, Object>> transferSms(@RequestBody String memberPhone) throws IOException {
-
         return snsService.transferMessage(memberPhone);
     }
 
@@ -177,5 +179,60 @@ public class MemberAPI {
 
         return ResponseEntity.ok(response);
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////// 아이디 찾기
+
+    @Operation(summary = "이메일(아이디) 찾기", description = "이메일(아이디)를 찾을 수 있는 API")
+    @ApiResponse(responseCode = "200", description = "아이디 찾기 성공")
+    @PostMapping("/find-id")
+    public Optional<MemberVO> findId(@RequestBody MemberVO memberVO) {
+
+    // 이름과 전화번호로 회원을 조회
+    Optional<MemberVO> foundUser = memberService.findMemberByNameAndPhone(memberVO);
+    return foundUser;
+    }
+
+    // SMS 전송
+    @PostMapping("sms/find-id")
+    public ResponseEntity<Map<String, Object>> transferSmsForFindId(@RequestBody String memberPhone) throws IOException {
+        return snsService.transferMessage(memberPhone);
+    }
+
+    // 회원 정보 조회 (휴대폰 번호로 이메일 찾고, 이메일로 회원 조회)
+    @Operation( summary = "회원 조회", description = "휴대폰 번호로 회원 이메일을 찾고, 이메일로 회원 정보를 조회할 수 있는 API")
+    @Parameters({
+            @Parameter(name = "memberPhone", description = "회원의 휴대폰 번호", schema = @Schema(type = "string", example = "010-1234-5678", description = "회원의 전화번호를 입력해주세요."), required = true)
+    })
+    @ApiResponse(responseCode = "200", description = "회원 정보 조회 성공")
+    @ApiResponse(responseCode = "404", description = "회원이 존재하지 않음")
+    @GetMapping("find-id/{memberPhone}")
+    public ResponseEntity<Map<String, Object>> findMemberByIdAndPhone(@PathVariable String memberPhone) throws IOException {
+        Map<String, Object> response = new HashMap<>();
+
+        // 1) 휴대폰 번호로 이메일 찾기
+        Optional<String> foundUser = memberService.getEmailById(memberPhone);
+
+        // 2) 이메일이 없으면 예외를 던진다
+        if (foundUser.isEmpty()) {
+            response.put("message", "이름 또는 휴대폰 번호가 일치하지 않습니다.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+
+        // 3) 이메일로 회원 정보 조회
+        String memberEmail = foundUser.get();
+        List<MemberVO> members = memberService.findMemberByEmail(memberEmail);
+
+        // 4) 회원이 존재하면 첫 번째 회원 반환
+        Optional<MemberVO> foundUserFromEmail = members.stream().findFirst();
+        if (foundUserFromEmail.isPresent()) {
+            response.put("memberInfo", foundUserFromEmail.get());
+            return ResponseEntity.ok(response);
+        } else {
+            response.put("message", "이 이메일에 해당하는 회원을 찾을 수 없습니다: " + memberEmail);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+    }
+
+
 
 }

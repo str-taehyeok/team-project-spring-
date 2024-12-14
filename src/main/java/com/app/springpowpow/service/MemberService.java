@@ -19,4 +19,17 @@ public interface MemberService {
     public void withdraw(Long id);
 
     public boolean checkDuplicate(String memberEmail);
+
+    // 이름 & 휴대번호 ID 조회
+    public Optional<MemberVO> findMemberByNameAndPhone(MemberVO memberVO);
+
+    // 휴대폰 번호로 이메일 조회
+    public Optional<String> getEmailById(String memberPhone);
+
+    // 이메일로 회원 정보 조회
+    public List<MemberVO> findMemberByEmail(String memberEmail);
+
+    // 이메일 조회
+    public Optional<MemberVO> findById(Long id);
+
 }

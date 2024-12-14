@@ -29,11 +29,6 @@ public class CommentDAO {
         commentMapper.deleteComment(id);
     }
 
-    // 단일 댓글 조회
-    public Optional<CommentVO> getCommentById(Long id) {
-        return commentMapper.selectCommentById(id);
-    }
-
     // 전체 댓글 조회
     public List<CommentVO> getCommentsByPostId(Long postId) {
         return commentMapper.selectCommentsByPostId(postId);
