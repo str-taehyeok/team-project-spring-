@@ -3,8 +3,8 @@
 <mapper namespace="com.app.springpowpow.mapper.DeliveryMapper">
     <!--    배송정보 추가-->
     <insert id="insert" parameterType="ProductDTO">
-        INSERT INTO TBL_DELIVERY (ID, PRODUCT_ID, ORDER_ID, DELIVERY_FEE, DELIVERY_FEE_KIND, DELIVERY_FEE_FREE, DELIVERY_HOW, DELIVERY_PAY_WHEN, DELIVERY_COMPANY)
-        VALUES (SEQ_DELIVERY.NEXTVAL, #{productId}, #{orderId}, #{deliveryFee}, #{deliveryFeeKind}, #{deliveryFeeFree}, #{deliveryHow}, #{deliveryPayWhen}, #{deliveryCompany})
+        INSERT INTO TBL_DELIVERY (ID, PRODUCT_ID, DELIVERY_FEE, DELIVERY_FEE_KIND, DELIVERY_FEE_FREE, DELIVERY_HOW, DELIVERY_PAY_WHEN, DELIVERY_COMPANY)
+        VALUES (SEQ_DELIVERY.NEXTVAL, #{productId}, #{deliveryFee}, #{deliveryFeeKind}, #{deliveryFeeFree}, #{deliveryHow}, #{deliveryPayWhen}, #{deliveryCompany})
     </insert>
 
     <update id="update" parameterType="ProductDTO">

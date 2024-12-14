@@ -20,10 +20,10 @@ public class OrderDTO {
     @Schema(description = "배송 ID", example = "301", required = true)
     private Long deliveryId;
 
-    @Schema(description = "주문 번호", example = "ORD20240001")
+    @Schema(description = "주문 번호", example = "01010101")
     private String orderNumber;
 
-    @Schema(description = "주문 날짜", example = "2024-06-01T12:00:00")
+    @Schema(description = "주문 날짜", example = "2024-06-01")
     private String orderDate;
 
     @Schema(description = "주문 주소", example = "서울특별시 강남구 테헤란로 123")
