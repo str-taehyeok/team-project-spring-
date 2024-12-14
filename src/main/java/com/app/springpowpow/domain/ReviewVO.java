@@ -22,7 +22,7 @@ public class ReviewVO {
     @Schema(description = "리뷰 별점", example = "5", required = true)
     private int reviewStar;
 
-    @Schema(description = "리뷰 작성 날짜", example = "2024-06-14T15:30:00", required = true)
+    @Schema(description = "리뷰 작성 날짜", example = "2024-06-14T15:30:00")
     private String reviewDate;
 
     @Schema(description = "리뷰 내용", example = "정말 만족스러운 상품입니다!", required = true)

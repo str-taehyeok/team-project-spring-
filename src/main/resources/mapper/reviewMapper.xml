@@ -9,6 +9,25 @@
         VALUES (SEQ_PRODUCT_REVIEW.NEXTVAL, #{productId}, #{memberId}, #{reviewStar}, #{reviewContant})
     </insert>
 
+
+
+<!--    전체 리뷰 리스트-->
+    <select id="selectAll" resultType="ReviewDTO" parameterType="Long">
+        SELECT TPR.ID, TPR.PRODUCT_ID, TPR.MEMBER_ID, TPR.REVIEW_STAR, TPR.REVIEW_CONTANT, TPM.MEMBER_NICKNAME, TPM.MEMBER_IMAGE
+        FROM TBL_PRODUCT_REVIEW TPR
+        JOIN TBL_MEMBER TPM
+        ON TPM.ID = TPR.MEMBER_ID
+        WHERE PRODUCT_ID = #{productId}
+    </select>
+
+<!--    <select id="select" parameterType="Long" resultType="ReviewDTO">-->
+<!--        SELECT -->
+<!--        FROM TBL_PRODUCT_REVIEW TPR-->
+<!--        JOIN TBL_MEMBER TPM-->
+<!--        ON TPR.MEMBER_ID = TPM.ID-->
+<!--        WHERE TPR.ID = #{id}-->
+<!--    </select>-->
+
 <!--   리뷰 수정하기 -->
 
     <update id="update" parameterType="ReviewDTO">
@@ -18,7 +37,7 @@
 
 <!--    리뷰 삭제하기-->
 
-    <delete id="delete">
+    <delete id="delete" parameterType="Long">
         DELETE FROM TBL_PRODUCT_REVIEW
         WHERE ID = #{id}
     </delete>
