@@ -37,24 +37,6 @@ public class MemberAPI {
 
     //    회원가입
     @Operation(summary = "회원가입", description = "회원가입을 할 수 있는 API")
-    @Parameters({
-            @Parameter(name = "id", description = "회원 번호", schema = @Schema(type = "number"), in = ParameterIn.HEADER, required = true),
-            @Parameter(name = "memberEmail", description = "회원 이메일", schema = @Schema(type = "string"), in = ParameterIn.HEADER, required = true),
-            @Parameter(name = "memberPassword", description = "회원 비밀번호", schema = @Schema(type = "string"), in = ParameterIn.HEADER, required = true),
-            @Parameter(name = "memberName", description = "회원 이름", schema = @Schema(type = "string"), in = ParameterIn.HEADER, required = true),
-            @Parameter(name = "memberPhone", description = "회원 전화번호", schema = @Schema(type = "string"), in = ParameterIn.HEADER, required = true),
-            @Parameter(name = "memberNickname", description = "회원 닉네임", schema = @Schema(type = "string"), in = ParameterIn.HEADER),
-            @Parameter(name = "memberZipcode", description = "회원 우편번호", schema = @Schema(type = "string"), in = ParameterIn.HEADER),
-            @Parameter(name = "memberAddress", description = "회원 주소", schema = @Schema(type = "string"), in = ParameterIn.HEADER),
-            @Parameter(name = "memberAddressDetail", description = "회원 상세주소", schema = @Schema(type = "string"), in = ParameterIn.HEADER),
-            @Parameter(name = "memberImage", description = "회원 프로필이미지", schema = @Schema(type = "string"), in = ParameterIn.HEADER),
-            @Parameter(name = "memberSmsCheck", description = "회원 문자수신동의", schema = @Schema(type = "char"), in = ParameterIn.HEADER),
-            @Parameter(name = "memberEmailCheck", description = "회원 이메일수신동의", schema = @Schema(type = "char"), in = ParameterIn.HEADER),
-            @Parameter(name = "memberBusinessNumber", description = "사업자번호", schema = @Schema(type = "string"), in = ParameterIn.HEADER),
-            @Parameter(name = "memberBusinessName", description = "업체명", schema = @Schema(type = "string"), in = ParameterIn.HEADER),
-            @Parameter(name = "memberBank", description = "은행명", schema = @Schema(type = "string"), in = ParameterIn.HEADER),
-            @Parameter(name = "memberBankAccount", description = "은행계좌번호", schema = @Schema(type = "string"), in = ParameterIn.HEADER)
-    })
     @ApiResponse(responseCode = "200", description = "회원가입 완료")
     @PostMapping("register")
     public ResponseEntity<Map<String, Object>> register(@RequestBody MemberVO memberVO) {
@@ -180,25 +162,25 @@ public class MemberAPI {
 
         return ResponseEntity.ok(response);
     }
-//  단일회원조회
-@Operation(summary = "회원정보 조회", description = "회원 개인정보를 조회할 수 있는 API")
-@Parameter(
-        name = "id",
-        description = "회원 번호",
-        schema = @Schema(type="number"), // DB의 스키마를 의미하는 것이 아니라, Swagger에서 인식하기 위한 타입
-        in = ParameterIn.PATH, // path로 전달
-        required = true
-)
-@GetMapping("member/{id}")
-public MemberVO getMember(@PathVariable Long id) {
+    //  단일회원조회
+    @Operation(summary = "회원정보 조회", description = "회원 개인정보를 조회할 수 있는 API")
+    @Parameter(
+            name = "id",
+            description = "회원 번호",
+            schema = @Schema(type="number"), // DB의 스키마를 의미하는 것이 아니라, Swagger에서 인식하기 위한 타입
+            in = ParameterIn.PATH, // path로 전달
+            required = true
+    )
+    @GetMapping("member/{id}")
+    public MemberVO getMember(@PathVariable Long id) {
 
-    Optional<MemberVO> foundUser = memberService.getMemberById(id);
-    if (foundUser.isPresent()) {
-        return foundUser.get();
+        Optional<MemberVO> foundUser = memberService.getMemberById(id);
+        if (foundUser.isPresent()) {
+            return foundUser.get();
+        }
+
+        return new MemberVO();
     }
-
-    return new MemberVO();
-}
 
 
 //  회원탈퇴(구매자)

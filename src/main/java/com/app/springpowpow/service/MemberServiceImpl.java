@@ -4,6 +4,7 @@ import com.app.springpowpow.domain.MemberVO;
 import com.app.springpowpow.repository.CartDAO;
 import com.app.springpowpow.repository.MemberDAO;
 import com.app.springpowpow.repository.PetDAO;
+import com.app.springpowpow.repository.PostDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberDAO memberDAO;
     private final PetDAO petDAO;
     private final CartDAO cartDAO;
+    private final PostDAO postDAO;
 
     @Override
     public Optional<MemberVO> getMemberById(Long id) {
@@ -49,6 +51,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void withdraw(Long id) {
+        postDAO.removeAll(id);
         petDAO.deleteAll(id);
         cartDAO.removeMember(id);
         memberDAO.delete(id);
