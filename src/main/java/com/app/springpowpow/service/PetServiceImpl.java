@@ -47,4 +47,9 @@ public class PetServiceImpl implements PetService {
     public void removeAll(Long memberId) {
         petDAO.deleteAll(memberId);
     }
+
+    @Override
+    public void registerPetColor(Long id) {
+        petDAO.updatePetColor(id);
+    }
 }

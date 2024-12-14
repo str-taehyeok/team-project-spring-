@@ -22,7 +22,7 @@ public class DeliveryTests {
         DeliveryVO deliveryVO = new DeliveryVO();
 
         deliveryVO.setId(1L);
-        deliveryVO.setProductId(30L);
+        deliveryVO.setProductId(12L);
         deliveryVO.setDeliveryFeeKind("free");
         deliveryVO.setDeliveryFee(2000);
         deliveryVO.setDeliveryFeeFree(0);

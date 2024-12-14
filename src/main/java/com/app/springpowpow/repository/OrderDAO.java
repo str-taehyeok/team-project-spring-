@@ -2,9 +2,7 @@ package com.app.springpowpow.repository;
 
 import com.app.springpowpow.domain.OrderDTO;
 import com.app.springpowpow.domain.OrderVO;
-import com.app.springpowpow.domain.ProductDTO;
 import com.app.springpowpow.mapper.OrderMapper;
-import com.app.springpowpow.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

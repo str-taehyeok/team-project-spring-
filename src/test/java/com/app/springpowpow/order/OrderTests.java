@@ -21,11 +21,10 @@ public class OrderTests {
         OrderVO orderVO = new OrderVO();
 
         orderVO.setId(1L);
-        orderVO.setProductId(1L);
-        orderVO.setMemberId(1L);
-        orderVO.setDeliveryId(1L);
+        orderVO.setProductId(11L);
+        orderVO.setMemberId(5L);
+        orderVO.setDeliveryId(2L);
         orderVO.setOrderNumber("1234556");
-        orderVO.setOrderDate("2024-12-14");
         orderVO.setOrderAddress("서초구 방배동 123");
         orderVO.setProductCount(3);
         orderService.insertOrder(orderVO);
