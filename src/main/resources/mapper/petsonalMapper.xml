@@ -3,21 +3,28 @@
 <mapper namespace="com.app.springpowpow.mapper.PetsonalMapper">
 
     <insert id="insert" parameterType="PetsonalVO">
-        INSERT INTO (ID, PET_ID, PETSONAL_CHIC, PETSONAL_CUTE, PETSONAL_CALM,
+        <selectKey keyProperty="id" order="BEFORE" resultType="Long">
+            SELECT SEQ_PETSONAL.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_PETSONAL(ID, PET_ID, PETSONAL_CHIC, PETSONAL_CUTE, PETSONAL_CALM,
             PETSONAL_ACTIVE, PETSONAL_LAZY, PETSONAL_DILIGENT, PETSONAL_COWARD,PETSONAL_BRAVE)
         VALUES (SEQ_PETSONAL.NEXTVAL, #{petId}, #{petsonalChic}, #{petsonalCute}, #{petsonalCalm},
             #{petsonalActive}, #{petsonalLazy}, #{petsonalDiligent}, #{petsonalCoward}, #{petsonalBrave})
     </insert>
 
     <select id="select" parameterType="Long" resultType="PetsonalDTO">
-        SELECT TPS.ID, TP.ID, PETSONAL_CHIC, PETSONAL_CUTE, PETSONAL_CALM,
+        SELECT TPS.ID, PET_ID, PETSONAL_CHIC, PETSONAL_CUTE, PETSONAL_CALM,
                PETSONAL_ACTIVE, PETSONAL_LAZY, PETSONAL_DILIGENT, PETSONAL_COWARD,PETSONAL_BRAVE,
                PET_IMAGE, PET_NAME, PET_KIND, PET_GENDER, PET_BREED, PET_BIRTH,
                PET_WEIGHT, PET_NEUTER, PET_VET
         FROM TBL_PETSONAL TPS
         JOIN TBL_PET TP
         ON TPS.PET_ID = TP.ID
-        WHERE TP.ID = #{petId}
+        WHERE PET_ID = #{petId}
     </select>
 
+    <delete id="delete" parameterType="Long">
+        DELETE FROM TBL_PETSONAL
+        WHERE ID = #{id}
+    </delete>
 </mapper>

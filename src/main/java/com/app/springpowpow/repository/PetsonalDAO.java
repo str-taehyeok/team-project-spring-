@@ -22,4 +22,7 @@ public class PetsonalDAO {
         return petsonalMapper.select(id);
     }
 
+    public void deleteSurveyResult(Long id){
+        petsonalMapper.delete(id);
+    }
 }
