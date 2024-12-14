@@ -26,10 +26,7 @@ public class PostAPI {
     @Operation(summary = "게시글 정보 조회", description = "게시글 정보를 전체 조회할 수 있는 API")
     @Parameters({
             @Parameter( name = "id", description = "게시글 번호", schema = @Schema(type="number"), in = ParameterIn.HEADER, required = true ),
-            @Parameter( name = "postTitle", description = "게시글 제목", schema = @Schema(type="string"), in = ParameterIn.HEADER, required = true ),
             @Parameter( name = "postContent", description = "게시글 내용", schema = @Schema(type="string"), in = ParameterIn.HEADER, required = true ),
-            @Parameter( name = "postCreateAt", description = "게시글 작성시간", schema = @Schema(type="string"), in = ParameterIn.HEADER),
-            @Parameter( name = "postModifiedAt", description = "게시글 수정시간", schema = @Schema(type="string"), in = ParameterIn.HEADER),
             @Parameter( name = "postImage1", description = "게시글 이미지1", schema = @Schema(type="string"), in = ParameterIn.HEADER, required = true ),
             @Parameter( name = "postImage2", description = "게시글 이미지2", schema = @Schema(type="string"), in = ParameterIn.HEADER ),
             @Parameter( name = "postImage3", description = "게시글 이미지3", schema = @Schema(type="string"), in = ParameterIn.HEADER),
