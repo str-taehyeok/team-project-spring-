@@ -16,9 +16,6 @@ public interface CommentService {
     // 댓글 삭제
     public void removeComment(Long id);
 
-    // 단일 댓글 조회
-    public Optional<CommentVO> getCommentById(Long id);
-
     // 특정 게시글에 달린 모든 댓글 조회
     public List<CommentVO> getCommentsByPostId(Long postId);
 }

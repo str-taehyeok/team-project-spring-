@@ -23,7 +23,9 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Optional<MemberVO> getMemberById(Long id) {
         return memberDAO.findById(id);
-    };
+    }
+
+    ;
 
     @Override
     public List<MemberVO> getAllMembers() {
@@ -59,10 +61,5 @@ public class MemberServiceImpl implements MemberService {
         return count > 0;
     }
 
-//    판매자 회원탈퇴
-    @Override
-    public void withdrawSeller(Long id) {
-
-        memberDAO.delete(id);
-    }
 }
+
