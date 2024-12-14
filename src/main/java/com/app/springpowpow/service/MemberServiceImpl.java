@@ -92,7 +92,5 @@ public class MemberServiceImpl implements MemberService {
     public Optional<MemberVO> findById(Long id) {
         return memberDAO.findById(id);
     }
-
-
 }
 
