@@ -27,7 +27,7 @@ public class MemberServiceImpl implements MemberService {
         return memberDAO.findById(id);
     }
 
-    ;
+
 
     @Override
     public List<MemberVO> getAllMembers() {
@@ -64,18 +64,23 @@ public class MemberServiceImpl implements MemberService {
         return count > 0;
     }
 
-//    판매자 회원탈퇴
+    //    판매자 회원탈퇴
     @Override
     public void withdrawSeller(Long id) {
 
         memberDAO.delete(id);
     }
 
-    // 이름 & 휴대번호 ID 조회
+    // 전화번호로 이메일 찾기
     @Override
-    public String findEmailByMemberPhone(String memberPhone) {
+    public String findEmail(String memberPhone) {
+        return memberDAO.findEmail(memberPhone);
+    }
 
-        return memberDAO.findEmailByMemberPhone(memberPhone);
+    // 이메일로 회원 정보 조회
+    @Override
+    public Optional<MemberVO> findMember(String memberEmail) {
+        return memberDAO.findMember(memberEmail);
     }
 }
 

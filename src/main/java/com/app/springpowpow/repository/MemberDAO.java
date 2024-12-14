@@ -42,9 +42,12 @@ public class MemberDAO {
         return memberMapper.checkEmailExists(memberEmail);
     }
 
-//    휴대폰 번호로 이메일 찾기
-    public String findEmailByMemberPhone(String memberPhone) {
+    // 전화번호로 이메일 찾기
+    public String findEmail(String memberPhone) {
         return memberMapper.selectEmailByPhone(memberPhone);
     }
-
+    // 이메일로 회원 정보 조회
+    public Optional<MemberVO> findMember(String memberEmail) {
+        return memberMapper.findMemberByEmail(memberEmail);
+    }
 }
