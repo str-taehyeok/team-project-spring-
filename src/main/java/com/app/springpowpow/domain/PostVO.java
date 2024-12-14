@@ -18,4 +18,5 @@ public class PostVO implements Serializable {
     private String postImage3;
     private String postImage4;
     private String postImage5;
+    private String postColor;
 }
