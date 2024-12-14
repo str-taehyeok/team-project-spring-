@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -109,6 +110,7 @@ public class MemberAPI {
         }
 //        아이디, 비밀번호가 일치하는 사용자
 //        토큰 생성
+        claims.put("memberId", foundUser.getId());
         claims.put("email", foundUser.getMemberEmail());
         claims.put("name", foundUser.getMemberName());
         String jwtToken = jwtTokenUtil.generateToken(claims);
@@ -176,6 +178,44 @@ public class MemberAPI {
         }
 
         return ResponseEntity.ok(response);
+    }
+//  단일회원조회
+@Operation(summary = "회원정보 조회", description = "회원 개인정보를 조회할 수 있는 API")
+@Parameter(
+        name = "id",
+        description = "회원 번호",
+        schema = @Schema(type="number"), // DB의 스키마를 의미하는 것이 아니라, Swagger에서 인식하기 위한 타입
+        in = ParameterIn.PATH, // path로 전달
+        required = true
+)
+@GetMapping("member/{id}")
+public MemberVO getMember(@PathVariable Long id) {
+
+    Optional<MemberVO> foundUser = memberService.getMemberById(id);
+    if (foundUser.isPresent()) {
+        return foundUser.get();
+    }
+
+    return new MemberVO();
+}
+
+
+//  회원탈퇴(구매자)
+    @Operation(summary = "회원탈퇴", description = "회원정보 탈퇴할 수 있는 API")
+    @Parameter( name = "id", description = "회원 번호", schema = @Schema(type="number"), in = ParameterIn.PATH, required = true )
+    @ApiResponse(responseCode = "200", description = "회원정보 탈퇴 완료")
+    @DeleteMapping("/buyer/{id}")
+    public void deleteMember(@PathVariable Long id) {
+        memberService.withdraw(id);
+    }
+
+//  회원탈퇴(판매자)
+    @Operation(summary = "판매자회원탈퇴", description = "회원정보 탈퇴할 수 있는 API")
+    @Parameter( name = "id", description = "판매자 회원 번호", schema = @Schema(type="number"), in = ParameterIn.PATH, required = true )
+    @ApiResponse(responseCode = "200", description = "회원정보 탈퇴 완료")
+    @DeleteMapping("/seller/{id}")
+    public void deleteSeller(@PathVariable Long id) {
+        memberService.withdrawSeller(id);
     }
 
 }
