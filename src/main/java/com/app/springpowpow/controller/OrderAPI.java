@@ -1,6 +1,8 @@
 package com.app.springpowpow.controller;
 
 import com.app.springpowpow.domain.OrderDTO;
+import com.app.springpowpow.domain.OrderVO;
+import com.app.springpowpow.domain.ProductDTO;
 import com.app.springpowpow.domain.ReviewDTO;
 import com.app.springpowpow.service.OrderService;
 import com.app.springpowpow.service.ReviewService;
@@ -15,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @Slf4j
@@ -34,17 +37,24 @@ public class OrderAPI {
             @Parameter(name = "productCount", description = "제품 개수", schema = @Schema(type = "String"), in = ParameterIn.HEADER),
     })
     @PostMapping("write")
-    public void insert(@RequestBody OrderDTO orderDTO) {
-        orderService.insertOrder(orderDTO);
+    public void insert(@RequestBody OrderVO orderVO) {
+        orderService.insertOrder(orderVO);
     }
 
     @Operation(summary = "주문 전체 조회", description = "모든 주문을 리스트로 볼수 있는 API")
+    @ApiResponse(responseCode = "200", description = "전체 주문 조회 완료")
     @GetMapping("order")
     public List<OrderDTO> orders() {
-        return orderService.getOrders();
+        return orderService.selectAllOrders();
     }
 
-
+    //  주문 단일
+    @Operation(summary = "주문 단일 조회", description = "주문 한가지를 볼수 있는 API")
+    @ApiResponse(responseCode = "200", description = "단일 주문 조회 완료")
+    @GetMapping("order/{id}")
+    public Optional<OrderDTO> product(@PathVariable Long id){
+        return orderService.getOrderById(id);
+    }
 
     //    배송 삭제
     @Operation(summary = "주문 삭제", description = "주문 삭제하는 API")
