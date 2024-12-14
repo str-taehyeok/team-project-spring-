@@ -12,9 +12,9 @@ public interface OrderMapper {
 
     public void insert(OrderVO orderVO);
 
-    public List<OrderDTO> selectOrder();
+    public List<OrderDTO> selectAll();
 
-    public Optional<OrderDTO> selectOrderById(Long id);
+    public Optional<OrderDTO> select(Long id);
 
-    public void deleteOrder(Long id);
+    public void delete(Long id);
 }

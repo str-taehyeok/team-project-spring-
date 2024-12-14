@@ -23,6 +23,7 @@
             TBO.ORDER_ADDRESS,
             TBO.PRODUCT_COUNT,
             TBO.TOTAL_PRICE,
+            TBO.DELIVERY_STATUS,
             TBP.PRODUCT_NAME,
             TBM.MEMBER_NAME,
             TBM.MEMBER_EMAIL

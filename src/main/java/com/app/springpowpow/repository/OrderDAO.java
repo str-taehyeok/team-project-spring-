@@ -23,15 +23,15 @@ public class OrderDAO {
         }
 
         public List<OrderDTO> findAll() {
-            return orderMapper.selectOrder();
+            return orderMapper.selectAll();
         }
 
         public Optional<OrderDTO> findById(Long id) {
-            return orderMapper.selectOrderById(id);
+            return orderMapper.select(id);
         }
 
         public void deleteById(Long id) {
-            orderMapper.deleteOrder(id);
+            orderMapper.delete(id);
         }
 
     }

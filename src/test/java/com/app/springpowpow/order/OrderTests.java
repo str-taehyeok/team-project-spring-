@@ -25,18 +25,22 @@ public class OrderTests {
         orderVO.setMemberId(1L);
         orderVO.setDeliveryId(1L);
         orderVO.setOrderNumber("1234556");
+        orderVO.setOrderDate("2024-12-14");
         orderVO.setOrderAddress("서초구 방배동 123");
         orderVO.setProductCount(3);
-//        orderDTO.setOrderDate("2024-12-12");
-//        orderDTO.setMemberEmail("jane@gmail.com");
-//        orderDTO.setTotalPrice(6000);
-//        orderDTO.setProductPrice(2000);
-//        orderDTO.setMemberName("jane");
         orderService.insertOrder(orderVO);
     }
 
+
+//    통과
     @Test
     public void selectAllTest() {
         log.info(orderService.selectAllOrders().toString());
+    }
+
+//    통과
+    @Test
+    public void selectOneTest() {
+        log.info(orderService.getOrderById(1L).toString());
     }
 }
