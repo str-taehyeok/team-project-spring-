@@ -46,7 +46,7 @@ public class MemberDAO {
         return memberMapper.selectByNameAndPhone(memberVO);
     }
 
-    public Optional<MemberVO> findEmailById(Long id) {
+    public List<MemberVO> findEmailById(Long id) {
         return memberMapper.selectByEmail(id);
     }
 
@@ -54,7 +54,7 @@ public class MemberDAO {
         return memberMapper.findEmailByPhone(memberPhone);
     }
 
-    public Optional<MemberVO> findEmailByEmail(String memberEmail) {
+    public List<MemberVO> findEmailByEmail(String memberEmail) {
         return memberMapper.findPhoneByEmail(memberEmail);
     }
 }

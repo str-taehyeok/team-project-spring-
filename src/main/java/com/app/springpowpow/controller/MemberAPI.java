@@ -1,7 +1,6 @@
 package com.app.springpowpow.controller;
 
 import com.app.springpowpow.domain.MemberVO;
-import com.app.springpowpow.domain.PetDTO;
 import com.app.springpowpow.service.MemberService;
 import com.app.springpowpow.service.SnsService;
 import com.app.springpowpow.util.JwtTokenUtil;
@@ -12,7 +11,6 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -180,17 +179,14 @@ public class MemberAPI {
 
     ////////////////////////////////////////////////////////////////////////////////////////// 아이디 찾기
 
-    // 아이디 찾기
-    @Operation(summary = "이메일(아이디) 찾기", description = "회원 아이디(이메일)를 찾을 수 있는 API")
+    @Operation(summary = "이메일(아이디) 찾기", description = "이메일(아이디)를 찾을 수 있는 API")
     @ApiResponse(responseCode = "200", description = "아이디 찾기 성공")
     @PostMapping("/find-id")
-    public ResponseEntity<MemberVO> findId(@RequestBody MemberVO memberVO) {
-        // 이름과 전화번호로 회원을 조회
-        Optional<MemberVO> foundUser = memberService.findMemberByNameAndPhone(memberVO);
+    public Optional<MemberVO> findId(@RequestBody MemberVO memberVO) {
 
-        // 회원을 찾지 못하면 404 반환
-        return foundUser.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    // 이름과 전화번호로 회원을 조회
+    Optional<MemberVO> foundUser = memberService.findMemberByNameAndPhone(memberVO);
+    return foundUser;
     }
 
     // SMS 전송
@@ -201,36 +197,35 @@ public class MemberAPI {
 
     // 회원 정보 조회 (휴대폰 번호로 이메일 찾고, 이메일로 회원 조회)
     @Operation(summary = "회원 조회", description = "휴대폰 번호로 회원 이메일을 찾고, 이메일로 회원 정보를 조회할 수 있는 API")
-    @PostMapping("find-id/{memberPhone}")
-    public ResponseEntity<MemberVO> findMemberByIdAndPhone(@PathVariable String memberPhone) {
+    @ApiResponse(responseCode = "200", description = "회원 정보 조회 성공")
+    @ApiResponse(responseCode = "404", description = "회원이 존재하지 않음")
+    @GetMapping("find-id/{memberPhone}")
+    public ResponseEntity<Map<String, Object>> findMemberByIdAndPhone(@PathVariable String memberPhone) throws IOException {
+        Map<String, Object> response = new HashMap<>();
 
         // 1) 휴대폰 번호로 이메일 찾기
-        Optional<String> foundEmail = memberService.getEmailById(memberPhone);
-
-        // 이메일을 찾을 수 없으면 "회원이 아닙니다."
-        if (!foundEmail.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-
-        // 2) 이메일로 유저를 찾기
-        String memberEmail = foundEmail.get();
-        Optional<MemberVO> foundUser = memberService.findMemberByEmail(memberEmail);
-
-        // 3) 이메일로 회원을 찾을 수 있으면 회원 정보 반환, 없으면 "회원이 아닙니다."
-        return foundUser.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
-    }
-
-    // 이메일 조회 (단일)
-    @Operation(summary = "이메일 조회(단일)", description = "이메일을 조회할 수 있는 API")
-    @Parameter(name = "memberPhone", description = "멤버전화번호", schema = @Schema(type = "string"), in = ParameterIn.HEADER, required = true)
-    @GetMapping("find-id/{id}")
-    public String getEmailById(@PathVariable String memberPhone) {
         Optional<String> foundUser = memberService.getEmailById(memberPhone);
-        if (foundUser.isPresent()) {
-            return foundUser.get();
-        }
-        return new String();
-    }
-}
 
+        // 2) 이메일이 없으면 예외를 던진다
+        if (foundUser.isEmpty()) {
+            response.put("message", "이름 또는 휴대폰 번호가 일치하지 않습니다.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+
+        // 3) 이메일로 회원 정보 조회
+        String memberEmail = foundUser.get();
+        List<MemberVO> members = memberService.findMemberByEmail(memberEmail);
+
+        // 4) 회원이 존재하면 첫 번째 회원 반환
+        Optional<MemberVO> foundUserFromEmail = members.stream().findFirst();
+        if (foundUserFromEmail.isPresent()) {
+            response.put("memberInfo", foundUserFromEmail.get());
+            return ResponseEntity.ok(response);
+        } else {
+            response.put("message", "이 이메일에 해당하는 회원을 찾을 수 없습니다: " + memberEmail);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+    }
+
+
+}

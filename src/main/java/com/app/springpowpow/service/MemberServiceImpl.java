@@ -62,22 +62,22 @@ public class MemberServiceImpl implements MemberService {
         return memberDAO.findById(memberId);
     }
 
-    // 이메일 조회
-    @Override
-    public Optional<MemberVO> findById(Long id) {
-        return memberDAO.findById(id);
-    }
-
     // 휴대폰 번호로 이메일 조회
     @Override
     public Optional<String> getEmailById(String memberPhone) {
         return memberDAO.findEmailByPhone(memberPhone);
     }
 
-    // 이메일로 회원 조회
+    // 이메일로 회원 정보 조회
     @Override
-    public Optional<MemberVO> findMemberByEmail(String memberEmail) {
+    public List<MemberVO> findMemberByEmail(String memberEmail) {
         return memberDAO.findEmailByEmail(memberEmail);
+    }
+
+    // 이메일 단일 조회
+    @Override
+    public Optional<MemberVO> findById(Long id) {
+        return memberDAO.findById(id);
     }
 
 }

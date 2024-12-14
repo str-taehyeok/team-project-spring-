@@ -34,12 +34,12 @@ public interface MemberMapper {
     public Long selectByNameAndPhone(MemberVO memberVO);
 
     // 이메일 조회
-    public Optional<MemberVO> selectByEmail(Long id);
+    public List<MemberVO> selectByEmail(Long id);
 
     // 휴대폰 번호로 이메일 조회
     public Optional<String> findEmailByPhone(String memberPhone);
 
     // 이메일로 회원 조회
-    public Optional<MemberVO> findPhoneByEmail(String memberEmail);
+    public List<MemberVO> findPhoneByEmail(String memberEmail);
 
 }
