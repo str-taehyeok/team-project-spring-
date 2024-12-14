@@ -162,25 +162,25 @@ public class MemberAPI {
 
         return ResponseEntity.ok(response);
     }
-//  단일회원조회
-@Operation(summary = "회원정보 조회", description = "회원 개인정보를 조회할 수 있는 API")
-@Parameter(
-        name = "id",
-        description = "회원 번호",
-        schema = @Schema(type="number"), // DB의 스키마를 의미하는 것이 아니라, Swagger에서 인식하기 위한 타입
-        in = ParameterIn.PATH, // path로 전달
-        required = true
-)
-@GetMapping("member/{id}")
-public MemberVO getMember(@PathVariable Long id) {
+    //  단일회원조회
+    @Operation(summary = "회원정보 조회", description = "회원 개인정보를 조회할 수 있는 API")
+    @Parameter(
+            name = "id",
+            description = "회원 번호",
+            schema = @Schema(type="number"), // DB의 스키마를 의미하는 것이 아니라, Swagger에서 인식하기 위한 타입
+            in = ParameterIn.PATH, // path로 전달
+            required = true
+    )
+    @GetMapping("member/{id}")
+    public MemberVO getMember(@PathVariable Long id) {
 
-    Optional<MemberVO> foundUser = memberService.getMemberById(id);
-    if (foundUser.isPresent()) {
-        return foundUser.get();
+        Optional<MemberVO> foundUser = memberService.getMemberById(id);
+        if (foundUser.isPresent()) {
+            return foundUser.get();
+        }
+
+        return new MemberVO();
     }
-
-    return new MemberVO();
-}
 
 
 //  회원탈퇴(구매자)
