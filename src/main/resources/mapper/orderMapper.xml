@@ -1,7 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.app.restful.mapper.OrderMapper">
-    <select id="getTime" resultType="string">
-        SELECT CURRENT_TIMESTAMP FROM DUAL
+<mapper namespace="com.app.springpowpow.mapper.OrderMapper">
+
+    <insert id="insert" parameterType="OrderDTO">
+        INSERT INTO TBL_ORDER (ID, PRODUCT_ID, MEMBER_ID, DELIVERY_ID, ORDER_NUMBER, ORDER_ADDRESS)
+        VALUES (SEQ_ORDER.NEXTVAL, #{productId}, #{memberId}, #{deliveryId}, #{ordernumber}, #{orderAddress})
+    </insert>
+
+    <select id="selectAll" resultType="OrderDTO">
+        SELECT ID, PRODUCT_ID, MEMBER_ID, DELIVERY_ID, ORDER_NUMBER, ORDER_DATE, PRODUCT_PRICE, TOTAL_PRICE, DELIVERY_STATUS
+        FROM VIEW_ORDER
     </select>
+
+    <select id="select" resultType="OrderDTO" parameterType="Long">
+        SELECT
+            TBO.ID,
+            TBO.PRODUCT_ID,
+            TBO.MEMBER_ID,
+            TBO.DELIVERY_ID,
+            TBO.ORDER_NUMBER,
+            TBO.ORDER_DATE,
+            TBO.ORDER_ADDRESS,
+            TBO.PRODUCT_COUNT,
+            TBP.PRODUCT_NAME,
+            TBM.MEMBER_NAME,
+            TBM.MEMBER_EMAIL
+        FROM TBL_ORDER TBO
+                 JOIN TBL_PRODUCT TBP ON TBO.PRODUCT_ID = TBP.ID
+                 JOIN TBL_MEMBER TBM ON TBO.MEMBER_ID = TBM.ID
+        WHERE TBO.ID = #{id}
+    </select>
+
+
+    <delete id="delete" parameterType="Long">
+        DELETE FROM TBL_ORDER
+        WHERE ID = #{id}
+    </delete>
 </mapper>
