@@ -61,8 +61,8 @@ public class ProductAPI {
 
 //  단일 제품
     @Operation(summary = "제품 단일 조회", description = "제품 한가지를 볼수 있는 API")
-    @GetMapping("product")
-    public Optional<ProductDTO> product(Long id){
+    @GetMapping("product/{id}")
+    public Optional<ProductDTO> product(@PathVariable Long id){
         return productService.selectProductById(id);
     }
 

@@ -14,8 +14,6 @@ public class DeliveryVO{
     private Long id;
     @Schema(description = "제품 ID", example = "1", required = true)
     private Long productId;
-    @Schema(description = "주문 ID", example = "1", required = true)
-    private Long orderId;
     @Schema(description = "배송 ID", example = "10000")
     private int deliveryFee;
     @Schema(description = "배송비 종류", example = "무료")

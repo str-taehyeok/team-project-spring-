@@ -1,7 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.app.restful.mapper.ReviewMapper">
-    <select id="getTime" resultType="string">
-        SELECT CURRENT_TIMESTAMP FROM DUAL
+<mapper namespace="com.app.springpowpow.mapper.ReviewMapper">
+
+
+<!--    리뷰달기-->
+    <insert id="insert" parameterType="ReviewDTO">
+        INSERT INTO TBL_PRODUCT_REVIEW (ID, PRODUCT_ID, MEMBER_ID, REVIEW_STAR, REVIEW_CONTANT)
+        VALUES (SEQ_PRODUCT_REVIEW.NEXTVAL, #{productId}, #{memberId}, #{reviewStar}, #{reviewContant})
+    </insert>
+
+
+
+<!--    전체 리뷰 리스트-->
+    <select id="selectAll" resultType="ReviewDTO" parameterType="Long">
+        SELECT TPR.ID, TPR.PRODUCT_ID, TPR.MEMBER_ID, TPR.REVIEW_STAR, TPR.REVIEW_CONTANT, TPM.MEMBER_NICKNAME, TPM.MEMBER_IMAGE
+        FROM TBL_PRODUCT_REVIEW TPR
+        JOIN TBL_MEMBER TPM
+        ON TPM.ID = TPR.MEMBER_ID
+        WHERE PRODUCT_ID = #{productId}
     </select>
+
+<!--    <select id="select" parameterType="Long" resultType="ReviewDTO">-->
+<!--        SELECT -->
+<!--        FROM TBL_PRODUCT_REVIEW TPR-->
+<!--        JOIN TBL_MEMBER TPM-->
+<!--        ON TPR.MEMBER_ID = TPM.ID-->
+<!--        WHERE TPR.ID = #{id}-->
+<!--    </select>-->
+
+<!--   리뷰 수정하기 -->
+
+    <update id="update" parameterType="ReviewDTO">
+        UPDATE TBL_PRODUCT_REVIEW
+        SET REVIEW_STAR = #{reviewStar}, REVIEW_DATE = #{reviewDate}, REVIEW_CONTANT = #{reviewContant}
+    </update>
+
+<!--    리뷰 삭제하기-->
+
+    <delete id="delete" parameterType="Long">
+        DELETE FROM TBL_PRODUCT_REVIEW
+        WHERE ID = #{id}
+    </delete>
+
 </mapper>
