@@ -92,11 +92,22 @@
         WHERE MEMBER_EMAIL = #{memberEmail}
     </select>
 
-<!--  이름 빼고 어차피 핸드폰중복 안되니 핸드폰으로만 조회  -->
+    <!-- 전화번호로 이메일 찾기 -->
     <select id="selectEmailByPhone" parameterType="String" resultType="String">
         SELECT MEMBER_EMAIL
         FROM TBL_MEMBER
         WHERE MEMBER_PHONE = #{memberPhone}
+    </select>
+
+    <!-- 이메일로 회원 정보 조회 -->
+    <select id="findMemberByEmail" parameterType="String" resultType="MemberVO">
+        SELECT ID, MEMBER_EMAIL, MEMBER_PASSWORD, MEMBER_NAME, MEMBER_PHONE,
+               MEMBER_NICKNAME, MEMBER_ZIPCODE, MEMBER_ADDRESS, MEMBER_ADDRESS_DETAIL,
+               MEMBER_IMAGE, MEMBER_SMSCHECK, MEMBER_EMAILCHECK, MEMBER_DATE,
+               MEMBER_BUSINESS_NUMBER, MEMBER_AUTH, MEMBER_PROVIDER, MEMBER_BUSINESS_NAME,
+               MEMBER_BANK, MEMBER_BANK_ACCOUNT
+        FROM TBL_MEMBER
+        WHERE MEMBER_EMAIL = #{memberEmail}
     </select>
 
 </mapper>

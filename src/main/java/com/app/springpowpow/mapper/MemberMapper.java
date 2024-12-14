@@ -27,10 +27,13 @@ public interface MemberMapper {
     //    회원 탈퇴
     public void delete(Long id);
 
-    //  이메일 중복체크
+    // 이메일 중복체크
     public int checkEmailExists(String memberEmail);
 
-    // 휴대번호로 ID 조회
+    // 전화번호로 이메일 찾기
     public String selectEmailByPhone(String memberPhone);
+
+    // 이메일로 회원 정보 조회
+    public Optional<MemberVO> findMemberByEmail(String memberEmail);
 
 }

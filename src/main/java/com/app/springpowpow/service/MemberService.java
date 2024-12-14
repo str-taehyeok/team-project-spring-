@@ -23,7 +23,10 @@ public interface MemberService {
 //    판매자 회원탈퇴
     public void withdrawSeller(Long id);
 
-    // 이름 & 휴대번호 ID 조회
-    public String findEmailByMemberPhone(String memberPhone);
+    // 전화번호로 이메일 찾기
+    public String findEmail(String memberPhone);
+
+    // 이메일로 회원 정보 조회
+    public Optional<MemberVO> findMember(String memberEmail);
 
 }
