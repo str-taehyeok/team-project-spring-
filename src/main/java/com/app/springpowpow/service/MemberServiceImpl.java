@@ -79,7 +79,7 @@ public class MemberServiceImpl implements MemberService {
 
     // 이메일로 회원 정보 조회
     @Override
-    public List<MemberVO> findMember(String memberEmail) {
+    public Optional<MemberVO> findMember(String memberEmail) {
         return memberDAO.findMember(memberEmail);
     }
 }

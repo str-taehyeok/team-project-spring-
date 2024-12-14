@@ -44,12 +44,10 @@ public class MemberDAO {
 
     // 전화번호로 이메일 찾기
     public String findEmail(String memberPhone) {
-        return memberMapper.findEmailByMemberPhone(memberPhone);
+        return memberMapper.selectEmailByPhone(memberPhone);
     }
-
     // 이메일로 회원 정보 조회
-    public List<MemberVO> findMember(String memberEmail) {
+    public Optional<MemberVO> findMember(String memberEmail) {
         return memberMapper.findMemberByEmail(memberEmail);
     }
-
 }

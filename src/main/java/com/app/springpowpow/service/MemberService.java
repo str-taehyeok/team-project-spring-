@@ -27,6 +27,6 @@ public interface MemberService {
     public String findEmail(String memberPhone);
 
     // 이메일로 회원 정보 조회
-    public List<MemberVO> findMember(String memberEmail);
+    public Optional<MemberVO> findMember(String memberEmail);
 
 }
