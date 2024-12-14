@@ -18,9 +18,9 @@ public class PostDTO {
     @Schema(description = "게시글 내용", example = "테스트 내용1", required = true)
     private String postContent;
     @Schema(description = "게시글 작성시간", example = "2024-12-24:00:10")
-    private LocalDateTime postCreateAt;
+    private String postCreateAt;
     @Schema(description = "게시글 수정시간", example = "2024-12-24:00:10")
-    private LocalDateTime postModifiedAt;
+    private String postModifiedAt;
     @Schema(description = "게시글 이미지1", example = "post.png")
     private String postImage1;
     @Schema(description = "게시글 이미지2", example = "post.png")

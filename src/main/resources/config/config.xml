@@ -5,6 +5,7 @@
         <typeAlias type="com.app.springpowpow.domain.DefaultVO" alias="DefaultVO" />
         <typeAlias type="com.app.springpowpow.domain.MemberVO" alias="MemberVO" />
         <typeAlias type="com.app.springpowpow.domain.PostVO" alias="PostVO" />
+        <typeAlias type="com.app.springpowpow.domain.PostDTO" alias="PostDTO" />
         <typeAlias type="com.app.springpowpow.domain.AdjustmentDTO" alias="AdjustmentDTO"/>
         <typeAlias type="com.app.springpowpow.domain.AdjustmentVO" alias="AdjustmentVO" />
         <typeAlias type="com.app.springpowpow.domain.BannerVO" alias="BannerVO" />
