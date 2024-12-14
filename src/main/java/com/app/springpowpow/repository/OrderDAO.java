@@ -18,7 +18,7 @@ public class OrderDAO {
 
 
         public void save(OrderDTO orderDTO) {
-            orderMapper.insertOrder(orderDTO);
+            orderMapper.insert(orderDTO);
         }
 
         public List<OrderDTO> findAll() {

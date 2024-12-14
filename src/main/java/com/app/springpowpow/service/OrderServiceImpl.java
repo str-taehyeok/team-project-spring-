@@ -26,7 +26,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDTO> getOrders() {
+    public List<OrderDTO> selectAllOrders() {
         return orderDAO.findAll();
     }
 

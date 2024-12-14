@@ -9,7 +9,7 @@ import java.util.Optional;
 @Mapper
 public interface OrderMapper {
 
-    public void insertOrder(OrderDTO orderDTO);
+    public void insert(OrderDTO orderDTO);
 
     public List<OrderDTO> selectOrder();
 
