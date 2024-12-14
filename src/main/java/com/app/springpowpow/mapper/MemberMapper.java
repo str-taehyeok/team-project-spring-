@@ -30,7 +30,10 @@ public interface MemberMapper {
     //  이메일 중복체크
     public int checkEmailExists(String memberEmail);
 
-    // 휴대번호로 ID 조회
-    public String selectEmailByPhone(String memberPhone);
+    // 전화번호로 이메일 찾기
+    public String findEmailByMemberPhone(String memberPhone);
+
+    // 이메일로 회원 정보 조회
+    public List<MemberVO> findMemberByEmail(String memberEmail);
 
 }
