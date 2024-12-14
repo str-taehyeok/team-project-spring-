@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Data
-//@Schema(description = "회원 정보")
+@Schema(description = "리뷰 정보")
 public class ReviewDTO {
     @Schema(description = "리뷰 번호", example = "1", required = true)
     private Long id;
@@ -26,7 +26,7 @@ public class ReviewDTO {
     @Schema(description = "리뷰 내용", example = "정말 만족스러운 상품입니다!", required = true)
     private String reviewContent;
 
-    @Schema(description = "훠원사진", example = "profile.png!")
+    @Schema(description = "훠원사진", example = "profile.png")
     private String memberImage;
 
     @Schema(description = "회원 닉네임", example = "징징이")
