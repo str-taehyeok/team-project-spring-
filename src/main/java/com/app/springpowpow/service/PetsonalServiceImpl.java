@@ -20,7 +20,8 @@ public class PetsonalServiceImpl implements PetsonalService {
 
     @Override
     public void registerSurvey(PetsonalVO petsonalVO) {
-//        petDAO.u
+
+//        petDAO.update(petsonalVO.getPetId());
         petsonalDAO.save(petsonalVO);
     }
 

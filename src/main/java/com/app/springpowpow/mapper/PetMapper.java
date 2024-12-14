@@ -26,4 +26,7 @@ public interface PetMapper {
 
 //    회원탈퇴시 모든 pet 삭제
     public void deleteAll(Long memberId);
+
+//    펫컬러 수정
+    public void updateColor(Long id);
 }
