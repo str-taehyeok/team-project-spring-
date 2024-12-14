@@ -203,15 +203,15 @@ public class MemberAPI {
 
     ////////////////////////////////////////////////////////////////////////////////////////// 아이디 찾기
 
-//    @Operation(summary = "이메일(아이디) 찾기", description = "이메일(아이디)를 찾을 수 있는 API")
-//    @ApiResponse(responseCode = "200", description = "아이디 찾기 성공")
-//    @PostMapping("/find-id")
-//    public Optional<MemberVO> findId(@RequestBody MemberVO memberVO) {
-//
-//    // 이름과 전화번호로 회원을 조회
-//    Optional<MemberVO> foundUser = memberService.findMemberByNameAndPhone(memberVO);
-//    return foundUser;
-//    }
+    @Operation(summary = "이메일(아이디) 찾기", description = "이메일(아이디)를 찾을 수 있는 API")
+    @ApiResponse(responseCode = "200", description = "아이디 찾기 성공")
+    @PostMapping("/find-id")
+    public String findId(@RequestBody String memberPhone) {
+
+    // 이름과 전화번호로 회원을 조회
+        String memberEmail = memberService.findEmailByMemberPhone(memberPhone);
+    return memberEmail;
+    }
 //
 //    // SMS 전송
 //    @PostMapping("sms/find-id")
