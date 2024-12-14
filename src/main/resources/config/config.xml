@@ -27,7 +27,7 @@
         <typeAlias type="com.app.springpowpow.domain.ProductLikesVO" alias="ProductLikesVO" />
         <typeAlias type="com.app.springpowpow.domain.ProductVO" alias="ProductVO" />
         <typeAlias type="com.app.springpowpow.domain.ProductDTO" alias="ProductDTO" />
-        <typeAlias type="com.app.springpowpow.domain.ReviewVO" alias="ReviewDTO" />
+        <typeAlias type="com.app.springpowpow.domain.ReviewDTO" alias="ReviewDTO" />
         <typeAlias type="com.app.springpowpow.domain.ReviewVO" alias="ReviewVO" />
 <!--        <typeAlias type="com.app.springpowpow.domain.ProductLikesDTO" alias="ProductLikesDTO" />-->
     </typeAliases>
