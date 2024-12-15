@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -50,4 +51,37 @@ public class MemberDAO {
     public Optional<MemberVO> findMember(String memberEmail) {
         return memberMapper.findMemberByEmail(memberEmail);
     }
+
+//    어드민 구매자 리스트
+//    public List<MemberVO> findBuyersOnly() {
+//        List<MemberVO> members = memberMapper.selectAll();
+//        List<MemberVO> classifyMembers = members.stream()
+//                .map(member -> {
+//                    if("구매자".equals(member.getMemberProvider())){
+//                        member.setMemberProvider("구매자");
+//                    }else {
+//                        member.setMemberProvider("판매자");
+//                    }
+//                    return member;
+//                })
+//                .collect(Collectors.toList());
+//        return classifyMembers;
+//    }
+
+    // 구매자 리스트 조회
+    public List<MemberVO> findBuyersOnly() {
+        List<MemberVO> members = memberMapper.selectAll();
+        return members.stream()
+                .filter(member -> "구매자".equals(member.getMemberProvider()))
+                .collect(Collectors.toList());
+    }
+
+    // 판매자 리스트 조회
+    public List<MemberVO> findSellersOnly() {
+        List<MemberVO> members = memberMapper.selectAll();
+        return members.stream()
+                .filter(member -> !"구매자".equals(member.getMemberProvider()))
+                .collect(Collectors.toList());
+    }
+
 }
