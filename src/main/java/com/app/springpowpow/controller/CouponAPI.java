@@ -1,6 +1,8 @@
 package com.app.springpowpow.controller;
 
 import com.app.springpowpow.domain.CouponVO;
+import com.app.springpowpow.domain.PetDTO;
+import com.app.springpowpow.domain.PetVO;
 import com.app.springpowpow.service.CouponService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -10,12 +12,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,10 +30,9 @@ public class CouponAPI {
     @Operation(summary = "쿠폰 생성", description = "쿠폰을 생성할 수 있는 API")
 //    @Parameters({
 //            @Parameter(name = "id", description = "쿠폰 번호", schema = @Schema(type = "number"), in = ParameterIn.HEADER, required = true),
-//            @Parameter(name = "memberId", description = "멤버 번호", schema = @Schema(type= "number"), in = ParameterIn.HEADER),
 //            @Parameter(name = "couponTitle", description = "쿠폰 이름", schema = @Schema(type= "string"), in = ParameterIn.HEADER, required = true),
 //            @Parameter(name = "couponCategory", description = "쿠폰 카테고리", schema = @Schema(type= "string"), in = ParameterIn.HEADER, required = true),
-//            @Parameter(name = "couponCategoryAnimal", description = "쿠폰 동물 카테고리", schema = @Schema(type= "string"), in = ParameterIn.HEADER, required = true),
+//            @Parameter(name = "couponAnimal", description = "쿠폰 동물 카테고리", schema = @Schema(type= "string"), in = ParameterIn.HEADER, required = true),
 //            @Parameter(name = "couponCode", description = "쿠폰 코드", schema = @Schema(type= "string"), in = ParameterIn.HEADER, required = true),
 //            @Parameter(name = "couponStart", description = "쿠폰 시작 기간", schema = @Schema(type= "string"), in = ParameterIn.HEADER),
 //            @Parameter(name = "couponEnd", description = "쿠폰 종료 기간", schema = @Schema(type= "string"), in = ParameterIn.HEADER),
@@ -47,4 +46,32 @@ public class CouponAPI {
         couponService.registerCoupon(couponVO);
         return couponVO;
     }
+
+    @Operation(summary = "쿠폰 수정", description = "쿠폰 수정할 수 있는 API")
+    @Parameter( name = "id", description = "쿠폰 번호", schema = @Schema(type="number"), in = ParameterIn.PATH, required = true )
+    @ApiResponse(responseCode = "200", description = "쿠폰 수정 완료")
+    @PutMapping("coupons/{id}")
+    public CouponVO modify(@PathVariable Long id, @RequestBody CouponVO couponVO){
+        couponVO.setId(id);
+        couponService.modifyCoupon(couponVO);
+        return couponVO;
+    }
+
+
+    @Operation(summary = "전체 쿠폰 조회", description = "전체 쿠폰 조회할 수 있는 API")
+    @ApiResponse(responseCode = "200", description = "쿠폰 조회 완료")
+    @GetMapping("list")
+    public List<CouponVO> list(){
+        return couponService.getAllCoupons();
+    }
+
+    //    쿠폰 삭제
+    @Operation(summary = "쿠폰 삭제", description = "쿠폰 삭제할 수 있는 API")
+    @Parameter( name = "id", description = "쿠폰 번호", schema = @Schema(type="number"), in = ParameterIn.PATH, required = true )
+    @ApiResponse(responseCode = "200", description = "마이펫 삭제 완료")
+    @DeleteMapping("coupons/{id}")
+    public void delete(@PathVariable Long id){
+        couponService.deleteCoupon(id);
+    }
+
 }

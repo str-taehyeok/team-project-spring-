@@ -18,7 +18,7 @@ public class CouponDTO {
     @Schema(description = "쿠폰 카테고리", example = "장난감", required = true)
     private String couponCategory;
     @Schema(description = "쿠폰 카테고리 동물", example = "고양이", required = true)
-    private String couponCategoryAnimal;
+    private String couponAnimal;
     @Schema(description = "쿠폰 코드", example = "ABCDEFGH1234125", required = true)
     private String couponCode;
     @Schema(description = "쿠폰 시작 시간", example = "2024-11-21")

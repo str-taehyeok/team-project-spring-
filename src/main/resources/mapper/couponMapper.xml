@@ -2,32 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.app.springpowpow.mapper.CouponMapper">
     <insert id="insert" parameterType="CouponVO">
-        INSERT INTO TBL_COUPON(ID, MEMBER_ID, COUPON_TITLE, COUPON_CATEGORY, COUPON_CATEGORY_ANIMAL, COUPON_CODE, COUPON_START, COUPON_END, COUPON_CONTENT, COUPON_QUANTITY, COUPON_DISCOUNT_RATE)
-        VALUES ( SEQ_COUPON.NEXTVAL, #{memberId}, #{couponTitle}, #{couponCategory}, #{couponCategoryAnimal}, #{couponCode},#{couponStart}, #{couponEnd}, #{couponContent}, #{couponQuantity}, #{couponDiscountRate} )
+        INSERT INTO TBL_COUPON(ID, COUPON_TITLE, COUPON_CATEGORY, COUPON_ANIMAL, COUPON_CODE, COUPON_START, COUPON_END, COUPON_CONTENT, COUPON_QUANTITY, COUPON_DISCOUNT_RATE)
+        VALUES ( SEQ_COUPON.NEXTVAL, #{couponTitle}, #{couponCategory}, #{couponAnimal}, #{couponCode},TO_DATE(#{couponStart}, 'YYYY-MM-DD'), TO_DATE(#{couponEnd}, 'YYYY-MM-DD'), #{couponContent}, #{couponQuantity}, #{couponDiscountRate} )
     </insert>
 
     <select id="selectAll" resultType="CouponVO">
-        SELECT ID, MEMBER_ID, COUPON_TITLE, COUPON_CATEGORY, COUPON_CATEGORY_ANIMAL, COUPON_CODE, COUPON_START, COUPON_END, COUPON_CONTENT, COUPON_QUANTITY, COUPON_DISCOUNT_RATE
+        SELECT ID, MEMBER_ID, PRODUCT_ID, COUPON_TITLE, COUPON_CATEGORY, COUPON_ANIMAL, COUPON_CODE, COUPON_START, COUPON_END, COUPON_CONTENT, COUPON_QUANTITY, COUPON_DISCOUNT_RATE
         FROM TBL_COUPON
     </select>
 
     <select id="select" parameterType="Long" resultType="CouponVO">
-        SELECT ID, MEMBER_ID, COUPON_TITLE, COUPON_CATEGORY, COUPON_CATEGORY_ANIMAL, COUPON_CODE, COUPON_START, COUPON_END, COUPON_CONTENT, COUPON_QUANTITY, COUPON_DISCOUNT_RATE
+        SELECT ID, MEMBER_ID, PRODUCT_ID, COUPON_TITLE, COUPON_CATEGORY, COUPON_ANIMAL, COUPON_CODE, COUPON_START, COUPON_END, COUPON_CONTENT, COUPON_QUANTITY, COUPON_DISCOUNT_RATE
         FROM TBL_COUPON
         WHERE ID = #{id}
     </select>
 
     <select id="selectById" parameterType="Long" resultType="CouponVO">
-        SELECT ID, MEMBER_ID, COUPON_TITLE, COUPON_CATEGORY, COUPON_CATEGORY_ANIMAL, COUPON_CODE, COUPON_START, COUPON_END, COUPON_CONTENT, COUPON_QUANTITY, COUPON_DISCOUNT_RATE
+        SELECT ID, MEMBER_ID, PRODUCT_ID, COUPON_TITLE, COUPON_CATEGORY, COUPON_ANIMAL, COUPON_CODE, COUPON_START, COUPON_END, COUPON_CONTENT, COUPON_QUANTITY, COUPON_DISCOUNT_RATE
         FROM TBL_COUPON
         WHERE MEMBER_ID = #{memberId}
     </select>
 
     <update id="update" parameterType="CouponVO">
         UPDATE TBL_COUPON
-        SET MEMBER_ID = #{memberId}, COUPON_TITLE = #{couponTitle}, COUPON_CATEGORY = #{couponCategory},
-            COUPON_CATEGORY_ANIMAL = #{couponCategoryAnimal}, COUPON_CODE = #{couponCode}, COUPON_START = #{couponStart},
-            COUPON_END = #{couponEnd}, COUPON_CONTENT = #{couponContent}, COUPON_QUANTITY = #{couponQuantity},
+        SET MEMBER_ID = #{memberId}, PRODUCT_ID = #{productId}, COUPON_TITLE = #{couponTitle}, COUPON_CATEGORY = #{couponCategory},
+            COUPON_ANIMAL = #{couponAnimal}, COUPON_CODE = #{couponCode}, COUPON_START = TO_DATE(#{couponStart}, 'YYYY-MM-DD'),
+            COUPON_END = TO_DATE(#{couponEnd}, 'YYYY-MM-DD'), COUPON_CONTENT = #{couponContent}, COUPON_QUANTITY = #{couponQuantity},
             COUPON_DISCOUNT_RATE = #{couponDiscountRate}
         WHERE ID = #{id}
     </update>
