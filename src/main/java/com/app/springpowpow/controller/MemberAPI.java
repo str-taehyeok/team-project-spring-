@@ -263,7 +263,6 @@ public class MemberAPI {
 
         List<MemberVO> result;
 
-        // memberProvider 파라미터에 따라 다른 로직 수행
         if ("구매자".equals(memberProvider)) {
             result = memberService.findBuyers();
         } else if ("판매자".equals(memberProvider)) {
@@ -272,7 +271,6 @@ public class MemberAPI {
             return ResponseEntity.badRequest().body(Collections.emptyList());
         }
 
-        // 결과가 비어있지 않은 경우 반환
         if (!result.isEmpty()) {
             return ResponseEntity.ok(result);
         } else {
