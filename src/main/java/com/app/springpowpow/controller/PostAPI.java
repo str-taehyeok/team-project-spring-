@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -57,7 +58,7 @@ public class PostAPI {
     @Operation(summary = "게시글 작성", description = "게시글 새로 작성할 수 있는 API")
     @ApiResponse(responseCode = "200", description = "게시글 작성 완료")
     @PostMapping("write")
-    public PostDTO write(@RequestBody PostVO postVO){
+    public PostDTO write(@RequestParam("uuid") List<String> uuids, @RequestParam("uploadFile") List<MultipartFile> uploadFiles, @RequestBody PostVO postVO){
         postService.write(postVO);
         Optional<PostDTO> foundPost = postService.getPost(postVO.getId());
         if(foundPost.isPresent()){
