@@ -21,7 +21,7 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/file/*")
-public class FileController {
+public class FileAPI {
 
     @PostMapping("upload")
     @ResponseBody
