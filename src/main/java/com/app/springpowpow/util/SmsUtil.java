@@ -8,7 +8,11 @@ import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import net.nurigo.sdk.message.service.DefaultMessageService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 
 @Component
 @Slf4j
@@ -21,15 +25,21 @@ public class SmsUtil {
 
     private DefaultMessageService messageService;
 
+    private final JavaMailSender javaMailSender;
+
+    // 생성자 주입
+    public SmsUtil(JavaMailSender javaMailSender) {
+        this.javaMailSender = javaMailSender;
+    }
+
     @PostConstruct
-    private void init(){
+    private void init() {
         this.messageService = NurigoApp.INSTANCE.initialize(apiKey, apiSecretKey, "https://api.coolsms.co.kr");
     }
 
-    // 단일 메시지 발송 예제
+    // 단일 메시지 발송 예제 (휴대폰 인증 코드 발송 부분)
     public SingleMessageSentResponse sendOne(String to, String verificationCode) {
         Message message = new Message();
-        // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
         String toPhoneNumber = to.replace("\"", "");
         log.info("toPhoneNumber {}", toPhoneNumber);
 
@@ -37,8 +47,19 @@ public class SmsUtil {
         message.setTo(toPhoneNumber); // 받는 사람
         message.setText("[Powpow] 인증번호 [" + verificationCode + "]를 입력해주세요.");
 
-        SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
-        return response;
+        return this.messageService.sendOne(new SingleMessageSendingRequest(message));
     }
 
+    // 이메일 발송 메서드 추가
+    public void sendEmail(String to, String subject, String content) throws MessagingException {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+
+        helper.setTo(to);
+        helper.setSubject(subject);
+        helper.setText(content);
+
+        javaMailSender.send(mimeMessage);
+        log.info("이메일 전송 완료: {}", to);
+    }
 }

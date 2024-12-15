@@ -132,4 +132,11 @@
         WHERE MEMBER_PROVIDER != '구매자'
     </select>
 
+    <!-- 비밀번호 변경 -->
+    <update id="updatePassword" parameterType="MemberVO">
+        UPDATE TBL_MEMBER
+        SET MEMBER_PASSWORD = #{memberPassword}
+        WHERE MEMBER_EMAIL = #{memberEmail}
+    </update>
+
 </mapper>

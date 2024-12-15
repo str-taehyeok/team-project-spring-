@@ -93,5 +93,14 @@ public class MemberServiceImpl implements MemberService {
     public List<MemberVO> findSellers(){
         return memberDAO.findSellersOnly();
     }
+
+    // 비밀번호 변경
+    @Override
+    public void updatePassword(String memberEmail, String newPassword) {
+        MemberVO memberVO = new MemberVO();
+        memberVO.setMemberEmail(memberEmail);
+        memberVO.setMemberPassword(newPassword);
+        memberDAO.updatePassword(memberVO);
+    }
 }
 

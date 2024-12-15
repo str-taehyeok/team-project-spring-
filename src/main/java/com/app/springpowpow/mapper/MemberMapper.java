@@ -42,4 +42,7 @@ public interface MemberMapper {
 //    어드민 판매자 전체 조회
     public List<MemberVO> selectSellers();
 
+//    비밀번호 변경
+    public void updatePassword(MemberVO memberVO);
+
 }
