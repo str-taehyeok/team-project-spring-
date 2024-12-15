@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Component
 @Data
 @Schema(description = "쿠폰 정보")
-public class CouponVO implements Serializable {
+public class CouponVO {
 
     @Schema(description = "쿠폰 번호", example = "21", required = true)
     private Long id;
