@@ -26,8 +26,8 @@
     <update id="update" parameterType="CouponVO">
         UPDATE TBL_COUPON
         SET MEMBER_ID = #{memberId}, PRODUCT_ID = #{productId}, COUPON_TITLE = #{couponTitle}, COUPON_CATEGORY = #{couponCategory},
-            COUPON_ANIMAL = #{couponAnimal}, COUPON_CODE = #{couponCode}, COUPON_START = #{couponStart},
-            COUPON_END = #{couponEnd}, COUPON_CONTENT = #{couponContent}, COUPON_QUANTITY = #{couponQuantity},
+            COUPON_ANIMAL = #{couponAnimal}, COUPON_CODE = #{couponCode}, COUPON_START = TO_DATE(#{couponStart}, 'YYYY-MM-DD'),
+            COUPON_END = TO_DATE(#{couponEnd}, 'YYYY-MM-DD'), COUPON_CONTENT = #{couponContent}, COUPON_QUANTITY = #{couponQuantity},
             COUPON_DISCOUNT_RATE = #{couponDiscountRate}
         WHERE ID = #{id}
     </update>
