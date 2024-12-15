@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.app.springpowpow.mapper.postFileMapper">
+
+    <insert id="insert" parameterType="PostFileVO">
+        INSERT INTO TBL_POST_FILE
+        VALUES(SEQ_POST_FILE.NEXTVAL, #{postId}, #{postFileName}, #{postFilePath})
+    </insert>
+
+    <select id="selectAll" resultType="PostFileVO">
+        SELECT ID, POST_ID, POST_FILE_NAME, POST_FILE_PATH
+        FROM TBL_POST_FILE
+    </select>
+
+
+
+
+
+</mapper>
