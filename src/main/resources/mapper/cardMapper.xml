@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.app.springpowpow.mapper.CardMapper">
+
+    <!--  카드 단일 조회 -->
+    <select id="select" parameterType="Long" resultType="com.app.springpowpow.domain.CardVO">
+        SELECT ID, MEMBER_ID, CARD_COMPANY, CARD_NUMBER, CARD_SECURITY_CODE, CARD_EXPIRATION_DATE
+        FROM TBL_CARD
+        WHERE ID = #{id}
+    </select>
+
+    <!--  카드 추가 -->
+    <insert id="insert" parameterType="com.app.springpowpow.domain.CardVO">
+        INSERT INTO TBL_CARD(ID, MEMBER_ID, CARD_COMPANY, CARD_NUMBER, CARD_SECURITY_CODE, CARD_EXPIRATION_DATE)
+        VALUES (SEQ_CART.NEXTVAL, #{memberId}, #{cardCompany}, #{cardNumber}, #{cardSecurityCode}, #{cardExpirationDate})
+    </insert>
+
+    <!--  카드 취소 -->
+    <delete id="delete" parameterType="Long">
+        DELETE FROM TBL_CARD
+        WHERE ID = #{id}
+    </delete>
+
+    <!--  카드 정보 업데이트 -->
+    <update id="update" parameterType="com.app.springpowpow.domain.CardVO">
+        UPDATE TBL_CARD
+        SET CARD_COMPANY = #{cardCompany}, CARD_NUMBER = #{cardNumber}, CARD_SECURITY_CODE = #{cardSecurityCode}, CARD_EXPIRATION_DATE = #{cardExpirationDate}
+        WHERE ID = #{id}
+    </update>
+
+</mapper>
