@@ -34,8 +34,8 @@ public class PetDAO {
     public void deleteAll(Long memberId){
         petMapper.deleteAll(memberId);
     }
-    public void updatePetColor(Long id){
-        petMapper.updateColor(id);
+    public void updatePetColor(PetVO petVO){
+        petMapper.updateColor(petVO);
     }
 
 }
