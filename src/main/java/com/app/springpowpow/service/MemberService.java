@@ -29,4 +29,10 @@ public interface MemberService {
     // 이메일로 회원 정보 조회
     public Optional<MemberVO> findMember(String memberEmail);
 
+
+//    어드민 구매자리스트
+    public List<MemberVO> findBuyers();
+//    어드민 판매자 리스트
+    public List<MemberVO> findSellers();
+
 }

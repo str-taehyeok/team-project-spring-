@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -243,5 +244,17 @@ public class MemberAPI {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
+
+//    @Operation(summary = "어드민에서 일반회원과 구매자 따로 전체조회", description = "모든 일반 회원 정보를 조회할 수 있는 API")
+//    @Parameters({
+//            @Parameter(name = "memberProvider", description = "구매자 또는 판매자", schema = @Schema(type = "string", example = "구매자", description = "조회하고싶은 회원의 타입을 입력해주세요"))
+//    })
+//    public MemberVO getMemberListByType() {
+//        List<MemberVO> buyers = memberService.findBuyers();
+//        if (buyers.size() > 0) {}
+//
+//    }
+
+
 
 }
