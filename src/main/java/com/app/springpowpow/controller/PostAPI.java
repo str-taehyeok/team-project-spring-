@@ -1,7 +1,9 @@
 package com.app.springpowpow.controller;
 
 import com.app.springpowpow.domain.PostDTO;
+import com.app.springpowpow.domain.PostFileVO;
 import com.app.springpowpow.domain.PostVO;
+import com.app.springpowpow.service.PostFileService;
 import com.app.springpowpow.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -25,7 +27,7 @@ import java.util.Optional;
 public class PostAPI {
 
     private final PostService postService;
-//    private final FileService fileService;
+    private final PostFileService postFileService;
 
     //    게시글 전체 조회
     @Operation(summary = "게시글 정보 조회", description = "게시글 정보를 전체 조회할 수 있는 API")
@@ -67,13 +69,13 @@ public class PostAPI {
 
         // 파일 업로드 처리
         int count = 0;
-//        for(int i = 0; i < uploadFiles.size(); i++) {
-//            if(uploadFiles.get(i).isEmpty()) { count++; continue;}
-//            FileVO fileVO = new FileVO();
-//            fileVO.setFileName(uuids.get(i - count) + "_" + uploadFiles.get(i).getOriginalFilename());
-//            fileVO.setFilePath(getPath());
-//            fileService.register(fileVO);
-//        }
+        for(int i = 0; i < uploadFiles.size(); i++) {
+            if(uploadFiles.get(i).isEmpty()) { count++; continue;}
+            PostFileVO postFileVO = new PostFileVO();
+            postFileVO.setPostFileName(uuids.get(i - count) + "_" + uploadFiles.get(i).getOriginalFilename());
+            postFileVO.setPostFilePath(getPath());
+            postFileService.register(postFileVO);
+        }
 
         postService.write(postVO);
 
