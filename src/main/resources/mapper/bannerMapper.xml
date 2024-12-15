@@ -1,7 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.app.restful.mapper.BannerMapper">
-    <select id="getTime" resultType="string">
-        SELECT CURRENT_TIMESTAMP FROM DUAL
+<mapper namespace="com.app.springpowpow.mapper.BannerMapper">
+    <insert id="insert" parameterType="BannerVO">
+        INSERT INTO TBL_BANNER(ID, MEMBER_ID, BANNER_START, BANNER_END, BANNER_TITLE, BANNER_LINK, BANNER_TYPE, BANNER_IMAGE)
+        VALUES(SEQ_BANNER.NEXTVAL, #{memberId}, #{bannerStart}, #{bannerEnd}, #{bannerTitle},#{bannerLink}, #{bannerType}, #{bannerImage})
+    </insert>
+
+    <select id="selectAll" resultType="BannerDTO">
+        SELECT ID, TO_CHAR(BANNER_START, 'YYYY-MM-DD') AS BANNER_START, TO_CHAR(BANNER_END, 'YYYY-MM-DD') AS BANNER_END, BANNER_TITLE, BANNER_TYPE, BANNER_IMAGE
+        FROM TBL_BANNER
     </select>
+
+    <select id="select" resultType="BannerDTO" parameterType="Long">
+        SELECT ID, TO_CHAR(BANNER_START, 'YYYY-MM-DD') AS BANNER_START, TO_CHAR(BANNER_END, 'YYYY-MM-DD') AS BANNER_END, BANNER_LINK, BANNER_TITLE, BANNER_TYPE, BANNER_IMAGE
+        FROM TBL_BANNER
+        WHERE ID = #{id}
+    </select>
+
+    <update id="update" parameterType="BannerVO">
+        UPDATE TBL_BANNER
+        SET BANNER_START = #{bannerStart}, BANNER_END = #{bannerEnd}, BANNER_TITLE = #{bannerTitle}, BANNER_LINK = #{bannerLink}, BANNER_TYPE = #{bannerType}, BANNER_IMAGE = #{bannerImage}
+        WHERE ID = #{id}
+    </update>
+
+    <delete id="delete" parameterType="Long">
+        DELETE FROM TBL_BANNER
+        WHERE ID = #{id}
+    </delete>
 </mapper>

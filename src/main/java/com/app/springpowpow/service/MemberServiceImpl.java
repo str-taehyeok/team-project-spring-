@@ -82,5 +82,16 @@ public class MemberServiceImpl implements MemberService {
     public Optional<MemberVO> findMember(String memberEmail) {
         return memberDAO.findMember(memberEmail);
     }
+
+
+    @Override
+    public List<MemberVO> findBuyers(){
+        return memberDAO.findBuyersOnly();
+    }
+
+    @Override
+    public List<MemberVO> findSellers(){
+        return memberDAO.findSellersOnly();
+    }
 }
 

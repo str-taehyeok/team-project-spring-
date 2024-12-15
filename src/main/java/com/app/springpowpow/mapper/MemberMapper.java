@@ -36,4 +36,10 @@ public interface MemberMapper {
     // 이메일로 회원 정보 조회
     public Optional<MemberVO> findMemberByEmail(String memberEmail);
 
+//    어드민구매자 전체조회
+    public List<MemberVO> selectBuyers();
+
+//    어드민 판매자 전체 조회
+    public List<MemberVO> selectSellers();
+
 }

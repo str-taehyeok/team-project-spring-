@@ -1,7 +1,9 @@
 package com.app.springpowpow.product;
 
 import com.app.springpowpow.domain.CartDTO;
+import com.app.springpowpow.domain.MemberVO;
 import com.app.springpowpow.service.CartService;
+import com.app.springpowpow.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,10 @@ public class CartTests {
 
     @Autowired
     private CartService cartService;
+    @Autowired
+    private MemberService memberService;
+    @Autowired
+    private MemberVO memberVO;
 
     @Test
     public void cartTest(){
@@ -23,4 +29,6 @@ public class CartTests {
 //        log.info("cart {}" , cartService.getCartProductById(1L));
         cartService.removeMember(1L);
     }
+
+
 }
