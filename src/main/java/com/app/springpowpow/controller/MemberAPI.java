@@ -4,6 +4,7 @@ import com.app.springpowpow.domain.MemberVO;
 import com.app.springpowpow.service.MemberService;
 import com.app.springpowpow.service.SnsService;
 import com.app.springpowpow.util.JwtTokenUtil;
+import com.app.springpowpow.util.SmsUtil;
 import io.jsonwebtoken.Claims;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,11 +20,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,6 +35,8 @@ public class MemberAPI {
     private final MemberService memberService;
     private final SnsService snsService;
     private final MemberVO memberVO;
+    private Map<String, String> authCodeMap;
+    private final SmsUtil smsUtil;
 
 
     //    회원가입
@@ -259,33 +262,65 @@ public class MemberAPI {
 
     ////////////////////////////////////////////////////////////////////////////////////////// 비밀번호 찾기
 
-//    @Operation(summary = "비밀번호 찾기", description = "전화번호로 이메일을 찾고, 이메일로 인증번호를 보내는 API")
+
+
+    // 비밀번호 찾기
+//    @Operation(summary = "비밀번호 찾기", description = "비밀번호를 찾을 수 있는 API")
 //    @ApiResponse(responseCode = "200", description = "비밀번호 찾기 성공")
 //    @PostMapping("/find-password")
-//    public ResponseEntity<Map<String, Object>> findPassword(@RequestBody String memberPhone) {
+//    public ResponseEntity<Map<String, Object>> findPassword(@RequestBody Map<String, String> req) {
 //        Map<String, Object> response = new HashMap<>();
+//        String memberEmail = req.get("memberEmail");
 //
-////         1) 전화번호로 이메일을 찾는다.
-//        String memberEmail = memberService.findEmail(memberPhone);
-//
-//        if (memberEmail != null) {
-//            // 2) 이메일로 인증번호를 전송한다.
-//            String authCode = generateAuthCode(); // 인증번호 생성
-//            sendEmailWithAuthCode(memberEmail, authCode); // 인증번호 이메일로 발송
-//
-//            authCodeMap.put(memberEmail, authCode);
-//
-//            response.put("message", "인증번호가 이메일로 전송되었습니다.");
-//            return ResponseEntity.ok(response);
+//        // 1. 이메일 입력 확인
+//        if (memberEmail == null || memberEmail.isEmpty()) {
+//            response.put("message", "이메일을 입력해주세요.");
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 //        }
 //
-//        response.put("message", "이메일을 찾을 수 없습니다.");
-//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+//        // 2. 인증번호 생성 (6자리 숫자)
+//        String authCode = generateAuthCode();
+//
+//        // 3. 이메일로 인증번호 전송
+//        boolean emailSent = sendEmailWithAuthCode(memberEmail, authCode);
+//
+//        if (!emailSent) {
+//            response.put("message", "이메일 전송에 실패했습니다.");
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+//        }
+//
+//        // 4. 인증번호 저장
+//        authCodeMap.put(memberEmail, authCode);
+//
+//        // 5. 인증번호가 이메일로 전송되었다는 응답
+//        response.put("message", "인증번호가 이메일로 전송되었습니다.");
+//        return ResponseEntity.ok(response);
 //    }
 //
+//    // 인증번호 생성 (6자리 숫자)
+//    private String generateAuthCode() {
+//        Random rand = new Random();
+//        int authCode = rand.nextInt(999999 - 100000) + 100000; // 6자리 숫자 생성
+//        return String.valueOf(authCode);
+//    }
 //
+//    // 이메일로 인증번호 전송
+//    private boolean sendEmailWithAuthCode(String memberEmail, String authCode) {
+//        String subject = "비밀번호 찾기 인증번호";
+//        String content = "비밀번호 찾기 인증번호는 " + authCode + " 입니다.";
 //
-//    @Operation(summary = "비밀번호 찾기 인증번호 확인", description = "이메일로 받은 인증번호를 확인하는 API")
+//        // 이메일 전송 시 결과를 boolean으로 반환
+//        try {
+//            snsService.sendEmail(memberEmail, subject, content);
+//            return true;  // 이메일 전송 성공
+//        } catch (Exception e) {
+//            log.error("이메일 전송 실패. 이메일: {}, 인증번호: {}, 오류: {}", memberEmail, authCode, e.getMessage(), e);
+//            return false;  // 이메일 전송 실패
+//        }
+//    }
+//
+//    // 인증번호 확인
+//    @Operation(summary = "인증번호 확인", description = "비밀번호 찾기 인증번호를 확인하는 API")
 //    @ApiResponse(responseCode = "200", description = "인증번호 확인 성공")
 //    @PostMapping("/verify-password-auth")
 //    public ResponseEntity<Map<String, Object>> verifyPasswordAuthCode(@RequestBody Map<String, String> req) {
@@ -305,9 +340,8 @@ public class MemberAPI {
 //        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 //    }
 //
-//
-//
-//    @Operation(summary = "새 비밀번호로 변경", description = "인증번호가 맞으면 새 비밀번호를 변경하는 API")
+//    // 비밀번호 변경
+//    @Operation(summary = "비밀번호 변경", description = "새로운 비밀번호로 변경하는 API")
 //    @ApiResponse(responseCode = "200", description = "비밀번호 변경 성공")
 //    @PostMapping("/change-password")
 //    public ResponseEntity<Map<String, Object>> changePassword(@RequestBody Map<String, String> req) {
@@ -320,7 +354,7 @@ public class MemberAPI {
 //        String storedAuthCode = authCodeMap.get(memberEmail);
 //
 //        if (storedAuthCode != null && storedAuthCode.equals(authCode)) {
-//            // 인증번호가 맞으면 비밀번호 변경
+//            // 비밀번호 변경 로직
 //            memberService.updatePassword(memberEmail, newPassword);
 //
 //            // 비밀번호 변경 후 인증번호 삭제
@@ -333,7 +367,5 @@ public class MemberAPI {
 //        response.put("message", "인증번호가 올바르지 않습니다.");
 //        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 //    }
-
-
 
 }
