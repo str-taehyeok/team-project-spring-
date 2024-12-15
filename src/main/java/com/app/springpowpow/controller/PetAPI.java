@@ -72,20 +72,20 @@ public PetDTO getPet(@PathVariable Long id){
     return new PetDTO();
 }
 
-// 마이펫 수정
-@Operation(summary = "마이펫 수정", description = "마이펫 수정할 수 있는 API")
-@Parameter( name = "id", description = "마이펫 번호", schema = @Schema(type="number"), in = ParameterIn.PATH, required = true )
-@ApiResponse(responseCode = "200", description = "마이펫 수정 완료")
-@PutMapping("my-pet/{id}")
-public PetDTO modify(@PathVariable Long id, @RequestBody PetVO petVO){
-    petVO.setId(id);
-    petService.modify(petVO);
-    Optional<PetDTO> foundPet = petService.getPet(petVO.getId());
-    if(foundPet.isPresent()){
-        return foundPet.get();
+    // 마이펫 수정
+    @Operation(summary = "마이펫 수정", description = "마이펫 수정할 수 있는 API")
+    @Parameter( name = "id", description = "마이펫 번호", schema = @Schema(type="number"), in = ParameterIn.PATH, required = true )
+    @ApiResponse(responseCode = "200", description = "마이펫 수정 완료")
+    @PutMapping("my-pet/{id}")
+    public PetDTO modify(@PathVariable Long id, @RequestBody PetVO petVO) {
+        petVO.setId(id);
+        petService.modify(petVO);
+        Optional<PetDTO> foundPet = petService.getPet(petVO.getId());
+        if (foundPet.isPresent()) {
+            return foundPet.get();
+        }
+        return new PetDTO();
     }
-    return new PetDTO();
-}
 
     //    마이펫 삭제
     @Operation(summary = "마이펫 삭제", description = "마이펫 삭제할 수 있는 API")

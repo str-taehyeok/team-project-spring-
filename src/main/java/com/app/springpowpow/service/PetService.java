@@ -25,5 +25,5 @@ public interface PetService {
     public void removeAll(Long memberId);
 
 //    펫컬러 등록
-    public void registerPetColor(Long id);
+    public void modifyPetColor(PetVO petVO);
 }

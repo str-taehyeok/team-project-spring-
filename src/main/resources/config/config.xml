@@ -5,6 +5,7 @@
         <typeAlias type="com.app.springpowpow.domain.DefaultVO" alias="DefaultVO" />
         <typeAlias type="com.app.springpowpow.domain.MemberVO" alias="MemberVO" />
         <typeAlias type="com.app.springpowpow.domain.PostVO" alias="PostVO" />
+        <typeAlias type="com.app.springpowpow.domain.FileVO" alias="FileVO" />
         <typeAlias type="com.app.springpowpow.domain.PostDTO" alias="PostDTO" />
         <typeAlias type="com.app.springpowpow.domain.AdjustmentDTO" alias="AdjustmentDTO"/>
         <typeAlias type="com.app.springpowpow.domain.AdjustmentVO" alias="AdjustmentVO" />
@@ -15,6 +16,7 @@
         <typeAlias type="com.app.springpowpow.domain.CommLikesVO" alias="CommLikesVO" />
         <typeAlias type="com.app.springpowpow.domain.CommLikesDTO" alias="CommLikesDTO" />
         <typeAlias type="com.app.springpowpow.domain.CouponVO" alias="CouponVO" />
+        <typeAlias type="com.app.springpowpow.domain.CouponDTO" alias="CouponDTO" />
         <typeAlias type="com.app.springpowpow.domain.DeliveryVO" alias="DeliveryVO" />
         <typeAlias type="com.app.springpowpow.domain.FollowsVO" alias="FollowsVO" />
         <typeAlias type="com.app.springpowpow.domain.NoticeVO" alias="NoticeVO" />
