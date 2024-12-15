@@ -49,7 +49,8 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public void registerPetColor(Long id) {
-        petDAO.updatePetColor(id);
+    public void modifyPetColor(PetVO petVO) {
+
+        petDAO.updatePetColor(petVO);
     }
 }

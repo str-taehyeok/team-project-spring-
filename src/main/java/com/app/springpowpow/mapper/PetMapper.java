@@ -28,5 +28,5 @@ public interface PetMapper {
     public void deleteAll(Long memberId);
 
 //    펫컬러 수정
-    public void updateColor(Long id);
+    public void updateColor(PetVO petVO);
 }
