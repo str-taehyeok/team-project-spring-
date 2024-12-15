@@ -10,17 +10,19 @@ import java.util.Date;
 @Component
 @Data
 @Schema(description = "공지사항 정보")
-public class NoticeVO implements Serializable {
+public class NoticeVO {
 
-    @Schema(description = "공지사항 번호", example = "25", required = true)
+    @Schema(description = "공지사항 번호", example = "1", required = true)
     private Long id;
+    @Schema(description = "관리자 정보", example = "1", required = true)
+    private Long memberId;
     @Schema(description = "공지사항 제목", example = "POWPOW 공지사항 제목", required = true)
     private String noticeTitle;
     @Schema(description = "공지사항 내용", example = "POWPOW 공지사항 내용", required = true)
     private String noticeContent;
-    @Schema(description = "공지사항 등록일자", example = "2024-12-11", required = true)
-    private Date noticeDate;
-    @Schema(description = "공지사항 조회수", example = "1000")
+    @Schema(description = "공지사항 등록일자", example = "2012-11-07")
+    private String noticeDate;
+    @Schema(description = "공지사항 조회수", example = "0")
     private Long noticeCount;
     
 }
