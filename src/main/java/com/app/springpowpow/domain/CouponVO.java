@@ -11,16 +11,18 @@ import java.io.Serializable;
 @Schema(description = "쿠폰 정보")
 public class CouponVO {
 
-    @Schema(description = "쿠폰 번호", example = "21", required = true)
+    @Schema(description = "쿠폰 번호", example = "1", required = true)
     private Long id;
-    @Schema(description = "멤버 번호", example = "11")
+    @Schema(description = "멤버 번호", example = "1")
     private Long memberId;
+    @Schema(description = "제품 번호", example = "1")
+    private Long productId;
     @Schema(description = "쿠폰 이름", example = "쿠폰 이름", required = true)
     private String couponTitle;
     @Schema(description = "쿠폰 카테고리", example = "장난감", required = true)
     private String couponCategory;
     @Schema(description = "쿠폰 카테고리 동물", example = "고양이", required = true)
-    private String couponCategoryAnimal;
+    private String couponAnimal;
     @Schema(description = "쿠폰 코드", example = "ABCDEFGH1234125", required = true)
     private String couponCode;
     @Schema(description = "쿠폰 시작 시간", example = "2024-11-21")
