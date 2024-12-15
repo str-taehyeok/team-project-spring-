@@ -163,12 +163,13 @@ public class MemberAPI {
 
         return ResponseEntity.ok(response);
     }
+
     //  단일회원조회
     @Operation(summary = "회원정보 조회", description = "회원 개인정보를 조회할 수 있는 API")
     @Parameter(
             name = "id",
             description = "회원 번호",
-            schema = @Schema(type="number"), // DB의 스키마를 의미하는 것이 아니라, Swagger에서 인식하기 위한 타입
+            schema = @Schema(type = "number"), // DB의 스키마를 의미하는 것이 아니라, Swagger에서 인식하기 위한 타입
             in = ParameterIn.PATH, // path로 전달
             required = true
     )
@@ -184,18 +185,18 @@ public class MemberAPI {
     }
 
 
-//  회원탈퇴(구매자)
+    //  회원탈퇴(구매자)
     @Operation(summary = "회원탈퇴", description = "회원정보 탈퇴할 수 있는 API")
-    @Parameter( name = "id", description = "회원 번호", schema = @Schema(type="number"), in = ParameterIn.PATH, required = true )
+    @Parameter(name = "id", description = "회원 번호", schema = @Schema(type = "number"), in = ParameterIn.PATH, required = true)
     @ApiResponse(responseCode = "200", description = "회원정보 탈퇴 완료")
     @DeleteMapping("/buyer/{id}")
     public void deleteMember(@PathVariable Long id) {
         memberService.withdraw(id);
     }
 
-//  회원탈퇴(판매자)
+    //  회원탈퇴(판매자)
     @Operation(summary = "판매자회원탈퇴", description = "회원정보 탈퇴할 수 있는 API")
-    @Parameter( name = "id", description = "판매자 회원 번호", schema = @Schema(type="number"), in = ParameterIn.PATH, required = true )
+    @Parameter(name = "id", description = "판매자 회원 번호", schema = @Schema(type = "number"), in = ParameterIn.PATH, required = true)
     @ApiResponse(responseCode = "200", description = "회원정보 탈퇴 완료")
     @DeleteMapping("/seller/{id}")
     public void deleteSeller(@PathVariable Long id) {
@@ -210,7 +211,7 @@ public class MemberAPI {
     @PostMapping("/find-id")
     public String findId(@RequestBody String memberPhone) {
 
-    // 이름과 전화번호로 회원을 조회
+        // 이름과 전화번호로 회원을 조회
         String memberEmail = memberService.findEmail(memberPhone);
         return memberEmail;
     }
@@ -253,6 +254,84 @@ public class MemberAPI {
 //        List<MemberVO> buyers = memberService.findBuyers();
 //        if (buyers.size() > 0) {}
 //
+//    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////// 비밀번호 찾기
+
+//    @Operation(summary = "비밀번호 찾기", description = "전화번호로 이메일을 찾고, 이메일로 인증번호를 보내는 API")
+//    @ApiResponse(responseCode = "200", description = "비밀번호 찾기 성공")
+//    @PostMapping("/find-password")
+//    public ResponseEntity<Map<String, Object>> findPassword(@RequestBody String memberPhone) {
+//        Map<String, Object> response = new HashMap<>();
+//
+////         1) 전화번호로 이메일을 찾는다.
+//        String memberEmail = memberService.findEmail(memberPhone);
+//
+//        if (memberEmail != null) {
+//            // 2) 이메일로 인증번호를 전송한다.
+//            String authCode = generateAuthCode(); // 인증번호 생성
+//            sendEmailWithAuthCode(memberEmail, authCode); // 인증번호 이메일로 발송
+//
+//            authCodeMap.put(memberEmail, authCode);
+//
+//            response.put("message", "인증번호가 이메일로 전송되었습니다.");
+//            return ResponseEntity.ok(response);
+//        }
+//
+//        response.put("message", "이메일을 찾을 수 없습니다.");
+//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+//    }
+//
+//
+//
+//    @Operation(summary = "비밀번호 찾기 인증번호 확인", description = "이메일로 받은 인증번호를 확인하는 API")
+//    @ApiResponse(responseCode = "200", description = "인증번호 확인 성공")
+//    @PostMapping("/verify-password-auth")
+//    public ResponseEntity<Map<String, Object>> verifyPasswordAuthCode(@RequestBody Map<String, String> req) {
+//        Map<String, Object> response = new HashMap<>();
+//        String memberEmail = req.get("memberEmail");
+//        String authCode = req.get("authCode");
+//
+//        // 인증번호 확인
+//        String storedAuthCode = authCodeMap.get(memberEmail);
+//
+//        if (storedAuthCode != null && storedAuthCode.equals(authCode)) {
+//            response.put("message", "인증번호가 확인되었습니다.");
+//            return ResponseEntity.ok(response);
+//        }
+//
+//        response.put("message", "인증번호가 올바르지 않습니다.");
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+//    }
+//
+//
+//
+//    @Operation(summary = "새 비밀번호로 변경", description = "인증번호가 맞으면 새 비밀번호를 변경하는 API")
+//    @ApiResponse(responseCode = "200", description = "비밀번호 변경 성공")
+//    @PostMapping("/change-password")
+//    public ResponseEntity<Map<String, Object>> changePassword(@RequestBody Map<String, String> req) {
+//        Map<String, Object> response = new HashMap<>();
+//        String memberEmail = req.get("memberEmail");
+//        String authCode = req.get("authCode");
+//        String newPassword = req.get("newPassword");
+//
+//        // 인증번호 확인
+//        String storedAuthCode = authCodeMap.get(memberEmail);
+//
+//        if (storedAuthCode != null && storedAuthCode.equals(authCode)) {
+//            // 인증번호가 맞으면 비밀번호 변경
+//            memberService.updatePassword(memberEmail, newPassword);
+//
+//            // 비밀번호 변경 후 인증번호 삭제
+//            authCodeMap.remove(memberEmail);
+//
+//            response.put("message", "비밀번호가 성공적으로 변경되었습니다.");
+//            return ResponseEntity.ok(response);
+//        }
+//
+//        response.put("message", "인증번호가 올바르지 않습니다.");
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 //    }
 
 
