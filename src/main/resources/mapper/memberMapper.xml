@@ -139,4 +139,6 @@
         WHERE MEMBER_EMAIL = #{memberEmail}
     </update>
 
+
+
 </mapper>

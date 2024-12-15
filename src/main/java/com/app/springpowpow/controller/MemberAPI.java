@@ -20,10 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -249,15 +246,39 @@ public class MemberAPI {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
-//    @Operation(summary = "어드민에서 일반회원과 구매자 따로 전체조회", description = "모든 일반 회원 정보를 조회할 수 있는 API")
-//    @Parameters({
-//            @Parameter(name = "memberProvider", description = "구매자 또는 판매자", schema = @Schema(type = "string", example = "구매자", description = "조회하고싶은 회원의 타입을 입력해주세요"))
-//    })
-//    public MemberVO getMemberListByType() {
-//        List<MemberVO> buyers = memberService.findBuyers();
-//        if (buyers.size() > 0) {}
-//
-//    }
+
+
+
+//    어드민에서 회원 찾기
+    @Operation(summary = "어드민에서 일반회원과 판매자 전체조회", description = "구매자 또는 판매자 유형에 따라 회원 정보를 조회할 수 있는 API")
+    @Parameters({
+            @Parameter(
+                    name = "memberProvider",
+                    description = "구매자 또는 판매자",
+                    schema = @Schema(type = "string", example = "구매자", description = "조회하고 싶은 회원의 타입을 입력해주세요"))
+    })
+    @GetMapping("/admin/members")
+    public ResponseEntity<List<MemberVO>> getMemberListByType(
+            @RequestParam(name = "memberProvider") String memberProvider) {
+
+        List<MemberVO> result;
+
+        // memberProvider 파라미터에 따라 다른 로직 수행
+        if ("구매자".equals(memberProvider)) {
+            result = memberService.findBuyers();
+        } else if ("판매자".equals(memberProvider)) {
+            result = memberService.findSellers();
+        } else {
+            return ResponseEntity.badRequest().body(Collections.emptyList());
+        }
+
+        // 결과가 비어있지 않은 경우 반환
+        if (!result.isEmpty()) {
+            return ResponseEntity.ok(result);
+        } else {
+            return ResponseEntity.noContent().build();
+        }
+    }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////// 비밀번호 찾기

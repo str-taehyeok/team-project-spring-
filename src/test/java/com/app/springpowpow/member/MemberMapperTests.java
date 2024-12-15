@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 @SpringBootTest
 @Slf4j
 public class MemberMapperTests {
@@ -57,5 +59,14 @@ public class MemberMapperTests {
 //        log.info(email);
 //    }
 
+
+//    통과
+    @Test
+    public void getSellerListTest() {
+        List<MemberVO> sellers = memberService.findSellers();
+
+        log.info("판매자 리스트: " + sellers);
+
+    }
 
 }
