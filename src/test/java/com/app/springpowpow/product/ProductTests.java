@@ -59,4 +59,31 @@ public class ProductTests {
         productService.insertNewProduct(productVO);
 
     }
+
+
+//    통과 update
+    @Test
+    public void updateProductTest() {
+        ProductDTO productDTO = new ProductDTO();
+
+        productDTO.setId(50L);
+        productDTO.setMemberId(30L);
+        productDTO.setProductName("test12412");
+        productDTO.setProductPrice(2000);
+        productDTO.setProductCode("101010");
+        productDTO.setProductDate("2024-01-01");
+        productDTO.setProductStock(300);
+        productDTO.setProductEditDate("2024-12-12");
+        productDTO.setProductDetail("detail");
+        productDTO.setProductImage1("test.png");
+        productDTO.setProductImage2("test2.png");
+        productDTO.setProductImage3("test3.png");
+        productDTO.setProductImage4("test4.png");
+        productDTO.setProductAnimal("dog");
+        productDTO.setProductCategory("healthcare");
+        productDTO.setProductColor("orange");
+        productDTO.setProductSize('m');
+
+        productService.updateProduct(productDTO);
+    }
 }
