@@ -32,5 +32,13 @@ public class OrderDAO {
             orderMapper.delete(id);
         }
 
+        public void update(OrderVO orderVO) {
+            orderMapper.update(orderVO);
+        }
+
+        public Optional<OrderDTO> findByOrderDate(String orderDate) {
+            return orderMapper.selectAllByDate(orderDate);
+        }
+
     }
 
