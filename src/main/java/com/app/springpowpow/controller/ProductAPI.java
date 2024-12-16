@@ -63,6 +63,13 @@ public class ProductAPI {
         return productService.selectAllProducts();
     }
 
+    @Operation(summary = "동물 종에 따른 제품 전체 조회", description = "종에 따라 모든 제품을 리스트로 볼수 있는 API")
+    @GetMapping("products/{productAnimal}")
+    public List<ProductDTO> products(@PathVariable String productAnimal) {
+        return productService.selectProductsByAnimal();
+    }
+
+
 
 //  단일 제품
     @Operation(summary = "제품 단일 조회", description = "제품 한가지를 볼수 있는 API")

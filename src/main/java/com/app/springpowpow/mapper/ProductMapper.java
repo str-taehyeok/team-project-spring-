@@ -15,6 +15,10 @@ public interface ProductMapper {
     public Optional<ProductDTO> select(Long id);
 //    제품 리스트
     public List<ProductDTO> selectAll();
+
+//    종에 따른 리스트
+    public List<ProductDTO> selectByAnimal();
+
 //    판매자의 모든 제품
     public List<ProductDTO> selectAllBySeller(Long memberId);
 //    수정

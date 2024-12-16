@@ -17,6 +17,10 @@ public interface ProductService {
 //    상품 전체
     public List<ProductDTO> selectAllProducts();
 
+//    종으로 분리한 리스트
+    public List<ProductDTO> selectProductsByAnimal();
+
+
 //    특정 판매자의 상품전체
     public List<ProductDTO> selectAllProductsBySellerId(Long memberId);
 

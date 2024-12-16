@@ -22,7 +22,7 @@ import java.util.Optional;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/order/*")
+@RequestMapping("/orders/*")
 public class OrderAPI {
     private final OrderService orderService;
 
