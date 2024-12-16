@@ -32,6 +32,10 @@ public class ProductDAO {
             return productMapper.selectAll();
         }
 
+//        종에따른 분류 리스트
+        public List<ProductDTO> findProductByAnimal() {return productMapper.selectByAnimal();}
+
+
 //        판매자의 모든 제품
         public List<ProductDTO> findAllProductBySeller(Long memberId) {
             return productMapper.selectAllBySeller(memberId);

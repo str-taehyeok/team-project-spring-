@@ -35,6 +35,11 @@ public class ProductServiceImpl implements ProductService {
         return productDAO.findAllProduct();
     }
 
+    public List<ProductDTO> selectProductsByAnimal() {
+        return productDAO.findProductByAnimal();
+    }
+
+
     @Override
     public List<ProductDTO> selectAllProductsBySellerId(Long memberId) {
         return productDAO.findAllProductBySeller(memberId);
