@@ -1,12 +1,9 @@
 package com.app.springpowpow.controller;
 
 import com.app.springpowpow.domain.CouponVO;
-import com.app.springpowpow.domain.PetDTO;
-import com.app.springpowpow.domain.PetVO;
 import com.app.springpowpow.service.CouponService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -65,10 +62,32 @@ public class CouponAPI {
         return couponService.getAllCoupons();
     }
 
+    //  쿠폰 단일 조회
+    @Operation(summary = "쿠폰 정보 조회", description = "쿠폰 정보를 전체 조회할 수 있는 API")
+    @Parameter( name = "id", description = "쿠폰 번호", schema = @Schema(type="number"), in = ParameterIn.HEADER, required = true )
+    @GetMapping("coupons/{id}")
+    public CouponVO getCoupon(@PathVariable Long id){
+        Optional<CouponVO> foundCoupon = couponService.getCouponById(id);
+        if(foundCoupon.isPresent()){
+            return foundCoupon.get();
+        }
+        return new CouponVO();
+    }
+
+    //  쿠폰리스트 조회 (멤버)
+    @Operation(summary = "쿠폰 정보 조회(멤버)", description = "쿠폰 정보를 전체 조회할 수 있는 API")
+    @Parameter( name = "memberId", description = "멤버 번호", schema = @Schema(type="number"), in = ParameterIn.HEADER, required = true )
+    @GetMapping("coupons/member/{memberId}")
+    public List<CouponVO> getCouponsByMemberId(@PathVariable Long memberId){
+        return couponService.getCouponByMemberId(memberId);
+    }
+
+
+
     //    쿠폰 삭제
     @Operation(summary = "쿠폰 삭제", description = "쿠폰 삭제할 수 있는 API")
     @Parameter( name = "id", description = "쿠폰 번호", schema = @Schema(type="number"), in = ParameterIn.PATH, required = true )
-    @ApiResponse(responseCode = "200", description = "마이펫 삭제 완료")
+    @ApiResponse(responseCode = "200", description = "쿠폰 삭제 완료")
     @DeleteMapping("coupons/{id}")
     public void delete(@PathVariable Long id){
         couponService.deleteCoupon(id);
