@@ -386,5 +386,13 @@ public class MemberAPI {
 //        response.put("message", "인증번호가 올바르지 않습니다.");
 //        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 //    }
-
+    @Operation(summary = "유저 정보 변경", description = "유저 정보를 업데이트 하는 API")
+    @Parameter( name = "id", description = "멤버 번호", schema = @Schema(type = "number"), in = ParameterIn.PATH, required = true )
+    @ApiResponse(responseCode = "200", description = "정보 변경 완료")
+    @PutMapping("update/{id}")
+    public MemberVO modify(@PathVariable Long id, @RequestBody MemberVO memberVO) {
+        memberVO.setId(id);
+        memberService.modify(memberVO);
+        return memberVO;
+    }
 }

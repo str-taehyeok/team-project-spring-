@@ -66,6 +66,20 @@ public class OrderAPI {
         orderService.deleteOrderById(id);
     }
 
+//    주문 수정
+    @Operation(summary = "주문 수정", description = "주문 수정하는 API")
+    @Parameter( name = "id", description = "주문 번호", schema = @Schema(type="number"))
+    @ApiResponse(responseCode = "200", description = "주문 수정 완료")
+    @PutMapping("order/{id}")
+    public OrderVO modify(@PathVariable Long id, @RequestBody OrderVO orderVO){
+        orderVO.setId(id);
+        orderService.updateOrderById(orderVO);
+        return orderVO;
+    }
+
+//    @Operation(summary = "")
+
+
 
 
 
