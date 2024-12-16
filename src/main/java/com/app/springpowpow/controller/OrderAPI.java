@@ -37,8 +37,9 @@ public class OrderAPI {
             @Parameter(name = "productCount", description = "제품 개수", schema = @Schema(type = "String"), in = ParameterIn.HEADER),
     })
     @PostMapping("write")
-    public void insert(@RequestBody OrderVO orderVO) {
-        orderService.insertOrder(orderVO);
+    public OrderVO write(@RequestBody OrderVO orderVO) {
+        orderService.insertNewOrder(orderVO);
+        return new OrderVO();
     }
 
     @Operation(summary = "주문 전체 조회", description = "모든 주문을 리스트로 볼수 있는 API")

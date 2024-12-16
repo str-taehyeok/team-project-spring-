@@ -24,7 +24,7 @@ public class OrderVO {
     @Schema(description = "주문 번호", example = "1000100")
     private String orderNumber;
 
-    @Schema(description = "주문 날짜", example = "2024-06-01T12:00:00")
+    @Schema(description = "주문 날짜", example = "2024-06-01")
     private String orderDate;
 
     @Schema(description = "주문 주소", example = "서울특별시 강남구 테헤란로 123")
