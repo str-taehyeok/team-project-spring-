@@ -45,4 +45,5 @@ public interface MemberMapper {
 //    비밀번호 변경
     public void updatePassword(MemberVO memberVO);
 
+
 }
