@@ -1,6 +1,7 @@
 package com.app.springpowpow.repository;
 
 import com.app.springpowpow.domain.ProductDTO;
+import com.app.springpowpow.domain.ProductFileVO;
 import com.app.springpowpow.domain.ProductVO;
 import com.app.springpowpow.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +16,7 @@ public class ProductDAO {
 
         private final ProductMapper productMapper;
 
-
-//        제품 등록
+    //        제품 등록
         public void save(ProductVO productVO) {
             productMapper.insert(productVO);
         }
@@ -56,5 +56,27 @@ public class ProductDAO {
         public void deleteAllProducts(Long memberId){
             productMapper.deleteAll(memberId);
         }
+
+//        사진 추가
+    public void saveImage(ProductFileVO productFileVO) {
+        productMapper.insertImage(productFileVO);
+    }
+
+//    사진 수정
+    public void updateImage(ProductFileVO productFileVO) {
+            productMapper.updateImage(productFileVO);
+    }
+
+//    제품 삭제시 사진도 삭제
+    public void deleteImage(Long productId) {
+            productMapper.delete(productId);
+    }
+
+//    모든 사진
+    public List<ProductFileVO> findAll() {
+        return productMapper.selectAllImage();
+    }
+
+
     }
 

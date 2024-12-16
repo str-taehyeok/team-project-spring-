@@ -1,6 +1,7 @@
 package com.app.springpowpow.mapper;
 
 import com.app.springpowpow.domain.ProductDTO;
+import com.app.springpowpow.domain.ProductFileVO;
 import com.app.springpowpow.domain.ProductVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -28,5 +29,19 @@ public interface ProductMapper {
 
 //   회원탈퇴시 상품 전체삭제
     public void deleteAll(Long memberId);
+
+
+//    사진 추가
+    public void insertImage(ProductFileVO productFileVO);
+
+//    SELECT ALL
+    public List<ProductFileVO> selectAllImage();
+
+//    사진 수정
+    public void updateImage(ProductFileVO productFileVO);
+
+
+//    제품 삭제시 사진도 삭제
+    public void deleteAllImage(Long productId);
 
 }

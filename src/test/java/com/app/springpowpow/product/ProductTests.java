@@ -2,6 +2,7 @@ package com.app.springpowpow.product;
 
 import com.app.springpowpow.domain.CouponVO;
 import com.app.springpowpow.domain.ProductDTO;
+import com.app.springpowpow.domain.ProductFileVO;
 import com.app.springpowpow.domain.ProductVO;
 import com.app.springpowpow.mapper.CouponMapper;
 import com.app.springpowpow.mapper.ProductMapper;
@@ -28,4 +29,16 @@ public class ProductTests {
         log.info(productService.selectAllProducts().toString());
     }
 
+
+    @Test
+    public void insertImageTest(){
+        ProductFileVO productFileVO = new ProductFileVO();
+
+        productFileVO.setId(2L);
+        productFileVO.setProductId(3L);
+        productFileVO.setProductFileName("test.jpg");
+        productFileVO.setProductFilePath("test.jpg");
+
+        productService.updateImage(productFileVO);
+    }
 }

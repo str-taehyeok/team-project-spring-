@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.app.springpowpow.mapper.ProductFilterMapper">
+<!--    제품 추가-->
+    <insert id="insertImage" parameterType="ProductDTO">
+        INSERT INTO TBL_PRODUCT_FILE (ID, PRODUCT_ID, PRODUCT_FILE_NAME, PRODUCT_FILE_PATH)
+        VALUES (SEQ_PRODUCT.NEXTVAL, #{productId}, #{productFileName}, #{productFilePath})
+    </insert>
+
+
+<!--    사진 수정-->
+    <update id="updateImage" parameterType="ProductDTO">
+        UPDATE TBL_PRODUCT_FILE
+        SET PRODUCT_FILE_NAME = #{productFileName}, PRODUCT_FILE_PATH = #{productFilePath}
+    </update>
+
+    <select id="selectAll" resultType="ProductFileVO">
+        SELECT ID, PRODUCT_FILE_NAME, PRODUCT_FILE_PATH
+        FROM TBL_PRODUCT_FILE
+    </select>
+
+    <delete id="deleteAllImage" parameterType="Long">
+        DELETE FROM TBL_PRODUCT_FILE
+        WHERE PRODUCT_ID = #{productId}
+    </delete>
+
+</mapper>
