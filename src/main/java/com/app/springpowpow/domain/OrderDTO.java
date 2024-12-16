@@ -40,5 +40,7 @@ public class OrderDTO {
 
     private int totalPrice;
 
+    private int totalCount;
+
 
 }
