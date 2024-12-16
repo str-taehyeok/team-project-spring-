@@ -31,6 +31,7 @@
         <typeAlias type="com.app.springpowpow.domain.PetVO" alias="PetVO" />
         <typeAlias type="com.app.springpowpow.domain.PetDTO" alias="PetDTO" />
         <typeAlias type="com.app.springpowpow.domain.ProductLikesVO" alias="ProductLikesVO" />
+        <typeAlias type="com.app.springpowpow.domain.ProductFileVO" alias="ProductFileVO" />
         <typeAlias type="com.app.springpowpow.domain.ProductVO" alias="ProductVO" />
         <typeAlias type="com.app.springpowpow.domain.ProductDTO" alias="ProductDTO" />
         <typeAlias type="com.app.springpowpow.domain.ReviewDTO" alias="ReviewDTO" />

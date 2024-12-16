@@ -2,6 +2,7 @@ package com.app.springpowpow.service;
 
 import com.app.springpowpow.domain.DeliveryVO;
 import com.app.springpowpow.domain.ProductDTO;
+import com.app.springpowpow.domain.ProductFileVO;
 import com.app.springpowpow.domain.ProductVO;
 import com.app.springpowpow.repository.DeliveryDAO;
 import com.app.springpowpow.repository.ProductDAO;
@@ -54,5 +55,27 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteProduct(Long id) {
         productDAO.deleteProduct(id);
+    }
+
+
+    @Override
+    public void insertNewImage(ProductFileVO productFileVO) {
+        productDAO.saveImage(productFileVO);
+    }
+
+//    모든 사진 리스트로
+    @Override
+    public List<ProductFileVO> getList() {
+        return productDAO.findAll();
+    }
+
+    @Override
+    public void updateImage(ProductFileVO productFileVO) {
+        productDAO.updateImage(productFileVO);
+    }
+
+    @Override
+    public void deleteImage(Long productId) {
+        productDAO.deleteImage(productId);
     }
 }

@@ -30,7 +30,6 @@ public class MemberMapperTests {
         memberVO.setMemberZipcode("123456");
         memberVO.setMemberAddress("서울시 강남구");
         memberVO.setMemberAddressDetail("역삼동 111-111");
-        memberVO.setMemberImage("null");
         memberVO.setMemberSmsCheck('0');
         memberVO.setMemberEmailCheck('0');
         memberVO.setMemberBusinessNumber("null");
