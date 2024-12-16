@@ -28,8 +28,10 @@ public class MemberVO implements Serializable {
     private String memberAddress;
     @Schema(description = "회원 상세주소", example = "141-15 센터필드")
     private String memberAddressDetail;
-    @Schema(description = "회원 프로필이미지", example = "/assets/images/member/default-userImg.png")
-    private String memberImage;
+    @Schema(description = "회원 이미지파일 이름", example = "default-user-image")
+    private String memberFileName;
+    @Schema(description = "회원 이미지파일 경로", example = "default-user-image.jpg")
+    private String memberFilePath;
     @Schema(description = "회원 문자수신동의", example = "1")
     private char memberSmsCheck;
     @Schema(description = "회원 이메일수신동의", example = "1")

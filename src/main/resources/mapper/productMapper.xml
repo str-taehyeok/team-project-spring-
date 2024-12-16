@@ -56,4 +56,9 @@
         WHERE ID = #{id}
     </delete>
 
+    <delete id="deleteAll" parameterType="Long">
+        DELETE FROM TBL_PRODUCT
+        WHERE MEMBER_ID = #{memberId}
+    </delete>
+
 </mapper>

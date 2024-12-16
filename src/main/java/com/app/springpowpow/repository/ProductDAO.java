@@ -52,6 +52,9 @@ public class ProductDAO {
             productMapper.delete(id);
         }
 
-
+//        회원 탈퇴시 상품 전체 삭제
+        public void deleteAllProducts(Long memberId){
+            productMapper.deleteAll(memberId);
+        }
     }
 
