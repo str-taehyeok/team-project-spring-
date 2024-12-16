@@ -50,12 +50,16 @@ public class OrderAPI {
     }
 
     //  주문 단일
-    @Operation(summary = "주문 단일 조회", description = "주문 한가지를 볼수 있는 API")
-    @ApiResponse(responseCode = "200", description = "단일 주문 조회 완료")
-    @GetMapping("order/{id}")
-    public Optional<OrderDTO> product(@PathVariable Long id){
-        return orderService.getOrderById(id);
-    }
+//    @Operation(summary = "주문 단일 조회", description = "주문 한가지를 볼수 있는 API")
+//    @ApiResponse(responseCode = "200", description = "단일 주문 조회 완료")
+//    @GetMapping("order/{id}")
+//    public OrderDTO product(@PathVariable Long id){
+//        Optional<OrderDTO> foundOrder =  orderService.getOrderById(id);
+//        if (foundOrder.isPresent()) {
+//        return foundOrder.get();
+//        }
+//        return new OrderDTO();
+//    }
 
     //    배송 삭제
     @Operation(summary = "주문 삭제", description = "주문 삭제하는 API")
