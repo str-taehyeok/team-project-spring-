@@ -16,6 +16,8 @@ public class NoticeDTO {
     private String noticeContent;
     private String noticeDate;
     private Long noticeCount;
-    private String MemberEmail;
-    private String MemberPassword;
+    private String memberEmail;
+    private String memberPassword;
+    private String memberPhone;
+    private String memberName;
 }
