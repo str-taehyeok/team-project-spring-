@@ -1,7 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.app.restful.mapper.OrderCancelMapper">
-    <select id="getTime" resultType="string">
-        SELECT CURRENT_TIMESTAMP FROM DUAL
+    <insert id="insert" parameterType="OrderCancelVO">
+        INSERT INTO TBL_ORDER_CANCEL(ID, PRODUCT_ID, MEMBER_ID, ORDER_CANCEL_DATE, ORDER_CANCEL_COUNT)
+        VALUES (SEQ_ORDER_CANCEL.NEXTVAL, #{productId}, #{memberId}, #{orderCancelDate}, #{orderCancelCount})
+    </insert>
+    <select id="selectAll" resultType="OrderCancelVO">
+        SELECT ID, PRODUCT_ID, MEMBER_ID, ORDER_CANCEL_DATE, ORDER_CANCEL_COUNT
+        FROM TBL_ORDER_CANCEL
+    </select>
+    <select id="select" resultType="OrderCancelVO" parameterType="Long">
+        SELECT ID, PRODUCT_ID, MEMBER_ID, ORDER_CANCEL_DATE, ORDER_CANCEL_COUNT
+        FROM TBL_ORDER_CANCEL
+        WHERE ID = #{id}
+    </select>
+    <update id="update" parameterType="OrderCancelVO">
+        UPDATE TBL_ORDER_CANCEL
+        SET PRODUCT_ID = #{productId}, MEMBER_ID = #{memberId}, ORDER_CANCEL_DATE = #{orderCancelDate},ORDER_CANCEL_COUNT = #{orderCancelCount}
+        WHERE ID = #{id}
+    </update>
+
+    <delete id="delete" parameterType="Long">
+        DELETE FROM TBL_ORDER_CANCEL
+        WHERE ID = #{id}
+    </delete>
+
+
+    <select id="selectAllView" resultType="OrderCancelDTO" parameterType="java.util.Date">
+        SELECT
+            TBOC.ID AS ORDER_CANCEL_ID,
+            SUM(TBP.PRODUCT_PRICE * TBOC.ORDER_CANCEL_COUNT) AS TOTAL_CANCEL_PRICE,
+            SUM(TBOC.ORDER_CANCEL_COUNT) AS TOTAL_CANCEL_COUNT
+        FROM
+            TBL_ORDER_CANCEL TBOC
+                LEFT JOIN
+            TBL_PRODUCT TBP
+            ON
+                TBP.ID = TBOC.PRODUCT_ID
+        WHERE
+            TBOC.ORDER_CANCEL_DATE= TO_DATE(#{orderCancelDate}, 'YYYY-MM-DD')
+        GROUP BY
+            TBOC.ID;
     </select>
 </mapper>

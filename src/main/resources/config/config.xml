@@ -5,7 +5,7 @@
         <typeAlias type="com.app.springpowpow.domain.DefaultVO" alias="DefaultVO" />
         <typeAlias type="com.app.springpowpow.domain.MemberVO" alias="MemberVO" />
         <typeAlias type="com.app.springpowpow.domain.PostVO" alias="PostVO" />
-        <typeAlias type="com.app.springpowpow.domain.FileVO" alias="FileVO" />
+        <typeAlias type="com.app.springpowpow.domain.PostFileVO" alias="PostFileVO" />
         <typeAlias type="com.app.springpowpow.domain.PostDTO" alias="PostDTO" />
         <typeAlias type="com.app.springpowpow.domain.AdjustmentDTO" alias="AdjustmentDTO"/>
         <typeAlias type="com.app.springpowpow.domain.AdjustmentVO" alias="AdjustmentVO" />
@@ -22,6 +22,7 @@
         <typeAlias type="com.app.springpowpow.domain.NoticeVO" alias="NoticeVO" />
         <typeAlias type="com.app.springpowpow.domain.NoticeDTO" alias="NoticeDTO" />
         <typeAlias type="com.app.springpowpow.domain.OrderCancelVO" alias="OrderCancelVO" />
+        <typeAlias type="com.app.springpowpow.domain.OrderCancelDTO" alias="OrderCancelDTO" />
         <typeAlias type="com.app.springpowpow.domain.OrderVO" alias="OrderVO" />
         <typeAlias type="com.app.springpowpow.domain.OrderDTO" alias="OrderDTO" />
         <typeAlias type="com.app.springpowpow.domain.PayVO" alias="PayVO" />

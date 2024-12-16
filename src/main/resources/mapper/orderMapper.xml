@@ -20,9 +20,31 @@
         WHERE TBO.ID = #{id}
     </select>
 
+    <update id="update" parameterType="OrderVO">
+        UPDATE TBL_ORDER
+        SET PRODCUT_ID = #{productId}, MEMBER_ID = #{memberId}, DELIVERY_ID = #{deliveryId}, ORDER_NUMBER = #{orderNumber}, ORDER_DATE = #{orderDate}, ORDER_ADDRESS = #{orderAddress}, PRODUCT_COUNT = #{productCount}
+        WHERE ID = #{id}
+    </update>
 
     <delete id="delete" parameterType="Long">
         DELETE FROM TBL_ORDER
         WHERE ID = #{id}
     </delete>
+
+    <select id="selectAllView" resultType="OrderDTO" parameterType="java.util.Date">
+        SELECT
+            TBO.ID AS ORDER_ID,
+            SUM(TBP.PRODUCT_PRICE * TBO.PRODUCT_COUNT) AS TOTAL_PRICE,
+            SUM(TBO.PRODUCT_COUNT) AS TOTAL_COUNT
+        FROM
+            TBL_ORDER TBO
+                LEFT JOIN
+            TBL_PRODUCT TBP
+            ON
+                TBP.ID = TBO.PRODUCT_ID
+        WHERE
+            TBO.ORDER_DATE = TO_DATE(#{orderDate}, 'YYYY-MM-DD')
+        GROUP BY
+            TBO.ID;
+    </select>
 </mapper>

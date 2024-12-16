@@ -17,4 +17,8 @@ public interface OrderMapper {
     public Optional<OrderDTO> select(Long id);
 
     public void delete(Long id);
+
+    public void update(OrderVO orderVO);
+
+    public Optional<OrderDTO> selectAllByDate(String orderDate);
 }

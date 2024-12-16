@@ -40,4 +40,13 @@ public class OrderServiceImpl implements OrderService {
         orderDAO.deleteById(id);
     }
 
+    @Override
+    public void updateOrderById(OrderVO orderVO) {
+        orderDAO.update(orderVO);
+    }
+
+    @Override
+    public Optional<OrderDTO> selectOrderByDate(String orderDate) {
+        return orderDAO.findByOrderDate(orderDate);
+    }
 }
