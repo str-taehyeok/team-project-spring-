@@ -247,7 +247,7 @@ public class MemberAPI {
     }
 
 
-
+    ////////////////////////////////////////////////////////////////////////////////////////// 아이디 찾기 끝
 
 //    어드민에서 회원 찾기
     @Operation(summary = "어드민에서 일반회원과 판매자 전체조회", description = "구매자 또는 판매자 유형에 따라 회원 정보를 조회할 수 있는 API")
@@ -278,7 +278,6 @@ public class MemberAPI {
         }
     }
 
-
     @Operation(summary = "유저 정보 변경", description = "유저 정보를 업데이트 하는 API")
     @Parameter( name = "id", description = "멤버 번호", schema = @Schema(type = "number"), in = ParameterIn.PATH, required = true )
     @ApiResponse(responseCode = "200", description = "정보 변경 완료")
@@ -287,5 +286,94 @@ public class MemberAPI {
         memberVO.setId(id);
         memberService.modify(memberVO);
         return memberVO;
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////// 비밀번호 찾기
+
+    @PostMapping("/find-password")
+    public ResponseEntity<Map<String, Object>> findPassword(@RequestBody Map<String, String> req) {
+        Map<String, Object> response = new HashMap<>();
+        String memberEmail = req.get("memberEmail");
+
+        // 이메일 입력 확인
+        if (memberEmail == null || memberEmail.isEmpty()) {
+            response.put("message", "이메일을 입력해주세요.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+        // 인증번호 생성 (6자리 숫자)
+        String authCode = generateAuthCode();
+
+        // 이메일로 인증번호 전송
+        boolean emailSent = sendEmailWithAuthCode(memberEmail, authCode);
+
+        if (!emailSent) {
+            response.put("message", "이메일 전송에 실패했습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+
+        // 인증번호 저장
+        authCodeMap.put(memberEmail, authCode);
+
+        response.put("message", "인증번호가 이메일로 전송되었습니다.");
+        return ResponseEntity.ok(response);
+    }
+
+    // 인증번호 생성 (6자리 숫자)
+    private String generateAuthCode() {
+        Random rand = new Random();
+        int authCode = rand.nextInt(999999 - 100000) + 100000; // 6자리 숫자 생성
+        return String.valueOf(authCode);
+    }
+
+    // 이메일로 인증번호 전송
+    private boolean sendEmailWithAuthCode(String memberEmail, String authCode) {
+        String subject = "비밀번호 찾기 인증번호";
+        String content = "비밀번호 찾기 인증번호는 " + authCode + " 입니다.";
+
+        try {
+            snsService.sendEmailVerification(memberEmail);
+            return true;  // 이메일 전송 성공
+        } catch (Exception e) {
+            log.error("Failed to send email to {}: {}", memberEmail, e.getMessage());
+            return false;  // 이메일 전송 실패
+        }
+    }
+
+    // 인증번호 확인
+    @PostMapping("/verify-password-auth")
+    public ResponseEntity<Map<String, Object>> verifyPasswordAuthCode(@RequestBody Map<String, String> req) {
+        Map<String, Object> response = new HashMap<>();
+        String memberEmail = req.get("memberEmail");
+        String authCode = req.get("authCode");
+
+        // 인증번호 확인
+        String storedAuthCode = authCodeMap.get(memberEmail);
+
+        if (storedAuthCode != null && storedAuthCode.equals(authCode)) {
+            response.put("message", "인증번호가 확인되었습니다.");
+            return ResponseEntity.ok(response);
+        }
+
+        response.put("message", "인증번호가 올바르지 않습니다.");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    // 비밀번호 변경
+    @PostMapping("/change-password")
+    public ResponseEntity<Map<String, Object>> changePassword(@RequestBody Map<String, String> req) {
+        Map<String, Object> response = new HashMap<>();
+        String memberEmail = req.get("memberEmail");
+        String newPassword = req.get("newPassword");
+
+        // 비밀번호 변경 로직
+        memberService.updatePassword(memberEmail, newPassword);
+
+        // 비밀번호 변경 후 인증번호 삭제
+        authCodeMap.remove(memberEmail);
+
+        response.put("message", "비밀번호가 성공적으로 변경되었습니다.");
+        return ResponseEntity.ok(response);
     }
 }
