@@ -5,9 +5,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Data
-public class FileVO {
+public class PostFileVO {
     private Long id;
-    private String fileName;
-    private String filePath;
+    private Long postId;
+    private String postFileName;
+    private String postFilePath;
+
 
 }
