@@ -26,7 +26,7 @@ public class SellerUpdateAPI {
     @Operation(summary = "판매자 정보 수정", description = "판매자 수정할 수 있는 API")
     @Parameter( name = "id", description = "판매자 번호", schema = @Schema(type = "number"), in = ParameterIn.PATH, required = true)
     @ApiResponse(responseCode = "200", description = "회원 수정 완료")
-    @PutMapping("seller-info/{id}")
+    @PutMapping("update/{id}")
     public MemberVO modify(@PathVariable Long id, @RequestBody MemberVO memberVO){
         memberVO.setId(id);
         memberService.modify(memberVO);

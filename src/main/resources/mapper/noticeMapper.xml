@@ -7,13 +7,21 @@
         VALUES(SEQ_NOTICE.NEXTVAL, #{memberId}, #{noticeTitle}, #{noticeContent})
     </insert>
 
+<!--    <select id="selectAll" resultType="NoticeDTO">-->
+<!--        SELECT ID, NOTICE_TITLE, NOTICE_CONTENT, TO_CHAR(NOTICE_DATE, 'YYYY-MM-DD') AS NOTICE_DATE, NOTICE_COUNT, MEMBER_ID-->
+<!--        FROM TBL_NOTICE-->
+<!--    </select>-->
+
     <select id="selectAll" resultType="NoticeDTO">
-        SELECT ID, NOTICE_TITLE, NOTICE_CONTENT, TO_CHAR(NOTICE_DATE, 'YYYY-MM-DD') AS NOTICE_DATE, NOTICE_COUNT
-        FROM TBL_NOTICE
+        SELECT TBN.ID,TBN.NOTICE_TITLE, TBN.NOTICE_CONTENT, TO_CHAR(TBN.NOTICE_DATE, 'YYYY-MM-DD') AS NOTICE_DATE, TBN.NOTICE_COUNT,
+            TBM.MEMBER_NAME
+        FROM TBL_NOTICE TBN
+        JOIN TBL_MEMBER TBM
+        ON TBN.MEMBER_ID = TBM.ID
     </select>
 
     <select id="select" resultType="NoticeDTO" parameterType="Long">
-        SELECT ID, NOTICE_TITLE, NOTICE_CONTENT, TO_CHAR(NOTICE_DATE, 'YYYY-MM-DD') AS NOTICE_DATE, NOTICE_COUNT
+        SELECT ID, NOTICE_TITLE, NOTICE_CONTENT, TO_CHAR(NOTICE_DATE, 'YYYY-MM-DD') AS NOTICE_DATE, NOTICE_COUNT, MEMBER_ID
         FROM TBL_NOTICE
         WHERE ID = #{id}
     </select>
