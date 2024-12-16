@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,7 +34,6 @@ public class MemberAPI {
     private final MemberService memberService;
     private final SnsService snsService;
     private final MemberVO memberVO;
-    private Map<String, String> authCodeMap;
     private final SmsUtil smsUtil;
 
 
@@ -295,37 +295,36 @@ public class MemberAPI {
 
     ////////////////////////////////////////////////////////////////////////////////////////// 비밀번호 찾기
 
+    // 인증 코드 저장용 Map 초기화
+    private Map<String, String> authCodeMap = new HashMap<>();
 
     // 인증번호 생성메서드(6자리)
     private String generateAuthCode() {
-        Random rand = new Random();
-        int authCode = rand.nextInt(999999 - 100000) + 100000; // 6자리 숫자 생성
+        int authCode = ThreadLocalRandom.current().nextInt(100000, 1000000); // 6자리 숫자 생성
         return String.valueOf(authCode);
     }
 
-    // 이메일로 인증번호 전송메서드
+    // 이메일로 인증번호 전송 메서드
     private boolean sendEmailWithAuthCode(String memberEmail, String authCode) {
         String subject = "비밀번호 찾기 인증번호";
         String content = "비밀번호 찾기 인증번호는 " + authCode + " 입니다.";
 
         try {
             snsService.sendEmailVerification(memberEmail);
-            return true;  // 이메일 전송 성공
+            return true;
         } catch (Exception e) {
-            log.error("Failed to send email to {}: {}", memberEmail, e.getMessage());
-            return false;  // 이메일 전송 실패
+            log.error("이메일 전송이 실패되었습니다. {}: {}", memberEmail, e.getMessage());
+            return false;
         }
     }
 
-
-
-
+    // 이메일로 인증번호 전송 후, 인증번호 저장 (find-password)
     @PostMapping("/find-password")
     public ResponseEntity<Map<String, Object>> findPassword(@RequestBody Map<String, String> req) {
         Map<String, Object> response = new HashMap<>();
         String memberEmail = req.get("memberEmail");
 
-        // 이메일 입력 확인(등록되지 않은 이메일입니다.)
+        // 이메일 입력 확인
         if (memberEmail == null || memberEmail.isEmpty()) {
             response.put("message", "이메일을 입력해주세요.");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
@@ -342,14 +341,13 @@ public class MemberAPI {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
 
-        // 인증번호 저장
+        // 인증번호 저장 (authCodeMap에 이메일과 인증번호 매핑하기)
         authCodeMap.put(memberEmail, authCode);
+//        log.info("Stored Auth Code for {}: {}", memberEmail, authCode);
 
         response.put("message", "인증번호가 이메일로 전송되었습니다.");
         return ResponseEntity.ok(response);
     }
-
-
 
     // 인증번호 확인
     @PostMapping("/verify-password-auth")
@@ -358,9 +356,13 @@ public class MemberAPI {
         String memberEmail = req.get("memberEmail");
         String authCode = req.get("authCode");
 
-        // 인증번호 확인
+        // 저장된 인증번호 확인
         String storedAuthCode = authCodeMap.get(memberEmail);
 
+        log.info("Stored Auth Code for {}: {}", memberEmail, storedAuthCode);
+        log.info("Provided Auth Code: {}", authCode);
+
+        // 인증번호 확인
         if (storedAuthCode != null && storedAuthCode.equals(authCode)) {
             response.put("message", "인증번호가 확인되었습니다.");
             return ResponseEntity.ok(response);
@@ -370,14 +372,15 @@ public class MemberAPI {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
-    // 비밀번호 변경
+
+    // 비밀번호 변경 (change-password)
     @PostMapping("/change-password")
     public ResponseEntity<Map<String, Object>> changePassword(@RequestBody Map<String, String> req) {
         Map<String, Object> response = new HashMap<>();
         String memberEmail = req.get("memberEmail");
         String newPassword = req.get("newPassword");
 
-        // 비밀번호 변경 로직
+        // 비밀번호 변경 로직 (memberService 사용)
         memberService.updatePassword(memberEmail, newPassword);
 
         // 비밀번호 변경 후 인증번호 삭제
