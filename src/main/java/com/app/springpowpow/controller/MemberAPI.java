@@ -1,5 +1,6 @@
 package com.app.springpowpow.controller;
 
+import com.app.springpowpow.domain.BannerDTO;
 import com.app.springpowpow.domain.MemberVO;
 import com.app.springpowpow.service.MemberService;
 import com.app.springpowpow.service.SnsService;
@@ -94,14 +95,17 @@ public class MemberAPI {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         }
 //        아이디, 비밀번호가 일치하는 사용자
+        String memberProvider = foundUser.getMemberProvider();
+
 //        토큰 생성
-        claims.put("memberId", foundUser.getId());
         claims.put("email", foundUser.getMemberEmail());
         claims.put("name", foundUser.getMemberName());
+        claims.put("provider", memberProvider);
         String jwtToken = jwtTokenUtil.generateToken(claims);
 
 //        토큰 응답
         response.put("jwtToken", jwtToken);
+        response.put("provider", memberProvider);
         return ResponseEntity.ok(response);
     }
 
@@ -291,12 +295,37 @@ public class MemberAPI {
 
     ////////////////////////////////////////////////////////////////////////////////////////// 비밀번호 찾기
 
+
+    // 인증번호 생성메서드(6자리)
+    private String generateAuthCode() {
+        Random rand = new Random();
+        int authCode = rand.nextInt(999999 - 100000) + 100000; // 6자리 숫자 생성
+        return String.valueOf(authCode);
+    }
+
+    // 이메일로 인증번호 전송메서드
+    private boolean sendEmailWithAuthCode(String memberEmail, String authCode) {
+        String subject = "비밀번호 찾기 인증번호";
+        String content = "비밀번호 찾기 인증번호는 " + authCode + " 입니다.";
+
+        try {
+            snsService.sendEmailVerification(memberEmail);
+            return true;  // 이메일 전송 성공
+        } catch (Exception e) {
+            log.error("Failed to send email to {}: {}", memberEmail, e.getMessage());
+            return false;  // 이메일 전송 실패
+        }
+    }
+
+
+
+
     @PostMapping("/find-password")
     public ResponseEntity<Map<String, Object>> findPassword(@RequestBody Map<String, String> req) {
         Map<String, Object> response = new HashMap<>();
         String memberEmail = req.get("memberEmail");
 
-        // 이메일 입력 확인
+        // 이메일 입력 확인(등록되지 않은 이메일입니다.)
         if (memberEmail == null || memberEmail.isEmpty()) {
             response.put("message", "이메일을 입력해주세요.");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
@@ -320,26 +349,7 @@ public class MemberAPI {
         return ResponseEntity.ok(response);
     }
 
-    // 인증번호 생성 (6자리 숫자)
-    private String generateAuthCode() {
-        Random rand = new Random();
-        int authCode = rand.nextInt(999999 - 100000) + 100000; // 6자리 숫자 생성
-        return String.valueOf(authCode);
-    }
 
-    // 이메일로 인증번호 전송
-    private boolean sendEmailWithAuthCode(String memberEmail, String authCode) {
-        String subject = "비밀번호 찾기 인증번호";
-        String content = "비밀번호 찾기 인증번호는 " + authCode + " 입니다.";
-
-        try {
-            snsService.sendEmailVerification(memberEmail);
-            return true;  // 이메일 전송 성공
-        } catch (Exception e) {
-            log.error("Failed to send email to {}: {}", memberEmail, e.getMessage());
-            return false;  // 이메일 전송 실패
-        }
-    }
 
     // 인증번호 확인
     @PostMapping("/verify-password-auth")
@@ -376,4 +386,35 @@ public class MemberAPI {
         response.put("message", "비밀번호가 성공적으로 변경되었습니다.");
         return ResponseEntity.ok(response);
     }
+
+
+
+//    전체 회원정보조회
+    @Operation(summary = "회원 전체 리스트", description = "회원 정보 전체 볼 수 있는 API")
+    @Parameters({
+            @Parameter(name = "id", description = "회원 번호", schema = @Schema(type = "number"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "memberEmail", description = "회원 이메일", schema = @Schema(type = "string", format = "date"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "memberName", description = "회원 이름", schema = @Schema(type = "string", format = "date"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "memberPhone", description = "회원 전화번호", schema = @Schema(type = "string"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "memberNickname", description = "회원 닉네임", schema = @Schema(type = "string"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "memberZipcode", description = "우편번호", schema = @Schema(type = "string"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "memberAddress", description = "회원 주소", schema = @Schema(type = "number"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "memberAddressDetail", description = "회원 상세주소", schema = @Schema(type = "string", format = "date"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "memberFileName", description = "회원 이미지파일 이름", schema = @Schema(type = "string", format = "date"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "memberFilePath", description = "회원 이미지파일 경로", schema = @Schema(type = "string"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "memberSmsCheck", description = "회원 문자수신동의", schema = @Schema(type = "string"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "memberEmailCheck", description = "회원 이메일수신동의", schema = @Schema(type = "string"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "memberDate", description = "회원 가입날짜", schema = @Schema(type = "string"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "memberBusinessNumber", description = "사업자번호", schema = @Schema(type = "string"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "memberProvider", description = "회원 프로바이더", schema = @Schema(type = "string"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "memberBusinessName", description = "판매자 업체명", schema = @Schema(type = "string"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "memberBank", description = "은행명", schema = @Schema(type = "string"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "memberBankAccount", description = "계좌번호", schema = @Schema(type = "string"), in = ParameterIn.HEADER, required = true)
+    })
+    @GetMapping("admin/member-list")
+    public List<MemberVO> getList() {
+        return memberService.getAllMembers();
+    }
+
+
 }

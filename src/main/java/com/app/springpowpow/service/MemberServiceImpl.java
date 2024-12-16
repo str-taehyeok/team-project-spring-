@@ -103,5 +103,6 @@ public class MemberServiceImpl implements MemberService {
         memberVO.setMemberPassword(newPassword);
         memberDAO.updatePassword(memberVO);
     }
+
 }
 
