@@ -1,11 +1,9 @@
 package com.app.springpowpow.member;
 
 import com.app.springpowpow.mapper.CommLikesMapper;
+import com.app.springpowpow.mapper.ProductLikesMapper;
 import com.app.springpowpow.repository.CommLikesDAO;
-import com.app.springpowpow.service.CommLikesService;
-import com.app.springpowpow.service.MemberService;
-import com.app.springpowpow.service.ProductLikesService;
-import com.app.springpowpow.service.ProductService;
+import com.app.springpowpow.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +23,11 @@ public class confirmTests {
     private ProductLikesService productLikesService;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private NoticeService noticeService;
 
     @Test
     public void likeTest(){
-        log.info("product {}", productService.selectAllProducts().toString());
-//       log.info("like {}", productLikesService.getAllLikes(1L));
-//       log.info("like {}", commLikesDAO.getAllLikes(1L));
-        Long memberId = 1L;
-//       log.info("like {}", commLikesMapper.selectAllLikes(memberId));
+        log.info("list {}", noticeService.getSearchKeywordList("공지사항"));
     }
 }

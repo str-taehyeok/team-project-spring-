@@ -30,6 +30,11 @@ public class NoticeDAO {
         return noticeMapper.select(id);
     }
 
+//    검색어 조회
+    public List<NoticeDTO> findByKeyword(String keyword) {
+        return noticeMapper.selectSearchKeyword(keyword);
+    }
+
 //    공지사항 수정
     public void update(NoticeVO noticeVO) {
         noticeMapper.update(noticeVO);
@@ -39,5 +44,8 @@ public class NoticeDAO {
     public void delete(Long id) {
         noticeMapper.delete(id);
     }
+
+//    공지사항 조회수 증가
+    public void updateCount(Long id){ noticeMapper.updateCount(id); }
 
 }

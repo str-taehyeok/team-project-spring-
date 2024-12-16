@@ -29,7 +29,13 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
+    public List<NoticeDTO> getSearchKeywordList(String keyword) {
+        return noticeDAO.findByKeyword(keyword);
+    }
+
+    @Override
     public Optional<NoticeDTO> read(Long id) {
+        noticeDAO.updateCount(id);
         return noticeDAO.findById(id);
     }
 
@@ -42,4 +48,5 @@ public class NoticeServiceImpl implements NoticeService {
     public void remove(Long id) {
         noticeDAO.delete(id);
     }
+
 }
