@@ -1,9 +1,7 @@
 package com.app.springpowpow.controller;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnailator;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,11 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Controller
+@RestController
 @Slf4j
-@RequiredArgsConstructor
-@RequestMapping("/file/*")
-public class FileController {
+@RequestMapping("/postFiles/*")
+public class PostFileAPI {
 
     @PostMapping("upload")
     @ResponseBody
