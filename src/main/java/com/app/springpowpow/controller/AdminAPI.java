@@ -26,7 +26,6 @@ public class AdminAPI {
         Map<String, Object> claims = new HashMap<>();
         Map<String, Object> response = new HashMap<>();
 
-
         Long memberId = memberService.getMemberIdByEmail(oauthMemberVO.getMemberEmail());
         if (memberId == null) {
             response.put("message", "등록되지 않은 이메일 입니다.");
@@ -53,10 +52,10 @@ public class AdminAPI {
         claims.put("memberId", foundUser.getId());
         claims.put("email", foundUser.getMemberEmail());
         claims.put("name", foundUser.getMemberName());
-        String jwtToken = jwtTokenUtil.generateToken(claims);
+        String adminToken = jwtTokenUtil.generateToken(claims);
 
         //        토큰 응답
-        response.put("jwtToken", jwtToken);
+        response.put("adminToken", adminToken);
         return ResponseEntity.ok(response);
     }
 

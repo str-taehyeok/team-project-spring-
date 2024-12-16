@@ -12,10 +12,11 @@ public interface NoticeService {
 
     public List<NoticeDTO> getList();
 
+    public List<NoticeDTO> getSearchKeywordList(String keyword);
+
     public Optional<NoticeDTO> read(Long id);
 
     public void edit(NoticeVO noticeVO);
 
     public void remove(Long id);
-
 }
