@@ -18,8 +18,8 @@ public class PostDTO {
     private Long memberId;
     @Schema(description = "게시글 내용", example = "테스트 내용1", required = true)
     private String postContent;
-    @Schema(description = "게시글 이미지", example = "post.png")
-    private List<MultipartFile> postImage;
+    @Schema(description = "게시글 이미지", example = "[\"post1.png\", \"post2.png\"]")
+    private List<String> postImage;
     @Schema(description = "게시글 색상", example = "Gold")
     private String postColor;
     @Schema(description = "회원 이메일", example = "test1234@test.app")

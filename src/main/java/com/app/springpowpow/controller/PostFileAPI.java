@@ -17,7 +17,7 @@ import java.util.UUID;
 
 @RestController
 @Slf4j
-@RequestMapping("/postFile/*")
+@RequestMapping("/postFiles/*")
 public class PostFileAPI {
 
     @PostMapping("upload")
