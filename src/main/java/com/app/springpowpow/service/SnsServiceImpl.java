@@ -53,7 +53,7 @@ public class SnsServiceImpl implements SnsService {
             // 동기화된 코드 저장
             synchronized (this) {
                 authCodeMap.put(memberEmail, verificationCode);
-                log.info("인증코드 이메일코드 확인하기 {}: {}", memberEmail, verificationCode);
+//                log.info("인증코드 이메일코드 확인하기 {}: {}", memberEmail, verificationCode);
             }
 
             String emailSubject = "POWPOW 이메일 인증 코드";
@@ -63,12 +63,11 @@ public class SnsServiceImpl implements SnsService {
             sendEmail(memberEmail, emailSubject, emailContent);
 
             response.put("message", "인증 코드가 전송되었습니다.");
-            log.info("인증 코드가 전송되었습니다. {}", memberEmail);
+//            log.info("인증 코드가 전송되었습니다. {}", memberEmail);
         } catch (Exception e) {
             response.put("message", "인증 코드 전송에 실패했습니다.");
-            log.error("인증 코드 전송에 실패했습니다. {}: {}", memberEmail, e.getMessage());
+//            log.error("인증 코드 전송에 실패했습니다. {}: {}", memberEmail, e.getMessage());
         }
-
         // 인증코드 유효기간 5분 설정
         return ResponseEntity.ok(response);
     }
@@ -80,8 +79,8 @@ public class SnsServiceImpl implements SnsService {
         String storedAuthCode = authCodeMap.get(memberEmail);
 
         // 인증 코드가 제대로 저장되었는지 로그로 확인
-        log.info("저장된 인증 코드: {}에 대한 인증 코드: {}", memberEmail, storedAuthCode);
-        log.info("제공된 인증 코드: {}", authCode);
+//        log.info("저장된 인증 코드: {}에 대한 인증 코드: {}", memberEmail, storedAuthCode);
+//        log.info("제공된 인증 코드: {}", authCode);
 
         // 저장된 인증 코드와 제공된 인증 코드가 동일한지 비교
         return storedAuthCode != null && storedAuthCode.equals(authCode);
