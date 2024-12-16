@@ -94,14 +94,17 @@ public class MemberAPI {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         }
 //        아이디, 비밀번호가 일치하는 사용자
+        String memberProvider = foundUser.getMemberProvider();
+
 //        토큰 생성
-        claims.put("memberId", foundUser.getId());
         claims.put("email", foundUser.getMemberEmail());
         claims.put("name", foundUser.getMemberName());
+        claims.put("provider", memberProvider);
         String jwtToken = jwtTokenUtil.generateToken(claims);
 
 //        토큰 응답
         response.put("jwtToken", jwtToken);
+        response.put("provider", memberProvider);
         return ResponseEntity.ok(response);
     }
 
@@ -296,7 +299,7 @@ public class MemberAPI {
         Map<String, Object> response = new HashMap<>();
         String memberEmail = req.get("memberEmail");
 
-        // 이메일 입력 확인
+        // 이메일 입력 확인(등록되지 않은 이메일입니다.)
         if (memberEmail == null || memberEmail.isEmpty()) {
             response.put("message", "이메일을 입력해주세요.");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
@@ -376,4 +379,7 @@ public class MemberAPI {
         response.put("message", "비밀번호가 성공적으로 변경되었습니다.");
         return ResponseEntity.ok(response);
     }
+
+
+
 }
