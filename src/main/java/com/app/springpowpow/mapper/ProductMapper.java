@@ -26,4 +26,7 @@ public interface ProductMapper {
 //    삭제
     public void delete(Long id);
 
+//   회원탈퇴시 상품 전체삭제
+    public void deleteAll(Long memberId);
+
 }
