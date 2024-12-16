@@ -75,7 +75,7 @@ public class CouponAPI {
     }
 
     //  쿠폰리스트 조회 (멤버)
-    @Operation(summary = "쿠폰 정보 조회", description = "쿠폰 정보를 전체 조회할 수 있는 API")
+    @Operation(summary = "쿠폰 정보 조회(멤버)", description = "쿠폰 정보를 전체 조회할 수 있는 API")
     @Parameter( name = "memberId", description = "멤버 번호", schema = @Schema(type="number"), in = ParameterIn.HEADER, required = true )
     @GetMapping("coupons/member/{memberId}")
     public List<CouponVO> getCouponsByMemberId(@PathVariable Long memberId){
