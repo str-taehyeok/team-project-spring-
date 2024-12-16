@@ -7,11 +7,6 @@
         VALUES(SEQ_NOTICE.NEXTVAL, #{memberId}, #{noticeTitle}, #{noticeContent})
     </insert>
 
-<!--    <select id="selectAll" resultType="NoticeDTO">-->
-<!--        SELECT ID, NOTICE_TITLE, NOTICE_CONTENT, TO_CHAR(NOTICE_DATE, 'YYYY-MM-DD') AS NOTICE_DATE, NOTICE_COUNT, MEMBER_ID-->
-<!--        FROM TBL_NOTICE-->
-<!--    </select>-->
-
     <select id="selectAll" resultType="NoticeDTO">
         SELECT TBN.ID,TBN.NOTICE_TITLE, TBN.NOTICE_CONTENT, TO_CHAR(TBN.NOTICE_DATE, 'YYYY-MM-DD') AS NOTICE_DATE, TBN.NOTICE_COUNT,
             TBM.MEMBER_NAME
@@ -26,9 +21,20 @@
         WHERE ID = #{id}
     </select>
 
+    <select id="selectSearchKeyword" parameterType="String" resultType="NoticeDTO">
+        SELECT ID, MEMBER_ID, NOTICE_TITLE, NOTICE_TITLE, NOTICE_DATE, NOTICE_COUNT
+        FROM TBL_NOTICE
+        WHERE NOTICE_TITLE LIKE '%' || #{keyword} || '%'
+    </select>
+
     <update id="update" parameterType="NoticeVO">
         UPDATE TBL_NOTICE
         SET NOTICE_TITLE = #{noticeTitle}, NOTICE_CONTENT = #{noticeContent}
+    </update>
+
+    <update id="updateCount" parameterType="Long">
+        UPDATE TBL_NOTICE
+        SET NOTICE_COUNT = NOTICE_COUNT + 1
         WHERE ID = #{id}
     </update>
 

@@ -13,10 +13,20 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.coobird.thumbnailator.Thumbnailator;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -25,18 +35,38 @@ import java.util.Optional;
 public class BannerAPI {
     private final BannerService bannerService;
 
-    //    배너 작성
     @Operation(summary = "배너 작성", description = "배너 새로 작성 할 수 있는 API")
     @ApiResponse(responseCode = "200", description = "배너 작성 완료")
-    @PostMapping("write")
-    public BannerDTO write(@RequestBody BannerVO bannerVO) {
-        log.info("{}", bannerVO.toString());
-        bannerService.write(bannerVO);
-        Optional<BannerDTO> foundBanner = bannerService.read(bannerVO.getId());
-        if(foundBanner.isPresent()){
-            return foundBanner.get();
+    @PostMapping("upload")
+    public List<String> upload(
+            @RequestParam("uploadFile") MultipartFile uploadFile
+    ) throws IOException {
+
+        log.info("uploadFile {}", uploadFile.getOriginalFilename());
+
+        String rootPath = "C:/upload/" + getPath();
+
+        List<String> uuids = new ArrayList<>();
+
+        File file = new File(rootPath);
+        if(!file.exists()){
+            file.mkdirs();
         }
-        return new BannerDTO();
+
+//        for(int i = 0; i < uploadFiles.size(); i++){
+//            uuids.add(UUID.randomUUID().toString());
+//            uploadFiles.get(i).transferTo(new File(rootPath, uuids.get(i) + "_" + uploadFiles.get(i).getOriginalFilename()));
+//
+////            썸네일
+//            if(uploadFiles.get(i).getContentType().startsWith("image")){
+//                FileOutputStream out = new FileOutputStream(new File(rootPath, "t_" + uuids.get(i) + "_" + uploadFiles.get(i).getOriginalFilename()));
+//                Thumbnailator.createThumbnail(uploadFiles.get(i).getInputStream(), out, 100, 100);
+//                out.close();
+//            }
+//        }
+
+        log.info("upload path : {}", uuids.toString());
+        return uuids;
     }
 
     //    배너 전체 조회
@@ -90,4 +120,15 @@ public class BannerAPI {
     public void delete(@PathVariable Long id){
         bannerService.remove(id);
     }
+
+    @GetMapping("display")
+    public byte[] display(String fileName) throws IOException {
+        return FileCopyUtils.copyToByteArray(new File("C:/upload/" + fileName));
+    }
+
+    //    현재 시간을 기준으로 년월일로 관리할 수 있게 경로를 붙인다.
+    private String getPath() {
+        return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+    }
+
 }

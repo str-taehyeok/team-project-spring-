@@ -29,7 +29,7 @@ public class CouponTests {
         couponVO.setMemberId(1L);
         couponVO.setCouponTitle("이것은 쿠폰제목4");
         couponVO.setCouponCategory("장난감");
-        couponVO.setCouponCategoryAnimal("고양이");
+//        couponVO.setCouponCategoryAnimal("고양이");
         couponVO.setCouponCode("423456789ABCDEFG");
         couponVO.setCouponStart("2024-12-12");
         couponVO.setCouponEnd("2024-12-29");
@@ -73,7 +73,7 @@ public class CouponTests {
         couponVO.setMemberId(1L);
         couponVO.setCouponTitle("이것은 수정1한 쿠폰제목5");
         couponVO.setCouponCategory("장난감");
-        couponVO.setCouponCategoryAnimal("고양이");
+//        couponVO.setCouponCategoryAnimal("고양이");
         couponVO.setCouponCode("923456789ABCDEFG");
         couponVO.setCouponStart("2024-12-12");
         couponVO.setCouponEnd("2024-12-29");

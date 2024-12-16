@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -63,6 +64,15 @@ public class NoticeAPI {
             return foundPost.get();
         }
         return new NoticeDTO();
+    }
+
+    //    공지사항 검색 조회
+    @Operation(summary = "공지사항 검색", description = "공지사항 검색조회 API")
+    @Parameter( name = "keyword", description = "검색어", schema = @Schema(type="string"), required = true )
+    @PostMapping("search")
+    public List<NoticeDTO> search(@RequestBody Map<String, String> keyword){
+        String searchKeyword = keyword.get("keyword");
+        return noticeService.getSearchKeywordList(searchKeyword);
     }
 
     // 공지사항 수정
