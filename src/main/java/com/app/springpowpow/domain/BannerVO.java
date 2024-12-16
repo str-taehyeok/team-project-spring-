@@ -25,7 +25,9 @@ public class BannerVO {
     private String bannerStart;
     @Schema(description = "배너 종료일자", example = "2012-12-24")
     private String bannerEnd;
-    @Schema(description = "배너 이미지", example = "powpow.jpg")
-    private String bannerImage;
+    @Schema(description = "배너 이미지 경로", example = "powpow.jpg")
+    private String bannerFilePath;
+    @Schema(description = "배너 이미지 이름", example = "powpow")
+    private String bannerFileName;
 
 }

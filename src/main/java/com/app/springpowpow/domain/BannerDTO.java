@@ -14,7 +14,8 @@ public class BannerDTO {
     private String bannerLink;
     private String bannerStart;
     private String bannerEnd;
-    private String bannerImage;
+    private String bannerFilePath;
+    private String bannerFileName;
     private String memberEmail;
     private String memberPassword;
     private String memberPhone;
