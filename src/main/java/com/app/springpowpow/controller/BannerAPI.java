@@ -1,9 +1,6 @@
 package com.app.springpowpow.controller;
 
-import com.app.springpowpow.domain.BannerDTO;
-import com.app.springpowpow.domain.BannerVO;
-import com.app.springpowpow.domain.NoticeDTO;
-import com.app.springpowpow.domain.NoticeVO;
+import com.app.springpowpow.domain.*;
 import com.app.springpowpow.service.BannerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -14,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnailator;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,10 +21,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @RestController
@@ -35,39 +30,87 @@ import java.util.UUID;
 public class BannerAPI {
     private final BannerService bannerService;
 
-    @Operation(summary = "배너 작성", description = "배너 새로 작성 할 수 있는 API")
-    @ApiResponse(responseCode = "200", description = "배너 작성 완료")
+    @Operation(summary = "이미지 업로드", description = "이미지를 저장할 수 있는 API")
+    @ApiResponse(responseCode = "200", description = "이미지 업로드 완료")
     @PostMapping("upload")
-    public List<String> upload(
+    public ResponseEntity<Map<String, String>> upload(
+            @RequestParam("memberId") Long memberId,
+            @RequestParam("bannerStart") String bannerStart,
+            @RequestParam("bannerEnd") String bannerEnd,
+            @RequestParam("bannerTitle") String bannerTitle,
+            @RequestParam("bannerType") String bannerType,
+            @RequestParam("bannerLink") String bannerLink,
             @RequestParam("uploadFile") MultipartFile uploadFile
     ) throws IOException {
 
-        log.info("uploadFile {}", uploadFile.getOriginalFilename());
-
+        Map<String, String> response = new HashMap<>();
         String rootPath = "C:/upload/" + getPath();
-
-        List<String> uuids = new ArrayList<>();
 
         File file = new File(rootPath);
         if(!file.exists()){
             file.mkdirs();
         }
 
-//        for(int i = 0; i < uploadFiles.size(); i++){
-//            uuids.add(UUID.randomUUID().toString());
-//            uploadFiles.get(i).transferTo(new File(rootPath, uuids.get(i) + "_" + uploadFiles.get(i).getOriginalFilename()));
-//
-////            썸네일
-//            if(uploadFiles.get(i).getContentType().startsWith("image")){
-//                FileOutputStream out = new FileOutputStream(new File(rootPath, "t_" + uuids.get(i) + "_" + uploadFiles.get(i).getOriginalFilename()));
-//                Thumbnailator.createThumbnail(uploadFiles.get(i).getInputStream(), out, 100, 100);
-//                out.close();
-//            }
-//        }
+//        uuid 생성
+        String uuid = UUID.randomUUID().toString();
+        uploadFile.transferTo(new File(rootPath, uuid + "_" + uploadFile.getOriginalFilename()));
 
-        log.info("upload path : {}", uuids.toString());
-        return uuids;
+//        썸네일
+        if(uploadFile.getContentType().startsWith("image")){
+            FileOutputStream out = new FileOutputStream(new File(rootPath, "t_" + uuid + "_" + uploadFile.getOriginalFilename()));
+            Thumbnailator.createThumbnail(uploadFile.getInputStream(), out, 100, 100);
+            out.close();
+        }
+
+        log.info("upload path : {}", uuid.toString());
+
+        response.put("uuid", uuid);
+        return ResponseEntity.ok(response);
     }
+
+    @Operation(summary = "배너 작성", description = "배너 새로 작성 할 수 있는 API")
+    @ApiResponse(responseCode = "200", description = "배너 작성 완료")
+    @PostMapping("write")
+    public ResponseEntity<Map<String, String>> insert(
+            @RequestParam("uuid") String uuid,
+            @RequestParam("memberId") Long memberId,
+            @RequestParam("bannerStart") String bannerStart,
+            @RequestParam("bannerEnd") String bannerEnd,
+            @RequestParam("bannerTitle") String bannerTitle,
+            @RequestParam("bannerType") String bannerType,
+            @RequestParam("bannerLink") String bannerLink,
+            @RequestParam("uploadFile") MultipartFile uploadFile
+    ) {
+
+        Map<String, String> response = new HashMap<>();
+
+        BannerVO bannerVO = new BannerVO();
+        bannerVO.setMemberId(memberId);
+        bannerVO.setBannerStart(bannerStart);
+        bannerVO.setBannerEnd(bannerEnd);
+        bannerVO.setBannerTitle(bannerTitle);
+        bannerVO.setBannerType(bannerType);
+        bannerVO.setBannerLink(bannerLink);
+        bannerVO.setBannerFileName(uuid + "_" + uploadFile.getOriginalFilename());
+        bannerVO.setBannerFilePath(getPath());
+        bannerService.write(bannerVO);
+
+        response.put("message", "이미지 등록 완료");
+        return ResponseEntity.ok(response);
+
+    };
+
+    @GetMapping("display")
+    public byte[] display(String fileName) throws IOException {
+        return FileCopyUtils.copyToByteArray(new File("C:/upload/" + fileName));
+    }
+
+    //    현재 시간을 기준으로 년월일로 관리할 수 있게 경로를 붙인다.
+    private String getPath() {
+        return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+    }
+
+
 
     //    배너 전체 조회
     @Operation(summary = "배너 전체 리스트", description = "배너 정보 전체 볼 수 있는 API")
@@ -119,16 +162,6 @@ public class BannerAPI {
     @DeleteMapping("list/{id}")
     public void delete(@PathVariable Long id){
         bannerService.remove(id);
-    }
-
-    @GetMapping("display")
-    public byte[] display(String fileName) throws IOException {
-        return FileCopyUtils.copyToByteArray(new File("C:/upload/" + fileName));
-    }
-
-    //    현재 시간을 기준으로 년월일로 관리할 수 있게 경로를 붙인다.
-    private String getPath() {
-        return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
     }
 
 }
