@@ -43,7 +43,7 @@ public class ProductDTO {
     private String productColor;
     @Schema(description = "제품 사이즈", example = "S")
     private char productSize;
-    @Schema(description = "배송 ID", example = "10000")
+    @Schema(description = "배송 가격", example = "10000")
     private int deliveryFee;
     @Schema(description = "배송비 종류", example = "무료")
     private String deliveryFeeKind;
