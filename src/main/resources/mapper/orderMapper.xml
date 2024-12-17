@@ -19,6 +19,12 @@
         JOIN TBL_MEMBER TBM ON TBO.MEMBER_ID = TBM.ID
         WHERE TBO.ID = #{id}
     </select>
+    
+    <select id="selectByMemberId" resultType="OrderVO" parameterType="Long">
+        SELECT ID, PRODUCT_ID, MEMBER_ID, DELIVERY_ID, ORDER_NUMBER, ORDER_DATE, ORDER_ADDRESS, PRODUCT_COUNT
+        FROM TBL_ORDER
+        WHERE ID = #{memberId}
+    </select>
 
     <update id="update" parameterType="OrderVO">
         UPDATE TBL_ORDER

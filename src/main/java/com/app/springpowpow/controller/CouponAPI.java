@@ -63,7 +63,7 @@ public class CouponAPI {
     }
 
     //  쿠폰 단일 조회
-    @Operation(summary = "쿠폰 정보 조회", description = "쿠폰 정보를 전체 조회할 수 있는 API")
+    @Operation(summary = "쿠폰 정보 조회", description = "특정 쿠폰 정보를 전체 조회할 수 있는 API")
     @Parameter( name = "id", description = "쿠폰 번호", schema = @Schema(type="number"), in = ParameterIn.HEADER, required = true )
     @GetMapping("coupons/{id}")
     public CouponVO getCoupon(@PathVariable Long id){
