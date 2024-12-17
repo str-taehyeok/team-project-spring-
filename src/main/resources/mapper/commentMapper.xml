@@ -4,28 +4,21 @@
 
     <!-- 댓글 추가 -->
     <insert id="insertComment" parameterType="CommentVO">
-        INSERT INTO TBL_COMMENT (ID, MEMBER_ID, POST_ID, COMMENT_CONTENT, COMMENT_CREATE_AT, COMMENT_MODIFIED_AT)
-        VALUES (SEQ_COMMENT.NEXTVAL, #{memberId}, #{postId}, #{commentContent}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+        INSERT INTO TBL_COMMENT (ID, MEMBER_ID, POST_ID, COMMENT_CONTENT)
+        VALUES (SEQ_COMMENT.NEXTVAL, #{memberId}, #{postId}, #{commentContent})
     </insert>
-
-    <!-- 전체 댓글 조회 -->
-    <select id="selectCommentsByPostId" parameterType="Long" resultType="CommentVO">
-        SELECT ID, MEMBER_ID, POST_ID, COMMENT_CONTENT, COMMENT_CREATE_AT, COMMENT_MODIFIED_AT
-        FROM TBL_COMMENT
-        WHERE POST_ID = #{postId}
-    </select>
-
-    <!-- 댓글 수정 -->
-    <update id="updateComment" parameterType="CommentVO">
-        UPDATE TBL_COMMENT
-        SET COMMENT_CONTENT = #{commentContent}, COMMENT_MODIFIED_AT = CURRENT_TIMESTAMP
-        WHERE ID = #{id}
-    </update>
 
     <!-- 댓글 삭제 -->
     <delete id="deleteComment" parameterType="Long">
         DELETE FROM TBL_COMMENT
         WHERE ID = #{id}
     </delete>
+
+    <!-- 댓글 리스트 -->
+    <select id="selectAllComment" parameterType="Long" resultType="CommentVO">
+        SELECT ID, MEMBER_ID, POST_ID, COMMENT_CONTENT
+        FROM TBL_COMMENT
+        WHERE POST_ID = #{postId}
+    </select>
 
 </mapper>

@@ -10,9 +10,6 @@ public interface CommentService {
     // 댓글 추가
     public void addComment(CommentVO commentVO);
 
-    // 댓글 수정
-    public void updateComment(CommentVO commentVO);
-
     // 댓글 삭제
     public void removeComment(Long id);
 

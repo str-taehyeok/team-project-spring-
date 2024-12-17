@@ -12,13 +12,10 @@ public interface CommentMapper {
     // 댓글 추가
     public void insertComment(CommentVO commentVO);
 
-    // 댓글 수정
-    public void updateComment(CommentVO commentVO);
-
     // 댓글 삭제
     public void deleteComment(Long id);
 
     // 전체 댓글 조회
-    public List<CommentVO> selectCommentsByPostId(Long postId);
+    public List<CommentVO> selectAllComment(Long postId);
 
 }

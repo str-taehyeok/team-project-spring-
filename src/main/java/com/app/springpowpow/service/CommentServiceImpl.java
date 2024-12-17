@@ -24,12 +24,6 @@ public class CommentServiceImpl implements CommentService {
         commentDAO.addComment(commentVO);
     }
 
-    // 댓글 수정
-    @Override
-    public void updateComment(CommentVO commentVO) {
-        commentDAO.updateComment(commentVO);
-    }
-
     // 댓글 삭제
     @Override
     public void removeComment(Long id) {
