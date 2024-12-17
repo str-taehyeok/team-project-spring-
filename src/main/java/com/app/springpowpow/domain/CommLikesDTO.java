@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Component
-public class CommLikesDTO implements Serializable {
+public class CommLikesDTO {
 
     private Long id;
     private Long memberId;

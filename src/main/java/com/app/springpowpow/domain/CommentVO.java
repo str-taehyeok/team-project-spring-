@@ -9,13 +9,11 @@ import java.security.Timestamp;
 @Component
 @Data
 //@Schema(description = "회원 정보")
-public class CommentVO implements Serializable {
+public class CommentVO {
 
     private Long id;
     private Long memberId;
     private Long postId;
     private String commentContent;
-    private Timestamp commentCreateAt;
-    private Timestamp commentModifiedAt;
 
 }

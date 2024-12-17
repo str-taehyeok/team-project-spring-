@@ -1,5 +1,6 @@
 package com.app.springpowpow.repository;
 
+import com.app.springpowpow.domain.CommentDTO;
 import com.app.springpowpow.domain.CommentVO;
 import com.app.springpowpow.mapper.CommentMapper;
 import lombok.RequiredArgsConstructor;
@@ -19,19 +20,14 @@ public class CommentDAO {
         commentMapper.insertComment(commentVO);
     }
 
-    // 댓글 수정
-    public void updateComment(CommentVO commentVO) {
-        commentMapper.updateComment(commentVO);
-    }
-
     // 댓글 삭제
     public void removeComment(Long id) {
         commentMapper.deleteComment(id);
     }
 
     // 전체 댓글 조회
-    public List<CommentVO> getCommentsByPostId(Long postId) {
-        return commentMapper.selectCommentsByPostId(postId);
+    public List<CommentDTO> getCommentsByPostId(Long postId) {
+        return commentMapper.selectAllComment(postId);
     }
 
 }
