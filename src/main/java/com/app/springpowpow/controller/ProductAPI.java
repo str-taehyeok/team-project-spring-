@@ -83,9 +83,9 @@ public class ProductAPI {
             @Parameter(name = "productColor", description = "제품 펫스널 컬러", schema = @Schema(type = "string"), in = ParameterIn.HEADER),
             @Parameter(name = "productSize", description = "제품 사이즈", schema = @Schema(type = "char"), in = ParameterIn.HEADER),
     })
-    @GetMapping("seller-all-list{id}")
-    public List<ProductDTO> getList(@PathVariable Long id) {
-        return productService.selectAllProductsBySellerId(id);
+    @GetMapping("seller-all-list/{memberId}")
+    public List<ProductDTO> getList(@PathVariable Long memberId) {
+        return productService.selectAllProductsBySellerId(memberId);
     }
 
 
