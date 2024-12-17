@@ -1,6 +1,8 @@
 package com.app.springpowpow.member;
 
 import com.app.springpowpow.mapper.CommLikesMapper;
+import com.app.springpowpow.mapper.CommentMapper;
+import com.app.springpowpow.mapper.PostMapper;
 import com.app.springpowpow.mapper.ProductLikesMapper;
 import com.app.springpowpow.repository.CommLikesDAO;
 import com.app.springpowpow.service.*;
@@ -27,11 +29,15 @@ public class confirmTests {
     private NoticeService noticeService;
     @Autowired
     private MemberService memberService;
-
+    @Autowired
+    private PostMapper postMapper;
+    @Autowired
+    private PostService postService;
 
     @Test
     public void likeTest(){
-        log.info("유저 {}", memberService.getMemberByIdAndType(2L, "판매자").toString());
+//        log.info("유저 {}", postMapper.selectAllPopular());
+        log.info("데이터 {}", postService.getListPopular());
     }
 
 }
