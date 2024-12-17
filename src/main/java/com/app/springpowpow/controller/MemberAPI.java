@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,7 @@ public class MemberAPI {
     private final SnsService snsService;
     private final MemberVO memberVO;
     private final SmsUtil smsUtil;
+    private final HttpSession session;
 
 
     //    회원가입
@@ -318,32 +320,7 @@ public class MemberAPI {
     }
 
 
-    ////////////////////////////////////////////////////////////////////////////////////////// 비밀번호 찾기
-
-    // 인증 코드 저장용 Map 초기화
-    private Map<String, String> authCodeMap = new HashMap<>();
-
-    // 인증번호 생성메서드(6자리)
-    private String generateAuthCode() {
-        int authCode = ThreadLocalRandom.current().nextInt(100000, 1000000); // 6자리 숫자 생성
-        return String.valueOf(authCode);
-    }
-
-    // 이메일로 인증번호 전송 메서드
-    private boolean sendEmailWithAuthCode(String memberEmail, String authCode) {
-        String subject = "비밀번호 찾기 인증번호";
-        String content = "비밀번호 찾기 인증번호는 " + authCode + " 입니다.";
-
-        try {
-            snsService.sendEmailVerification(memberEmail);
-            return true;
-        } catch (Exception e) {
-            log.error("이메일 전송이 실패되었습니다. {}: {}", memberEmail, e.getMessage());
-            return false;
-        }
-    }
-
-    // 이메일로 인증번호 전송 후, 인증번호 저장 (find-password)
+    // 비밀번호 로직 >>> 이메일로 인증번호 전송 후, 인증번호 저장
     @PostMapping("/find-password")
     public ResponseEntity<Map<String, Object>> findPassword(@RequestBody Map<String, String> req) {
         Map<String, Object> response = new HashMap<>();
@@ -355,48 +332,15 @@ public class MemberAPI {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 
-        // 인증번호 생성 (6자리 숫자)
-        String authCode = generateAuthCode();
+        // 6자리 인증 코드 생성
+        String verificationCode = String.format("%06d", (int)(Math.random() * 900000) + 100000);
+
+        // 인증번호 세션에 저장
+        session.setAttribute("verificationCode", verificationCode);
 
         // 이메일로 인증번호 전송
-        boolean emailSent = sendEmailWithAuthCode(memberEmail, authCode);
-
-        if (!emailSent) {
-            response.put("message", "이메일 전송에 실패했습니다.");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-        }
-
-        // 인증번호 저장 (authCodeMap에 이메일과 인증번호 매핑하기)
-        authCodeMap.put(memberEmail, authCode);
-        log.info("이메일-> 인증번호 {}: {}", memberEmail, authCode);
-
-        response.put("message", "인증번호가 이메일로 전송되었습니다.");
-        return ResponseEntity.ok(response);
+        return snsService.sendEmailVerification(memberEmail);
     }
-
-    // 인증번호 확인
-    @PostMapping("/verify-password-auth")
-    public ResponseEntity<Map<String, Object>> verifyPasswordAuthCode(@RequestBody Map<String, String> req) {
-        Map<String, Object> response = new HashMap<>();
-        String memberEmail = req.get("memberEmail");
-        String authCode = req.get("authCode");
-
-        // 저장된 인증번호 확인
-        String storedAuthCode = authCodeMap.get(memberEmail);
-
-        log.info("Stored Auth Code for {}: {}", memberEmail, storedAuthCode);
-        log.info("Provided Auth Code: {}", authCode);
-
-        // 인증번호 확인
-        if (storedAuthCode != null && storedAuthCode.equals(authCode)) {
-            response.put("message", "인증번호가 확인되었습니다.");
-            return ResponseEntity.ok(response);
-        }
-
-        response.put("message", "인증번호가 올바르지 않습니다.");
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-    }
-
 
     // 비밀번호 변경 (change-password)
     @PostMapping("/change-password")
@@ -405,16 +349,11 @@ public class MemberAPI {
         String memberEmail = req.get("memberEmail");
         String newPassword = req.get("newPassword");
 
-        // 비밀번호 변경 로직 (memberService 사용)
+        // 비밀번호 변경 로직
         memberService.updatePassword(memberEmail, newPassword);
-
-        // 비밀번호 변경 후 인증번호 삭제
-        authCodeMap.remove(memberEmail);
-
         response.put("message", "비밀번호가 성공적으로 변경되었습니다.");
         return ResponseEntity.ok(response);
     }
-
 
 
 //    전체 회원정보조회
