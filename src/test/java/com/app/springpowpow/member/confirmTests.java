@@ -36,8 +36,7 @@ public class confirmTests {
 
     @Test
     public void likeTest(){
-//        log.info("유저 {}", postMapper.selectAllPopular());
-        log.info("데이터 {}", postService.getListPopular());
+        log.info("유저 {}", postMapper.selectAllPopular());
     }
 
 }

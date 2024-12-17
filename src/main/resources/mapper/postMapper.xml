@@ -46,7 +46,7 @@
 
     <select id="selectAllPopular">
         SELECT
-        TP.ID AS POST_ID,
+        TP.ID,
         TP.MEMBER_ID,
         TP.POST_CONTENT,
         TP.POST_COLOR,
