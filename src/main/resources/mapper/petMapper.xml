@@ -7,11 +7,12 @@
         VALUES(SEQ_PET.NEXTVAL, #{memberId}, #{petFileName}, #{petFilePath}, #{petName}, #{petKind}, #{petGender}, #{petBreed},  TO_DATE(#{petBirth}, 'YYYY-MM-DD'), #{petWeight}, #{petNeuter}, #{petVet})
     </insert>
 
-    <select id="selectAll" resultType="PetDTO">
+    <select id="selectAll" parameterType="Long" resultType="PetDTO">
         SELECT TP.ID, TP.MEMBER_ID, TP.PET_KIND, TP.PET_FILE_NAME, TP.PET_FILE_PATH, TP.PET_NAME, TP.PET_GENDER, TP.PET_BREED, TP.PET_BIRTH, TP.PET_VET, TP.PET_WEIGHT, TP.PET_NEUTER, TP.PET_COLOR, TM.MEMBER_EMAIL, TM.MEMBER_NAME
         FROM TBL_PET TP
         JOIN TBL_MEMBER TM
         ON TP.MEMBER_ID = TM.ID
+        WHERE MEMBER_ID = #{memberId}
     </select>
     
     <select id="select" parameterType="Long" resultType="PetDTO">

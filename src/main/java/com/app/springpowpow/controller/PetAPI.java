@@ -130,39 +130,39 @@ public class PetAPI {
 
 
 
-    //    마이펫 전체 조회
-@Operation(summary = "마이펫 전체 조회", description = "마이펫 정보를 전체 조회할 수 있는 API")
-@Parameters({
-        @Parameter( name = "id", description = "마이펫 번호", schema = @Schema(type="number"), in = ParameterIn.HEADER, required = true ),
-        @Parameter( name = "petKind", description = "마이펫 종류", schema = @Schema(type="string"), in = ParameterIn.HEADER ),
-        @Parameter( name = "petImage", description = "마이펫 이미지", schema = @Schema(type="string"), in = ParameterIn.HEADER),
-        @Parameter( name = "petName", description = "마이펫 이름", schema = @Schema(type="string"), in = ParameterIn.HEADER ),
-        @Parameter( name = "petGender", description = "마이펫 성별 ", schema = @Schema(type="boolean"), in = ParameterIn.HEADER, required = true ),
-        @Parameter( name = "petBreed", description = "마이펫 품종", schema = @Schema(type="string"), in = ParameterIn.HEADER, required = true),
-        @Parameter( name = "petBirth", description = "마이펫 생일", schema = @Schema(type="string"), in = ParameterIn.HEADER ),
-        @Parameter( name = "petVet", description = "마이펫 동물병원", schema = @Schema(type="string"), in = ParameterIn.HEADER ),
-        @Parameter( name = "petWeight", description = "마이펫 몸무게", schema = @Schema(type="double"), in = ParameterIn.HEADER ),
-        @Parameter( name = "petNeuter", description = "마이펫 중성화", schema = @Schema(type="boolean"), in = ParameterIn.HEADER ),
-        @Parameter( name = "petColor", description = "마이펫 색상", schema = @Schema(type="string"), in = ParameterIn.HEADER ),
-        @Parameter( name = "MemberEmail", description = "회원 이메일", schema = @Schema(type="string"), in = ParameterIn.HEADER ),
-        @Parameter( name = "MemberName", description = "회원 이름", schema = @Schema(type="string"), in = ParameterIn.HEADER )
-})
-@GetMapping("list")
-public List<PetDTO> getPet(){
-    return petService.getList();
-}
-
-//  마이펫 단일 조회
-@Operation(summary = "마이펫 정보 조회", description = "마이펫 정보를 전체 조회할 수 있는 API")
-@Parameter( name = "id", description = "마이펫 번호", schema = @Schema(type="number"), in = ParameterIn.HEADER, required = true )
-@GetMapping("my-pet/{id}")
-public PetDTO getPet(@PathVariable Long id){
-    Optional<PetDTO> foundPost = petService.getPet(id);
-    if(foundPost.isPresent()){
-        return foundPost.get();
+        //    마이펫 전체 조회
+    @Operation(summary = "마이펫 전체 조회", description = "마이펫 정보를 전체 조회할 수 있는 API")
+    @Parameters({
+            @Parameter( name = "id", description = "마이펫 번호", schema = @Schema(type="number"), in = ParameterIn.HEADER, required = true ),
+            @Parameter( name = "petKind", description = "마이펫 종류", schema = @Schema(type="string"), in = ParameterIn.HEADER ),
+            @Parameter( name = "petImage", description = "마이펫 이미지", schema = @Schema(type="string"), in = ParameterIn.HEADER),
+            @Parameter( name = "petName", description = "마이펫 이름", schema = @Schema(type="string"), in = ParameterIn.HEADER ),
+            @Parameter( name = "petGender", description = "마이펫 성별 ", schema = @Schema(type="boolean"), in = ParameterIn.HEADER, required = true ),
+            @Parameter( name = "petBreed", description = "마이펫 품종", schema = @Schema(type="string"), in = ParameterIn.HEADER, required = true),
+            @Parameter( name = "petBirth", description = "마이펫 생일", schema = @Schema(type="string"), in = ParameterIn.HEADER ),
+            @Parameter( name = "petVet", description = "마이펫 동물병원", schema = @Schema(type="string"), in = ParameterIn.HEADER ),
+            @Parameter( name = "petWeight", description = "마이펫 몸무게", schema = @Schema(type="double"), in = ParameterIn.HEADER ),
+            @Parameter( name = "petNeuter", description = "마이펫 중성화", schema = @Schema(type="boolean"), in = ParameterIn.HEADER ),
+            @Parameter( name = "petColor", description = "마이펫 색상", schema = @Schema(type="string"), in = ParameterIn.HEADER ),
+            @Parameter( name = "MemberEmail", description = "회원 이메일", schema = @Schema(type="string"), in = ParameterIn.HEADER ),
+            @Parameter( name = "MemberName", description = "회원 이름", schema = @Schema(type="string"), in = ParameterIn.HEADER )
+    })
+    @GetMapping("list/{id}")
+    public List<PetDTO> getPetList(@PathVariable Long id){
+        return petService.getList(id);
     }
-    return new PetDTO();
-}
+
+    //  마이펫 단일 조회
+    @Operation(summary = "마이펫 정보 조회", description = "마이펫 정보를 전체 조회할 수 있는 API")
+    @Parameter( name = "id", description = "마이펫 번호", schema = @Schema(type="number"), in = ParameterIn.HEADER, required = true )
+    @GetMapping("my-pet/{id}")
+    public PetDTO getPet(@PathVariable Long id){
+        Optional<PetDTO> foundPost = petService.getPet(id);
+        if(foundPost.isPresent()){
+            return foundPost.get();
+        }
+        return new PetDTO();
+    }
 
     // 마이펫 수정
     @Operation(summary = "마이펫 수정", description = "마이펫 수정할 수 있는 API")

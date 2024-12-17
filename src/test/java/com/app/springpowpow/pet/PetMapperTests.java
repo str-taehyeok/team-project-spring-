@@ -1,5 +1,6 @@
 package com.app.springpowpow.pet;
 
+import com.app.springpowpow.domain.PetDTO;
 import com.app.springpowpow.domain.PetVO;
 import com.app.springpowpow.service.PetService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,5 +25,9 @@ public class PetMapperTests {
 
     }
 
+    @Test
+    public void selectPetByIdTest(){
+        petService.getPet(1L).map(PetDTO::toString).ifPresent(log::info);
+    }
 
 }

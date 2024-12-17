@@ -24,8 +24,8 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public List<PetDTO> getList() {
-        return petDAO.findAll();
+    public List<PetDTO> getList(Long memberId) {
+        return petDAO.findAll(memberId);
     }
 
     @Override
