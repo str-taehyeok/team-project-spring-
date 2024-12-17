@@ -10,7 +10,7 @@
 
 <!--    제품 전체-->
     <select id="selectAll" resultType="ProductDTO">
-        SELECT ID, MEMBER_ID, PRODUCT_PRICE, PRODUCT_REAL_PRICE, PRODUCT_DISCOUNT,
+        SELECT ID, MEMBER_ID, PRODUCT_PRICE, PRODUCT_REAL_PRICE, PRODUCT_DISCOUNT, PRODUCT_STOCK, PRODUCT_DATE,
                PRODUCT_NAME, PRODUCT_CODE, PRODUCT_DETAIL, PRODUCT_ANIMAL, PRODUCT_CATEGORY,
                PRODUCT_COLOR, PRODUCT_SIZE, PRODUCT_FILE_NAME, PRODUCT_FILE_PATH
         FROM VIEW_PRODUCT
@@ -26,7 +26,9 @@
 
 <!--    판매자의 모든 제품-->
     <select id="selectAllBySeller" resultType="ProductDTO" parameterType="Long">
-        SELECT ID, MEMBER_ID, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_REAL_PRICE, PRODUCT_CODE, PRODUCT_DETAIL, PRODUCT_IMAGE1, PRODUCT_IMAGE2, PRODUCT_IMAGE3, PRODUCT_IMAGE4, PRODUCT_ANIMAL, PRODUCT_CATEGORY, PRODUCT_COLOR, PRODUCT_SIZE
+        SELECT  ID, MEMBER_ID, PRODUCT_PRICE, PRODUCT_REAL_PRICE, PRODUCT_DISCOUNT, PRODUCT_STOCK, PRODUCT_DATE,
+                PRODUCT_NAME, PRODUCT_CODE, PRODUCT_DETAIL, PRODUCT_ANIMAL, PRODUCT_CATEGORY,
+                PRODUCT_COLOR, PRODUCT_SIZE, PRODUCT_FILE_NAME, PRODUCT_FILE_PATH
         FROM TBL_PRODUCT
         WHERE MEMBER_ID = #{memberId}
     </select>
@@ -46,7 +48,7 @@
 <!--    제품 수정-->
     <update id="update" parameterType="ProductDTO">
         UPDATE TBL_PRODUCT
-        SET PRODUCT_NAME = #{productName}, PRODUCT_PRICE = #{productPrice}, PRODUCT_REAL_PRICE = #{productRealPrice}, PRODUCT_CODE = #{productCode}, PRODUCT_DATE = #{productDate}, PRODUCT_STOCK = #{productStock},
+        SET PRODUCT_NAME = #{productName}, PRODUCT_PRICE = #{productPrice}, PRODUCT_REAL_PRICE = #{productRealPrice}, PRODUCT_CODE = #{productCode}, PRODUCT_STOCK = #{productStock},
             PRODUCT_EDIT_DATE = #{productEditDate}, PRODUCT_DETAIL = #{productDetail}, PRODUCT_ANIMAL = #{productAnimal}, PRODUCT_CATEGORY = #{productCategory}, PRODUCT_COLOR = #{productColor}, PRODUCT_SIZE = #{productSize}
     </update>
 

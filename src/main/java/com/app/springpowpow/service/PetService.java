@@ -10,7 +10,7 @@ public interface PetService {
 //    마이펫 작성
     public void write(PetVO petVO);
 //    마이펫 전체 조회
-    public List<PetDTO> getList();
+    public List<PetDTO> getList(Long memberId);
 
 //    마이펫 단일 조회
     public Optional<PetDTO> getPet(Long id);

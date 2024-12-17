@@ -18,8 +18,8 @@ public class PetDAO {
     public void save(PetVO petVO) {
         petMapper.insert(petVO);
     }
-    public List<PetDTO> findAll() {
-      return petMapper.selectAll();
+    public List<PetDTO> findAll(Long memberId) {
+      return petMapper.selectAll(memberId);
     }
     public Optional<PetDTO> findById(Long id) {
         return petMapper.select(id);

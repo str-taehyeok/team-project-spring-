@@ -13,7 +13,7 @@ public interface PetMapper {
     public void insert(PetVO petVO);
 
 //    마이펫 전체 조회
-    public List<PetDTO>selectAll();
+    public List<PetDTO>selectAll(Long memberId);
 
 //    마이펫 단일 조회
     public Optional<PetDTO> select(Long id);
