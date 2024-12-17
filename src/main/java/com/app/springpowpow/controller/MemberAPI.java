@@ -343,7 +343,7 @@ public class MemberAPI {
 
         // 인증번호 저장 (authCodeMap에 이메일과 인증번호 매핑하기)
         authCodeMap.put(memberEmail, authCode);
-//        log.info("Stored Auth Code for {}: {}", memberEmail, authCode);
+        log.info("이메일-> 인증번호 {}: {}", memberEmail, authCode);
 
         response.put("message", "인증번호가 이메일로 전송되었습니다.");
         return ResponseEntity.ok(response);
