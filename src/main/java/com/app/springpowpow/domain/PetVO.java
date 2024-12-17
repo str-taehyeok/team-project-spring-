@@ -14,8 +14,10 @@ public class PetVO implements Serializable {
     private Long id;
     @Schema(description = "반려종류", example = "반려견")
     private String petKind;
-    @Schema(description = "이미지", example = "사진")
-    private String petImage;
+    @Schema(description = "반려 이미지 경로", example = "powpow.jpg")
+    private String petFilePath;
+    @Schema(description = "반려 이미지 이름", example = "powpow")
+    private String petFileName;
     @Schema(description = "반려 이름", example = "레오")
     private String petName;
     @Schema(description = "반려 성별", example = "수컷", required = true)
