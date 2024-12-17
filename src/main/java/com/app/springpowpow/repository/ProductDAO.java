@@ -57,25 +57,7 @@ public class ProductDAO {
             productMapper.deleteAll(memberId);
         }
 
-//        사진 추가
-    public void saveImage(ProductFileVO productFileVO) {
-        productMapper.insertImage(productFileVO);
-    }
 
-//    사진 수정
-    public void updateImage(ProductFileVO productFileVO) {
-            productMapper.updateImage(productFileVO);
-    }
-
-//    제품 삭제시 사진도 삭제
-    public void deleteImage(Long productId) {
-            productMapper.delete(productId);
-    }
-
-//    모든 사진
-    public List<ProductFileVO> findAll() {
-        return productMapper.selectAllImage();
-    }
 
 
     }

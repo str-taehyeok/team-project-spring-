@@ -2,6 +2,7 @@ package com.app.springpowpow.controller;
 
 import com.app.springpowpow.domain.*;
 import com.app.springpowpow.service.DeliveryService;
+import com.app.springpowpow.service.ProductFileService;
 import com.app.springpowpow.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -27,7 +28,7 @@ import java.util.*;
 public class ProductAPI {
     private final ProductService productService;
     private final DeliveryService deliveryService;
-
+    private final ProductFileService productFileService;
 
 //    제품 등록
     @Operation(summary = "제품 등록", description = "제품등록 API")
@@ -111,9 +112,9 @@ public class ProductAPI {
     @Operation(summary = "제품 삭제", description = "제품을 삭제하는 API")
     @Parameter(name = "id", description = "제품 삭제", schema = @Schema(type="number"))//DB의 스키마가 아니라, swagger에서 인식하기 위한 타입in = ParameterIn.PATH, //path 로 전달required = true //반드시 전달)
     @ApiResponse(responseCode = "200", description = "제품 삭제 완료")
-    @DeleteMapping("seller-product/{id}")
-    public void delete(@PathVariable Long id){
-        productService.deleteProduct(id);
+    @DeleteMapping("seller-product/{deleteProductId}")
+    public void delete(@PathVariable Long deleteProductId){
+        productService.deleteProduct(deleteProductId);
     }
 
 
@@ -137,7 +138,7 @@ public class ProductAPI {
 
     @GetMapping("detail")
     public void goToDetail(Model model) {
-        model.addAttribute("files", productService.getList());
+        model.addAttribute("files", productFileService.getList());
     }
 
 
@@ -150,14 +151,14 @@ public class ProductAPI {
     @PutMapping("image/{id}")
     public ProductFileVO update(@PathVariable Long id, @RequestBody ProductFileVO productFileVO) {
         productFileVO.setId(id);
-        productService.updateImage(productFileVO);
+        productFileService.updateImage(productFileVO);
         return productFileVO;
     }
 
 //    제품 삭제시 사진도 삭제
     @DeleteMapping("image/{id}")
     public void deleteImage(@PathVariable Long id) {
-        productService.deleteImage(id);
+        productFileService.deleteImage(id);
     }
 
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.app.springpowpow.mapper.ProductFilterMapper">
+<mapper namespace="com.app.springpowpow.mapper.ProductFileMapper">
 <!--    제품 추가-->
     <insert id="insertImage" parameterType="ProductDTO">
         INSERT INTO TBL_PRODUCT_FILE (ID, PRODUCT_ID, PRODUCT_FILE_NAME, PRODUCT_FILE_PATH)
