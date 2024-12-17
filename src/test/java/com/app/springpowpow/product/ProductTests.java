@@ -8,6 +8,7 @@ import com.app.springpowpow.mapper.CouponMapper;
 import com.app.springpowpow.mapper.ProductMapper;
 import com.app.springpowpow.repository.CouponDAO;
 import com.app.springpowpow.service.CouponService;
+import com.app.springpowpow.service.ProductFileService;
 import com.app.springpowpow.service.ProductService;
 import com.app.springpowpow.service.ProductServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,9 @@ public class ProductTests {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private ProductFileService productFileService;
+
     @Test
     public void selectAllTest() {
         log.info(productService.selectAllProducts().toString());
@@ -39,6 +43,6 @@ public class ProductTests {
         productFileVO.setProductFileName("test.jpg");
         productFileVO.setProductFilePath("test.jpg");
 
-        productService.updateImage(productFileVO);
+        productFileService.updateImage(productFileVO);
     }
 }

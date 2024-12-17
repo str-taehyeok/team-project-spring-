@@ -31,17 +31,5 @@ public interface ProductMapper {
     public void deleteAll(Long memberId);
 
 
-//    사진 추가
-    public void insertImage(ProductFileVO productFileVO);
-
-//    SELECT ALL
-    public List<ProductFileVO> selectAllImage();
-
-//    사진 수정
-    public void updateImage(ProductFileVO productFileVO);
-
-
-//    제품 삭제시 사진도 삭제
-    public void deleteAllImage(Long productId);
 
 }
