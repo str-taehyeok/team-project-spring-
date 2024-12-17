@@ -33,8 +33,6 @@ public class MemberAPI {
     private final JwtTokenUtil jwtTokenUtil;
     private final MemberService memberService;
     private final SnsService snsService;
-    private final MemberVO memberVO;
-    private final SmsUtil smsUtil;
 
 
     //    회원가입
