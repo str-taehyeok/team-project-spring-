@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.app.springpowpow.mapper.CartOrderMapper">
+
+<!--    단일 주문 제품과 할인율 조회 -->
+    <select id="select" parameterType="Long" resultType="com.app.springpowpow.domain.CartOrderDTO">
+        SELECT ID, PRODUCT_ID, MEMBER_ID, CART_PRODUCT_COUNT, PRODUCT_NAME, PRODUCT_FILE_NAME, PRODUCT_FILE_PATH, PRODUCT_REAL_PRICE, PRODUCT_PRICE, PRODUCT_STOCK, COUPON_TITLE
+        FROM VIEW_CART
+        WHERE ID = #{id}
+    </select>
+
+    <select id="selectAll" resultType="com.app.springpowpow.domain.CartOrderDTO">
+        SELECT ID, PRODUCT_ID, MEMBER_ID, CART_PRODUCT_COUNT, PRODUCT_NAME, PRODUCT_FILE_NAME, PRODUCT_FILE_PATH, PRODUCT_REAL_PRICE, PRODUCT_PRICE, PRODUCT_STOCK, COUPON_TITLE
+        FROM VIEW_CART
+    </select>
+
+<!--   단일 주문 제품 중 제품 주문 수량과 쿠폰 적용한 가격을 디비에 저장 -->
+    <insert id="insert" parameterType="Long">
+       INSERT INTO VIEW_CART(ID, PRODUCT_ID. MEMBER_ID, CART_PRODUCT_COUNT, PRODUCT_NAME, PRODUCT_FILE_NAME, PRODUCT_FILE_PATH, PRODUCT_REAL_PRICE, PRODUCT_PRICE, PRODUCT_STOCK, COUPON_TITLE)
+       VALUES (SEQ_VIEW_CART.NEXTVAL, #{})
+    </insert>
+
+
+
+</mapper>
