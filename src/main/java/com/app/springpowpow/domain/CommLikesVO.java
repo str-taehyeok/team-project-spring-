@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Component
-public class CommLikesVO implements Serializable {
+public class CommLikesVO {
     private Long id;
     private Long memberId;
     private Long postId;
