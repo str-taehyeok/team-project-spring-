@@ -48,6 +48,14 @@ public class PostAPI {
         return postService.getList();
     }
 
+
+    //    게시글 전체 조회
+    @Operation(summary = "게시글 인기글 4개 조회", description = "게시글 인기글 4개 조회할 수 있는 API")
+    @GetMapping("postsPopular")
+    public List<PostDTO> getPostPopular() {
+        return postService.getListPopular();
+    }
+
     //    게시글 단일 조회
     @Operation(summary = "게시글 정보 조회", description = "게시글 정보를 조회할 수 있는 API")
     @Parameter(name = "id", description = "게시글 번호", schema = @Schema(type = "number"), in = ParameterIn.PATH, required = true)

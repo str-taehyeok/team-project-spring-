@@ -36,7 +36,6 @@ public class CommLikesAPI {
     @ApiResponse(responseCode = "200", description = "좋아요 취소 완료")
     @DeleteMapping("cancelLike")
     public void cancelLike(@RequestBody CommLikesVO commLikesVO) {
-        log.info("likeCancel {}", commLikesVO.toString());
         commLikesService.removeLike(commLikesVO);
     }
 

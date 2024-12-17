@@ -20,6 +20,11 @@ public class PostDAO {
         return postMapper.selectAll();
     }
 
+//    게시글 인기상품 가져오기
+    public List<PostDTO> findAllPopular(){
+        return postMapper.selectAllPopular();
+    }
+
 //    게시글 단일 가져오기
     public Optional<PostDTO> findById(Long id){
         return postMapper.select(id);

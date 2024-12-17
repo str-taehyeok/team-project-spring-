@@ -12,6 +12,9 @@ public interface PostService {
 //    게시글 전체조회
     public List<PostDTO> getList();
 
+//    인기순 게시글 조회 (4개)
+    public List<PostDTO> getListPopular();
+
 //    게시글 단일 조회
     public Optional<PostDTO> getPost(Long id);
 

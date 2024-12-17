@@ -22,7 +22,14 @@ public class PostServiceImpl implements PostService {
     public List<PostDTO> getList() {
         return postDAO.findAll();
     }
-//    게시글 단일 조회
+
+//    인기 4개
+    @Override
+    public List<PostDTO> getListPopular() {
+        return postDAO.findAllPopular();
+    }
+
+    //    게시글 단일 조회
     @Override
     public Optional<PostDTO> getPost(Long id) {
         return postDAO.findById(id);

@@ -13,6 +13,9 @@ public interface PostMapper {
 //   전체 조회
     public List<PostDTO> selectAll();
 
+//   좋아요 순 4개
+    public List<PostDTO> selectAllPopular();
+
 //   단일 조회
     public Optional<PostDTO> select(Long id);
 
