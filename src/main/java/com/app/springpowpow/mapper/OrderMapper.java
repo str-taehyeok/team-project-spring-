@@ -20,5 +20,7 @@ public interface OrderMapper {
 
     public void update(OrderVO orderVO);
 
+    public List<OrderVO> selectByMemberId(Long memberId);
+
     public Optional<OrderDTO> selectAllByDate(String orderDate);
 }

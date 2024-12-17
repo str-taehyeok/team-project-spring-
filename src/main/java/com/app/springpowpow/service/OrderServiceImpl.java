@@ -46,6 +46,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<OrderVO> selectOrderByMemberId(Long memberId) { return orderDAO.findByMemberId(memberId); }
+
+    @Override
     public Optional<OrderDTO> selectOrderByDate(String orderDate) {
         return orderDAO.findByOrderDate(orderDate);
     }
