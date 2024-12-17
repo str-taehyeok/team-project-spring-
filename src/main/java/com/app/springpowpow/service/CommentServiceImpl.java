@@ -1,5 +1,6 @@
 package com.app.springpowpow.service;
 
+import com.app.springpowpow.domain.CommentDTO;
 import com.app.springpowpow.domain.CommentVO;
 import com.app.springpowpow.repository.CommentDAO;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,9 +30,9 @@ public class CommentServiceImpl implements CommentService {
         commentDAO.removeComment(id);
     }
 
-    // 특정 게시글에 달린 모든 댓글 조회
+    // 댓글 조회
     @Override
-    public List<CommentVO> getCommentsByPostId(Long postId) {
+    public List<CommentDTO> getCommentsByPostId(Long postId) {
         return commentDAO.getCommentsByPostId(postId);
     }
 }

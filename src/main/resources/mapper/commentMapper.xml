@@ -15,10 +15,18 @@
     </delete>
 
     <!-- 댓글 리스트 -->
-    <select id="selectAllComment" parameterType="Long" resultType="CommentVO">
-        SELECT ID, MEMBER_ID, POST_ID, COMMENT_CONTENT
-        FROM TBL_COMMENT
-        WHERE POST_ID = #{postId}
+    <select id="selectAllComment" resultType="CommentDTO">
+        SELECT TBC.ID, TBC.MEMBER_ID, TBC.POST_ID, TBC.COMMENT_CONTENT, TBM.MEMBER_NICKNAME,
+               TBM.MEMBER_EMAIL, TBM.MEMBER_NAME,
+               TBM.MEMBER_PHONE, TBM.MEMBER_NICKNAME, TBM.MEMBER_ZIPCODE, TBM.MEMBER_ADDRESS,
+               TBM.MEMBER_ADDRESS_DETAIL, TBM.MEMBER_FILE_NAME, TBM.MEMBER_FILE_PATH,
+               TBP.POST_CONTENT, TBP.POST_COLOR
+        FROM TBL_COMMENT TBC
+                 JOIN TBL_MEMBER TBM
+                      ON TBC.MEMBER_ID = TBM.ID
+                 JOIN TBL_POST TBP
+                      ON TBC.POST_ID = TBP.ID
+        WHERE POST_ID = #{postId};
     </select>
 
 </mapper>

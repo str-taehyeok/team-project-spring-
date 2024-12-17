@@ -1,5 +1,6 @@
 package com.app.springpowpow.mapper;
 
+import com.app.springpowpow.domain.CommentDTO;
 import com.app.springpowpow.domain.CommentVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -16,6 +17,6 @@ public interface CommentMapper {
     public void deleteComment(Long id);
 
     // 전체 댓글 조회
-    public List<CommentVO> selectAllComment(Long postId);
+    public List<CommentDTO> selectAllComment(Long postId);
 
 }

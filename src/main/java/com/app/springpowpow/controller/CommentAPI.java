@@ -1,5 +1,6 @@
 package com.app.springpowpow.controller;
 
+import com.app.springpowpow.domain.CommentDTO;
 import com.app.springpowpow.domain.CommentVO;
 import com.app.springpowpow.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,7 +39,7 @@ public class CommentAPI {
     // 전체 댓글 조회
     @Operation(summary = "댓글 전체 조회", description = "댓글 전체 조회할 수 있는 API")
     @GetMapping("list")
-    public List<CommentVO> getCommentsByPostId(@RequestParam Long postId) {
+    public List<CommentDTO> getCommentsByPostId(@RequestBody Long postId) {
         return commentService.getCommentsByPostId(postId);
     }
 }

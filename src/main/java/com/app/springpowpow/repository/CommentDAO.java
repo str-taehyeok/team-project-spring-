@@ -1,5 +1,6 @@
 package com.app.springpowpow.repository;
 
+import com.app.springpowpow.domain.CommentDTO;
 import com.app.springpowpow.domain.CommentVO;
 import com.app.springpowpow.mapper.CommentMapper;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class CommentDAO {
     }
 
     // 전체 댓글 조회
-    public List<CommentVO> getCommentsByPostId(Long postId) {
+    public List<CommentDTO> getCommentsByPostId(Long postId) {
         return commentMapper.selectAllComment(postId);
     }
 
