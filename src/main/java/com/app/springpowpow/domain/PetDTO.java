@@ -14,7 +14,6 @@ public class PetDTO implements Serializable {
 
     private Long id;
     private String petKind;
-    private String petImage;
     private String petName;
     private String petGender;
     private String petBreed;
