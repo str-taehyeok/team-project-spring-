@@ -10,7 +10,7 @@ import java.util.Optional;
 @Mapper
 public interface CartMapper {
 
-    public List<CartDTO> selectAll(Long memberId);
+    public List<CartDTO> selectAll();
 
     public Optional<CartDTO> select(Long memberId);
 
