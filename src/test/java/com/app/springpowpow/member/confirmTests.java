@@ -25,9 +25,13 @@ public class confirmTests {
     private ProductService productService;
     @Autowired
     private NoticeService noticeService;
+    @Autowired
+    private MemberService memberService;
+
 
     @Test
     public void likeTest(){
-        log.info("list {}", noticeService.getSearchKeywordList("공지사항"));
+        log.info("유저 {}", memberService.getMemberByIdAndType(2L, "판매자").toString());
     }
+
 }

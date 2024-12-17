@@ -27,7 +27,10 @@ public class MemberServiceImpl implements MemberService {
         return memberDAO.findById(id);
     }
 
-
+    @Override
+    public Optional<MemberVO> getMemberByIdAndType(Long id, String type) {
+        return memberDAO.findByIdAndType(id, type);
+    }
 
     @Override
     public List<MemberVO> getAllMembers() {
