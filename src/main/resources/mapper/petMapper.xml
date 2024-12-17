@@ -3,22 +3,19 @@
 <mapper namespace="com.app.springpowpow.mapper.PetMapper">
 
     <insert id="insert" parameterType="PetVO">
-        <selectKey keyProperty="id" order="BEFORE" resultType="Long">
-            SELECT SEQ_PET.NEXTVAL FROM DUAL
-        </selectKey>
-        INSERT INTO TBL_PET(ID, MEMBER_ID, PET_IMAGE, PET_NAME, PET_KIND, PET_GENDER, PET_BREED, PET_BIRTH, PET_WEIGHT, PET_NEUTER, PET_VET)
-        VALUES(SEQ_PET.NEXTVAL, #{memberId}, #{petImage}, #{petName}, #{petKind}, #{petGender}, #{petBreed},  TO_DATE(#{petBirth}, 'YYYY-MM-DD'), #{petWeight}, #{petNeuter}, #{petVet})
+        INSERT INTO TBL_PET(ID, MEMBER_ID, PET_FILE_NAME, PET_FILE_PATH , PET_NAME, PET_KIND, PET_GENDER, PET_BREED, PET_BIRTH, PET_WEIGHT, PET_NEUTER, PET_VET)
+        VALUES(SEQ_PET.NEXTVAL, #{memberId}, #{petFileName}, #{petFilePath}, #{petName}, #{petKind}, #{petGender}, #{petBreed},  TO_DATE(#{petBirth}, 'YYYY-MM-DD'), #{petWeight}, #{petNeuter}, #{petVet})
     </insert>
 
     <select id="selectAll" resultType="PetDTO">
-        SELECT TP.ID, TP.MEMBER_ID, TP.PET_KIND, TP.PET_IMAGE, TP.PET_NAME, TP.PET_GENDER, TP.PET_BREED, TP.PET_BIRTH, TP.PET_VET, TP.PET_WEIGHT, TP.PET_NEUTER, TP.PET_COLOR, TM.MEMBER_EMAIL, TM.MEMBER_NAME
+        SELECT TP.ID, TP.MEMBER_ID, TP.PET_KIND, TP.PET_FILE_NAME, TP.PET_FILE_PATH, TP.PET_NAME, TP.PET_GENDER, TP.PET_BREED, TP.PET_BIRTH, TP.PET_VET, TP.PET_WEIGHT, TP.PET_NEUTER, TP.PET_COLOR, TM.MEMBER_EMAIL, TM.MEMBER_NAME
         FROM TBL_PET TP
         JOIN TBL_MEMBER TM
         ON TP.MEMBER_ID = TM.ID
     </select>
     
     <select id="select" parameterType="Long" resultType="PetDTO">
-        SELECT TP.ID, TP.MEMBER_ID, TP.PET_KIND, TP.PET_IMAGE, TP.PET_NAME, TP.PET_GENDER, TP.PET_BREED, TP.PET_BIRTH, TP.PET_VET, TP.PET_WEIGHT, TP.PET_NEUTER, TP.PET_COLOR, TM.MEMBER_EMAIL, TM.MEMBER_NAME
+        SELECT TP.ID, TP.MEMBER_ID, TP.PET_KIND, TP.PET_FILE_NAME, TP.PET_FILE_PATH, TP.PET_NAME, TP.PET_GENDER, TP.PET_BREED, TP.PET_BIRTH, TP.PET_VET, TP.PET_WEIGHT, TP.PET_NEUTER, TP.PET_COLOR, TM.MEMBER_EMAIL, TM.MEMBER_NAME
         FROM TBL_PET TP
         JOIN TBL_MEMBER TM
         ON TP.MEMBER_ID = TM.ID AND TP.ID = #{id}
