@@ -44,5 +44,6 @@ public class OrderDTO {
 
     private String deliveryStatus;
 
+    private String ProductName;
 
 }
