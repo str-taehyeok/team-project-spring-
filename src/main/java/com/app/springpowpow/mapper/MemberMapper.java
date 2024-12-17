@@ -2,6 +2,7 @@ package com.app.springpowpow.mapper;
 
 import com.app.springpowpow.domain.MemberVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +12,9 @@ public interface MemberMapper {
 
     //    회원 조회
     public Optional<MemberVO> select(Long id);
+
+    // 회원 가입시 타입별 가입
+    public Optional<MemberVO> selectType(@Param("id") Long id, @Param("type") String type);
 
     //    전체 조회
     public List<MemberVO> selectAll();
