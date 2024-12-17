@@ -63,10 +63,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProduct(Long id) {
+        productFileDAO.deleteAllImage(id);
+        reviewDAO.deleteAll(id);
+        deliveryDAO.deleteAll(id);
         productDAO.deleteProduct(id);
-        reviewDAO.deleteReview(id);
-        deliveryDAO.deleteDelivery(id);
-        productFileDAO.deleteImage(id);
     }
 
     @Override

@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface OrderService {
 
     public void insertNewOrder(OrderVO orderVO);
-    public List<OrderDTO> selectAllOrders();
+    public List<OrderDTO> selectAllOrders(Long memberId);
     public Optional<OrderDTO> getOrderById(Long id);
     public void deleteOrderById(Long id);
     public void updateOrderById(OrderVO orderVO);

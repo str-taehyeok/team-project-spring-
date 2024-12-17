@@ -7,9 +7,10 @@
         VALUES (SEQ_ORDER.NEXTVAL, #{productId}, #{memberId}, #{deliveryId}, #{orderNumber}, #{orderDate}, #{orderAddress}, #{productCount})
     </insert>
 
-    <select id="selectAll" resultType="OrderDTO">
-        SELECT ID, PRODUCT_ID, MEMBER_ID, DELIVERY_ID, ORDER_NUMBER, ORDER_DATE, PRODUCT_PRICE, TOTAL_PRICE, DELIVERY_STATUS, PRODUCT_COUNT
+    <select id="selectAll" parameterType="Long" resultType="OrderDTO">
+        SELECT ID, PRODUCT_ID, MEMBER_ID, DELIVERY_ID, ORDER_NUMBER, ORDER_DATE, MEMBER_NAME, MEMBER_EMAIL, MEMBER_ADDRESS, MEMBER_ADDRESS_DETAIL, MEMBER_ZIPCODE, PRODUCT_PRICE, TOTAL_PRICE, DELIVERY_STATUS, PRODUCT_COUNT, PRODUCT_NAME
         FROM VIEW_DELIVERY
+        WHERE MEMBER_ID = #{memberId}
     </select>
 
     <select id="select" resultType="OrderDTO" parameterType="Long">

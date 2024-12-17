@@ -24,7 +24,7 @@ public class ProductFileDAO {
     }
 
     //    제품 삭제시 사진도 삭제
-    public void deleteImage(Long productId) {
+    public void deleteAllImage(Long productId) {
         productFileMapper.deleteAllImage(productId);
     }
 
