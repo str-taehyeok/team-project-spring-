@@ -1,5 +1,6 @@
 package com.app.springpowpow.controller;
 
+import com.app.springpowpow.domain.DeliveryDTO;
 import com.app.springpowpow.domain.DeliveryVO;
 import com.app.springpowpow.domain.ProductDTO;
 import com.app.springpowpow.service.DeliveryService;
@@ -12,6 +13,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -35,6 +38,13 @@ public class DeliveryAPI {
     public void insert(@RequestBody DeliveryVO deliveryVO) {
         deliveryService.insertDeliveryInfo(deliveryVO);
     }
+
+
+    @GetMapping("orders")
+    public List<DeliveryDTO> getOrders() {
+        return deliveryService.selectAllDeliveryInfo();
+    }
+
 
 
     @Operation(summary = "배송 조건 수정", description = "배송 조건 수정 API")

@@ -1,11 +1,14 @@
 package com.app.springpowpow.service;
 
+import com.app.springpowpow.domain.DeliveryDTO;
 import com.app.springpowpow.domain.DeliveryVO;
 import com.app.springpowpow.domain.ProductDTO;
 import com.app.springpowpow.repository.DeliveryDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 @Service
@@ -19,6 +22,11 @@ public class DeliveryServiceImpl implements DeliveryService {
     @Override
     public void insertDeliveryInfo(DeliveryVO deliveryVO) {
         deliveryDAO.save(deliveryVO);
+    }
+
+    @Override
+    public List<DeliveryDTO> selectAllDeliveryInfo() {
+        return deliveryDAO.findAll();
     }
 
     @Override
