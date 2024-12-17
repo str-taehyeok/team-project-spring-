@@ -1,9 +1,6 @@
 package com.app.springpowpow.controller;
 
-import com.app.springpowpow.domain.DeliveryVO;
-import com.app.springpowpow.domain.ProductDTO;
-import com.app.springpowpow.domain.ProductFileVO;
-import com.app.springpowpow.domain.ProductVO;
+import com.app.springpowpow.domain.*;
 import com.app.springpowpow.service.DeliveryService;
 import com.app.springpowpow.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -71,6 +68,25 @@ public class ProductAPI {
         return productService.selectProductsByAnimal();
     }
 
+    //    판매자별 상품 전체 조회
+    @Operation(summary = "판매자별 상품 전체 리스트", description = "판매자별 상품 전체 볼 수 있는 API")
+    @Parameters({
+            @Parameter(name = "id", description = "회원 id", schema = @Schema(type = "number"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "productName", description = "제품명", schema = @Schema(type = "string"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "productPrice", description = "제품가격", schema = @Schema(type = "number"), in = ParameterIn.HEADER),
+            @Parameter(name = "productRealPrice", description = "제품소비자가격", schema = @Schema(type = "number"), in = ParameterIn.HEADER),
+            @Parameter(name = "productCode", description = "제품 코드", schema = @Schema(type = "string"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "productStock", description = "제품 재고", schema = @Schema(type = "number"), in = ParameterIn.HEADER),
+            @Parameter(name = "productDetail", description = "제품 상세정보", schema = @Schema(type = "string"), in = ParameterIn.HEADER),
+            @Parameter(name = "productAnimal", description = "반려동물 종류", schema = @Schema(type = "string"), in = ParameterIn.HEADER),
+            @Parameter(name = "productCategory", description = "제품 카테고리", schema = @Schema(type = "string"), in = ParameterIn.HEADER),
+            @Parameter(name = "productColor", description = "제품 펫스널 컬러", schema = @Schema(type = "string"), in = ParameterIn.HEADER),
+            @Parameter(name = "productSize", description = "제품 사이즈", schema = @Schema(type = "char"), in = ParameterIn.HEADER),
+    })
+    @GetMapping("seller-all-list{id}")
+    public List<ProductDTO> getList(@PathVariable Long id) {
+        return productService.selectAllProductsBySellerId(id);
+    }
 
 
 //  단일 제품
