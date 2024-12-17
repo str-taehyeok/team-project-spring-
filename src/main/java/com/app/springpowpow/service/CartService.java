@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface CartService {
 
-    public List<CartDTO> getCartById(Long memberId);
+    public List<CartDTO> getCartById();
 
     public Optional<CartDTO> getCartProductById(Long memberId);
 
