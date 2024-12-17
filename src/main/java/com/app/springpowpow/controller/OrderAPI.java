@@ -44,7 +44,7 @@ public class OrderAPI {
 
     @Operation(summary = "주문 전체 조회", description = "모든 주문을 리스트로 볼수 있는 API")
     @ApiResponse(responseCode = "200", description = "전체 주문 조회 완료")
-    @GetMapping("order")
+    @GetMapping("orders")
     public List<OrderDTO> orders() {
         return orderService.selectAllOrders();
     }

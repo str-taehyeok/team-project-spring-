@@ -45,4 +45,6 @@ public class ProductTests {
 
         productFileService.updateImage(productFileVO);
     }
+
+
 }

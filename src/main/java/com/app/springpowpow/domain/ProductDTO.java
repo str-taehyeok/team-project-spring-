@@ -43,6 +43,7 @@ public class ProductDTO {
     private String productColor;
     @Schema(description = "제품 사이즈", example = "S")
     private char productSize;
+//    배송 조건
     @Schema(description = "배송 가격", example = "10000")
     private int deliveryFee;
     @Schema(description = "배송비 종류", example = "무료")
@@ -55,4 +56,8 @@ public class ProductDTO {
     private String deliveryPayWhen;
     @Schema(description = "택배사 선택", example = "우체국 택배")
     private String deliveryCompany;
+//    리뷰
+    private int reviewStar;
+    private String reviewDate;
+    private String reviewContent;
 }

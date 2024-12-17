@@ -1,12 +1,11 @@
 package com.app.springpowpow.service;
 
-import com.app.springpowpow.domain.DeliveryVO;
 import com.app.springpowpow.domain.ProductDTO;
-import com.app.springpowpow.domain.ProductFileVO;
 import com.app.springpowpow.domain.ProductVO;
 import com.app.springpowpow.repository.DeliveryDAO;
 import com.app.springpowpow.repository.ProductDAO;
 import com.app.springpowpow.repository.ProductFileDAO;
+import com.app.springpowpow.repository.ReviewDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +20,8 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductDAO productDAO;
     private final ProductFileDAO productFileDAO;
+    private final DeliveryDAO deliveryDAO;
+    private final ReviewDAO reviewDAO;
 
     @Override
     public void insertNewProduct(ProductVO productVO) {
@@ -54,10 +55,23 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
+//    @Override
+//    public void deleteProduct(Long id) {
+//        productFileDAO.deleteImage(id);
+//        productDAO.deleteProduct(id);
+//    }
+
     @Override
     public void deleteProduct(Long id) {
-        productFileDAO.deleteImage(id);
         productDAO.deleteProduct(id);
+        reviewDAO.deleteReview(id);
+        deliveryDAO.deleteDelivery(id);
+        productFileDAO.deleteImage(id);
+    }
+
+    @Override
+    public void deleteAllProducts(Long memberId){
+        productDAO.deleteAllProducts(memberId);
     }
 
 }
