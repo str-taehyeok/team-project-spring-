@@ -8,6 +8,8 @@ import java.util.Optional;
 public interface MemberService {
     public Optional<MemberVO> getMemberById(Long id);
 
+    public Optional<MemberVO> getMemberByIdAndType(Long id, String type);
+
     public List<MemberVO> getAllMembers();
 
     public Long getMemberIdByEmail(String memberEmail);

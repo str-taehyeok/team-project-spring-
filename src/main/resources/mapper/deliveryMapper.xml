@@ -12,6 +12,11 @@
         SET DELIVERY_FEE = #{deliveryFee}, DELIVERY_FEE_FREE = #{deliveryFeeFree}, DELIVERY_FEE_KIND = #{deliveryFeeKind}, DELIVERY_HOW = #{deliveryHow}, DELIVERY_PAY_WHEN = #{deliveryPayWhen}, DELIVERY_COMPANY = #{deliveryCompany}
     </update>
 
+    <select id="selectAll" parameterType="DeliveryDTO">
+        SELECT ID, PRODUCT_ID, MEMBER_ID, DELIVERY_ID, ORDER_NUMBER, ORDER_DATE, ORDER_ADDRESS, PRODUCT_COUNT, PRODUCT_PRICE, TOTAL_PRICE, DELIVERY_STATUS
+        FROM VIEW_DELIVERY;
+    </select>
+
     <delete id="delete" parameterType="Long">
         DELETE FROM TBL_DELIVERY
         WHERE ID = #{id}

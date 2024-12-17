@@ -2,6 +2,7 @@ package com.app.springpowpow.controller;
 
 import com.app.springpowpow.domain.DeliveryVO;
 import com.app.springpowpow.domain.ProductDTO;
+import com.app.springpowpow.domain.ProductFileVO;
 import com.app.springpowpow.domain.ProductVO;
 import com.app.springpowpow.service.DeliveryService;
 import com.app.springpowpow.service.ProductService;
@@ -14,11 +15,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @RestController
 @Slf4j
@@ -55,7 +58,6 @@ public class ProductAPI {
         deliveryService.insertDeliveryInfo(deliveryVO);
         productService.insertNewProduct(productVO);
     }
-
 
     @Operation(summary = "제품 전체 조회", description = "모든 제품을 리스트로 볼수 있는 API")
     @GetMapping("products")
@@ -98,6 +100,49 @@ public class ProductAPI {
         productService.deleteProduct(id);
     }
 
+
+// 사진 등록
+    @PostMapping("image-upload")
+    public ResponseEntity<Map<String, Object>> fileUpload(
+            @RequestParam("title") String title,
+            @RequestParam("files") List<MultipartFile> files
+    ) {
+
+        Map<String, Object> response = new HashMap<String, Object>();
+        log.info("title {}", title);
+        for (MultipartFile file : files) {
+            log.info("file {}", file.getOriginalFilename());
+        }
+
+        response.put("uuid", UUID.randomUUID().toString());
+        return ResponseEntity.ok(response);
+    }
+
+
+    @GetMapping("detail")
+    public void goToDetail(Model model) {
+        model.addAttribute("files", productService.getList());
+    }
+
+
+    //    현재 시간을 기준으로 년월일로 관리 할 수 있게 경로를 붙인다.
+    private String getPath() {
+        return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+    }
+
+//    사진 수정
+    @PutMapping("image/{id}")
+    public ProductFileVO update(@PathVariable Long id, @RequestBody ProductFileVO productFileVO) {
+        productFileVO.setId(id);
+        productService.updateImage(productFileVO);
+        return productFileVO;
+    }
+
+//    제품 삭제시 사진도 삭제
+    @DeleteMapping("image/{id}")
+    public void deleteImage(@PathVariable Long id) {
+        productService.deleteImage(id);
+    }
 
 
 

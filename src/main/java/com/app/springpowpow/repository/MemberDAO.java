@@ -19,6 +19,10 @@ public class MemberDAO {
         return memberMapper.select(id);
     }
 
+    public Optional<MemberVO> findByIdAndType(Long id, String type){
+        return memberMapper.selectType(id, type);
+    }
+
     public List<MemberVO> findAll(){
         return memberMapper.selectAll();
     }

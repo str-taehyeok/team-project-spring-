@@ -17,6 +17,7 @@
         <typeAlias type="com.app.springpowpow.domain.CommLikesDTO" alias="CommLikesDTO" />
         <typeAlias type="com.app.springpowpow.domain.CouponVO" alias="CouponVO" />
         <typeAlias type="com.app.springpowpow.domain.CouponDTO" alias="CouponDTO" />
+        <typeAlias type="com.app.springpowpow.domain.DeliveryDTO" alias="DeliveryDTO" />
         <typeAlias type="com.app.springpowpow.domain.DeliveryVO" alias="DeliveryVO" />
         <typeAlias type="com.app.springpowpow.domain.FollowsVO" alias="FollowsVO" />
         <typeAlias type="com.app.springpowpow.domain.NoticeVO" alias="NoticeVO" />
@@ -31,6 +32,7 @@
         <typeAlias type="com.app.springpowpow.domain.PetVO" alias="PetVO" />
         <typeAlias type="com.app.springpowpow.domain.PetDTO" alias="PetDTO" />
         <typeAlias type="com.app.springpowpow.domain.ProductLikesVO" alias="ProductLikesVO" />
+        <typeAlias type="com.app.springpowpow.domain.ProductFileVO" alias="ProductFileVO" />
         <typeAlias type="com.app.springpowpow.domain.ProductVO" alias="ProductVO" />
         <typeAlias type="com.app.springpowpow.domain.ProductDTO" alias="ProductDTO" />
         <typeAlias type="com.app.springpowpow.domain.ReviewDTO" alias="ReviewDTO" />

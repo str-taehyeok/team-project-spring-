@@ -77,7 +77,10 @@ public class MemberAPI {
     ;
 
     @PostMapping("login")
-    public ResponseEntity<Map<String, Object>> login(@RequestBody MemberVO oauthMemberVO) {
+    public ResponseEntity<Map<String, Object>> login(
+            @RequestParam String type,
+            @RequestBody MemberVO oauthMemberVO
+    ) {
         Map<String, Object> response = new HashMap<>();
         Map<String, Object> claims = new HashMap<>();
 
@@ -87,13 +90,33 @@ public class MemberAPI {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         }
 //        유저를 찾는다.
-        MemberVO foundUser = memberService.getMemberById(memberId).orElse(null);
+        MemberVO foundUser = null;
+
+//        구매자 로그인인지, 판매자 로그인인지 확인한다.
+//        확인 후 로그인 처리
+        if(type.equals("buyer")){
+            // 구매자 로그인 처리 확인
+            foundUser = memberService.getMemberByIdAndType(memberId, "구매자").orElse(null);
+        }else if(type.equals("seller")){
+            // 판매자 로그인 처리 확인
+            foundUser = memberService.getMemberByIdAndType(memberId, "판매자").orElse(null);
+        }else if(type.equals("admin")) {
+            foundUser = memberService.getMemberByIdAndType(memberId, "관리자").orElse(null);
+        }
+
+//        회원은 있지만 다른 타입으로 로그인 한 경우
+        if (foundUser == null) {
+            String provider = memberService.getMemberById(memberId).get().getMemberProvider();
+            response.put("message", provider + "회원 입니다.");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+        }
 
 //        비밀번호 검사 방어코드
         if (!foundUser.getMemberPassword().equals(oauthMemberVO.getMemberPassword())) {
             response.put("message", "비밀번호가 틀렸습니다. 확인해주세요.");
             return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         }
+
 //        아이디, 비밀번호가 일치하는 사용자
         String memberProvider = foundUser.getMemberProvider();
 
@@ -108,6 +131,8 @@ public class MemberAPI {
         response.put("provider", memberProvider);
         return ResponseEntity.ok(response);
     }
+
+
 
     //    토큰 정보로 유저를 가져온다.
     @GetMapping("token")
