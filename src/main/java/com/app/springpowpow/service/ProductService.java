@@ -32,4 +32,5 @@ public interface ProductService {
     public void deleteProduct(Long id);
 
 
+    public void deleteAllProducts(Long memberId);
 }
