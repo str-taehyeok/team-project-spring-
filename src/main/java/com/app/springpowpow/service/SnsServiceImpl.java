@@ -51,12 +51,10 @@ public class SnsServiceImpl implements SnsService {
 
         synchronized (this) {
             authCodeMap.put(memberEmail, code);
-            log.info("인증코드 이메일코드 확인하기 {}: {}", memberEmail, code);
         }
 
         String emailSubject = "POWPOW 이메일 인증 코드";
         String emailContent = "안녕하세요, 인증 코드: " + code + "를 입력해주세요.";
-        log.info("emailContent: {}", emailContent);
 
         // 이메일 전송
         sendEmail(memberEmail, emailSubject, emailContent);
@@ -79,10 +77,6 @@ public class SnsServiceImpl implements SnsService {
     public boolean verifyAuthCode(String memberEmail, String authCode) {
         // 저장된 인증 코드 확인
         String storedAuthCode = authCodeMap.get(memberEmail);
-
-        // 인증 코드가 제대로 저장되었는지 로그로 확인
-        log.info("저장된 인증 코드: {}에 대한 인증 코드: {}", memberEmail, storedAuthCode);
-        log.info("제공된 인증 코드: {}", authCode);
 
         // 저장된 인증 코드와 제공된 인증 코드가 동일한지 비교
         return storedAuthCode != null && storedAuthCode.equals(authCode);
