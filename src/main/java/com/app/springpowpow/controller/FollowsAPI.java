@@ -1,5 +1,6 @@
 package com.app.springpowpow.controller;
 
+import com.app.springpowpow.domain.FollowsDTO;
 import com.app.springpowpow.domain.FollowsVO;
 import com.app.springpowpow.service.FollowsService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,7 +30,7 @@ public class FollowsAPI {
     // 팔로우 취소
     @Operation(summary = "팔로우 취소", description = "팔로우 취소 API")
     @ApiResponse(responseCode = "200", description = "팔로우 취소 완료")
-    @DeleteMapping("cancelLike")
+    @DeleteMapping("cancel")
     public void removeFollow(@RequestBody FollowsVO followsVO) {
         followsService.removeFollow(followsVO);
     }
@@ -38,7 +39,7 @@ public class FollowsAPI {
     @Operation(summary = "팔로워 리스트 조회", description = "특정 유저의 팔로워 리스트 조회 API")
     @ApiResponse(responseCode = "200", description = "팔로워 리스트 조회 완료")
     @GetMapping("followers/{memberId}")
-    public List<FollowsVO> getFollowerList(@PathVariable Long memberId) {
+    public List<FollowsDTO> getFollowerList(@PathVariable Long memberId) {
         return followsService.getFollowerList(memberId);
     }
 
@@ -46,7 +47,7 @@ public class FollowsAPI {
     @Operation(summary = "팔로잉 리스트 조회", description = "특정 유저의 팔로잉 리스트 조회 API")
     @ApiResponse(responseCode = "200", description = "팔로잉 리스트 조회 완료")
     @GetMapping("following/{memberId}")
-    public List<FollowsVO> getFollowingList(@PathVariable Long memberId) {
+    public List<FollowsDTO> getFollowingList(@PathVariable Long memberId) {
         return followsService.getFollowingList(memberId);
     }
 

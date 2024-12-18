@@ -1,5 +1,6 @@
 package com.app.springpowpow.mapper;
 
+import com.app.springpowpow.domain.FollowsDTO;
 import com.app.springpowpow.domain.FollowsVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,9 +16,9 @@ public interface FollowsMapper {
     public void deleteFollow(FollowsVO followsVO);
 
     // 특정 유저의 팔로워 리스트 조회
-    public List<FollowsVO> selectFollowerList(Long followerMemberId);
+    public List<FollowsDTO> selectFollowerList(Long followerMemberId);
 
     // 특정 유저의 팔로잉 리스트 조회
-    public List<FollowsVO> selectFollowingList(Long followingMemberId);
+    public List<FollowsDTO> selectFollowingList(Long followingMemberId);
 
 }

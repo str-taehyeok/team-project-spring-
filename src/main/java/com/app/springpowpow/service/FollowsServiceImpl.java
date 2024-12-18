@@ -1,5 +1,6 @@
 package com.app.springpowpow.service;
 
+import com.app.springpowpow.domain.FollowsDTO;
 import com.app.springpowpow.domain.FollowsVO;
 import com.app.springpowpow.repository.FollowsDAO;
 import lombok.RequiredArgsConstructor;
@@ -29,13 +30,13 @@ public class FollowsServiceImpl implements FollowsService {
 
     // 팔로워 리스트 조회
     @Override
-    public List<FollowsVO> getFollowerList(Long followerMemberId) {
+    public List<FollowsDTO> getFollowerList(Long followerMemberId) {
         return followsDAO.findFollowerList(followerMemberId);
     }
 
     // 팔로잉 리스트 조회
     @Override
-    public List<FollowsVO> getFollowingList(Long followingMemberId) {
+    public List<FollowsDTO> getFollowingList(Long followingMemberId) {
         return followsDAO.findFollowingList(followingMemberId);
     }
 }
