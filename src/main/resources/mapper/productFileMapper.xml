@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.app.springpowpow.mapper.ProductFileMapper">
 <!--    제품 추가-->
-    <insert id="insertImage" parameterType="ProductDTO">
+    <insert id="insertImage" parameterType="ProductFileVO">
         INSERT INTO TBL_PRODUCT_FILE (ID, PRODUCT_ID, PRODUCT_FILE_NAME, PRODUCT_FILE_PATH)
         VALUES (SEQ_PRODUCT.NEXTVAL, #{productId}, #{productFileName}, #{productFilePath})
     </insert>
 
 
 <!--    사진 수정-->
-    <update id="updateImage" parameterType="ProductDTO">
+    <update id="updateImage" parameterType="ProductFileVO">
         UPDATE TBL_PRODUCT_FILE
         SET PRODUCT_FILE_NAME = #{productFileName}, PRODUCT_FILE_PATH = #{productFilePath}
     </update>
