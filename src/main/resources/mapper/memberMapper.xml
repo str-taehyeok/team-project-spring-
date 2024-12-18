@@ -152,5 +152,15 @@
         WHERE MEMBER_EMAIL = #{memberEmail}
     </update>
 
+    <!--redux 의 email 로 비밀번호 확인-->
+    <select id="selectPasswordByMemberEmail" parameterType="MemberVO" resultType="_int">
+        SELECT CASE
+                   WHEN MEMBER_PASSWORD = #{memberPassword} THEN 1
+                   ELSE 0
+                   END
+        FROM TBL_MEMBER
+        WHERE MEMBER_EMAIL = #{memberEmail}
+    </select>
+
 
 </mapper>

@@ -49,5 +49,10 @@ public interface MemberMapper {
 //    비밀번호 변경
     public void updatePassword(MemberVO memberVO);
 
+//    비밀번호 확인
+    public int selectPasswordByMemberEmail(MemberVO memberVO);
+
+
+
 
 }

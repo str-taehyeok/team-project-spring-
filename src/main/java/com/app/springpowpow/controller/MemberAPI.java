@@ -379,4 +379,17 @@ public class MemberAPI {
     }
 
 
+    @Operation(summary = "비밀번호 체크", description = "redux의 이메일과 일치하는 비밀번호가 입력 비밀번호랑 일치하는지 확인하는 API")
+    @PostMapping("/check-password")
+    public ResponseEntity<Map<String, Object>> checkPassword(@RequestBody MemberVO memberVO) {
+
+//         이메일과 비밀번호를 확인하는 로직
+        boolean isPasswordMatch = memberService.checkPassword(memberVO);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", isPasswordMatch);
+        response.put("message", isPasswordMatch ? "비밀번호가 일치합니다." : "비밀번호가 일치하지 않습니다.");
+
+        return ResponseEntity.ok(response); // 200 OK
+    }
 }
