@@ -14,10 +14,10 @@ public interface FollowsMapper {
     // 팔로우 취소
     public void deleteFollow(FollowsVO followsVO);
 
-    // 특정 유저의 팔로잉 리스트 조회
-    public List<FollowsVO> selectFollowingList(Long followerMemberId);
-
     // 특정 유저의 팔로워 리스트 조회
-    public List<FollowsVO> selectFollowerList(Long followingMemberId);
+    public List<FollowsVO> selectFollowerList(Long followerMemberId);
+
+    // 특정 유저의 팔로잉 리스트 조회
+    public List<FollowsVO> selectFollowingList(Long followingMemberId);
 
 }
