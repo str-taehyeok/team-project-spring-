@@ -1,8 +1,6 @@
 package com.app.springpowpow.controller;
 
-import com.app.springpowpow.domain.PetDTO;
-import com.app.springpowpow.domain.PetVO;
-import com.app.springpowpow.domain.PostVO;
+import com.app.springpowpow.domain.*;
 import com.app.springpowpow.service.PetService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -32,12 +30,10 @@ import java.util.*;
 public class PetAPI {
     private final PetService petService;
 
-
-//    마이펫 작성
-    @Operation(summary = "마이펫 작성", description = "마이펫 작성 API")
-    @ApiResponse(responseCode = "200", description = "마이펫 작성 완료")
-    @PostMapping("write")
-    public ResponseEntity<Map<String, String>> write(
+    @Operation(summary = "이미지 업로드", description = "이미지를 저장하는 API")
+    @ApiResponse(responseCode = "200", description = "이미지 업로드 완료")
+    @PostMapping("upload")
+    public ResponseEntity<Map<String, String>> upload(
             @RequestParam("memberId") Long memberId,
             @RequestParam("petName") String petName,
             @RequestParam("petKind") String petKind,
@@ -47,12 +43,53 @@ public class PetAPI {
             @RequestParam("petVet") String petVet,
             @RequestParam("petWeight") double petWeight,
             @RequestParam("petNeuter") String petNeuter,
-            @RequestParam("uploadFileName") String uploadFileName,
-            @RequestParam("uploadFilePath") String uploadFilePath
+            @RequestParam("uploadFile") MultipartFile uploadFile
+    ) throws IOException {
+
+        Map<String, String> response = new HashMap<>();
+        String rootPath = "C:/upload/" + getPath();
+
+        File file = new File(rootPath);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+
+        //        uuid 생성
+        String uuid = UUID.randomUUID().toString();
+        log.info("Generated UUID: {}", uuid);
+        uploadFile.transferTo(new File(rootPath, uuid + "_" + uploadFile.getOriginalFilename()));
+
+//        썸네일
+        if(uploadFile.getContentType().startsWith("image")){
+            FileOutputStream out = new FileOutputStream(new File(rootPath, "t_" + uuid + "_" + uploadFile.getOriginalFilename()));
+            Thumbnailator.createThumbnail(uploadFile.getInputStream(), out, 100, 100);
+            out.close();
+        }
+
+        log.info("upload path : {}", uuid.toString());
+
+        response.put("uuid", uuid);
+        return ResponseEntity.ok(response);
+    }
+
+    // MyPet 작성 API
+    @Operation(summary = "마이펫 작성", description = "마이펫 작성 API")
+    @ApiResponse(responseCode = "200", description = "마이펫 작성 완료")
+    @PostMapping("write")
+    public ResponseEntity<Map<String, String>> write(
+            @RequestParam("uuid") String uuid,
+            @RequestParam("uploadFile") MultipartFile uploadFile,
+            @RequestParam("memberId") Long memberId,
+            @RequestParam("petName") String petName,
+            @RequestParam("petKind") String petKind,
+            @RequestParam("petGender") String petGender,
+            @RequestParam("petBreed") String petBreed,
+            @RequestParam("petBirth") String petBirth,
+            @RequestParam("petVet") String petVet,
+            @RequestParam("petWeight") double petWeight,
+            @RequestParam("petNeuter") String petNeuter
     ) {
         Map<String, String> response = new HashMap<>();
-
-        // PetVO 생성 및 저장
         PetVO petVO = new PetVO();
         petVO.setMemberId(memberId);
         petVO.setPetName(petName);
@@ -63,70 +100,24 @@ public class PetAPI {
         petVO.setPetVet(petVet);
         petVO.setPetWeight(petWeight);
         petVO.setPetNeuter(petNeuter);
-        petVO.setPetFileName(uploadFileName);
-        petVO.setPetFilePath(uploadFilePath);
-
+        petVO.setPetFileName(uuid + "_" + uploadFile.getOriginalFilename());
+        petVO.setPetFilePath(getPath());
         petService.write(petVO);
-
-        log.info("Pet saved: {}", petVO);
 
         response.put("message", "마이펫 등록 완료");
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "이미지 업로드", description = "이미지를 저장하는 API")
-    @ApiResponse(responseCode = "200", description = "이미지 업로드 완료")
-    @PostMapping("upload")
-    public ResponseEntity<Map<String, String>> upload(@RequestParam("uploadFile") MultipartFile uploadFile) throws IOException {
-        Map<String, String> response = new HashMap<>();
-
-        // 파일 저장 및 썸네일 생성
-        String uuid = saveFile(uploadFile);
-        String uploadFilePath = getPath();
-        String uploadFileName = uuid + "_" + uploadFile.getOriginalFilename();
-
-        response.put("message", "이미지 업로드 완료");
-        response.put("uploadFileName", uploadFileName);
-        response.put("uploadFilePath", uploadFilePath);
-        response.put("uuid", uuid);
-
-        return ResponseEntity.ok(response);
-    }
-
-    @Operation(summary = "이미지 표시", description = "이미지를 표시하는 API")
     @GetMapping("display")
-    public byte[] display(@RequestParam("fileName") String fileName) throws IOException {
+    public byte[] display(String fileName) throws IOException {
         return FileCopyUtils.copyToByteArray(new File("C:/upload/" + fileName));
     }
 
-    private String saveFile(MultipartFile uploadFile) throws IOException {
-        String rootPath = "C:/upload/" + getPath();
-        File file = new File(rootPath);
-
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-
-        String uuid = UUID.randomUUID().toString();
-        String fileName = uuid + "_" + uploadFile.getOriginalFilename();
-
-        // 파일 저장
-        uploadFile.transferTo(new File(rootPath, fileName));
-
-        // 썸네일 생성 (이미지인 경우)
-        if (uploadFile.getContentType().startsWith("image")) {
-            try (FileOutputStream out = new FileOutputStream(new File(rootPath, "t_" + fileName))) {
-                Thumbnailator.createThumbnail(uploadFile.getInputStream(), out, 100, 100);
-            }
-        }
-
-        log.info("File saved: {}", fileName);
-        return uuid;
-    }
-
+    //    현재 시간을 기준으로 년월일로 관리할 수 있게 경로를 붙인다.
     private String getPath() {
         return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
     }
+
 
 
 

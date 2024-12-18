@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.app.springpowpow.mapper.CartMapper">
-    <select id="selectAll" parameterType="Long" resultType="com.app.springpowpow.domain.CartDTO">
+    <select id="selectAll" resultType="com.app.springpowpow.domain.CartDTO">
         SELECT TP.ID, TC.MEMBER_ID, TP.PRODUCT_NAME, TP.PRODUCT_PRICE,
                TP.PRODUCT_REAL_PRICE, TP.PRODUCT_CODE, TP.PRODUCT_DATE, TP.PRODUCT_STOCK,
                TP.PRODUCT_DETAIL, TP.PRODUCT_IMAGE1, TP.PRODUCT_IMAGE2, TP.PRODUCT_IMAGE3,

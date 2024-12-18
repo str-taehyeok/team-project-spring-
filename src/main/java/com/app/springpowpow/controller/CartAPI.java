@@ -28,8 +28,8 @@ public class CartAPI {
     @Operation(summary = "제품 전체 조회", description = "제품 전체 조회 API")
     @Parameter(name = "memberId", description = "회원 ID", schema = @Schema(type = "number"), in = ParameterIn.QUERY)
     @PostMapping("all-carts")
-    public List<CartDTO> getCartById(@RequestBody Long memberId) {
-        return cartService.getCartById(memberId);
+    public List<CartDTO> getCartById() {
+        return cartService.getCartById();
     }
 
 //   제품 단일 조회

@@ -36,7 +36,7 @@ public class OrderTests {
 //    통과
     @Test
     public void selectAllTest() {
-        log.info(orderService.selectAllOrders().toString());
+        orderService.selectAllOrders(16L).stream().map(OrderDTO::toString).forEach(log::info);
     }
 
 //    통과

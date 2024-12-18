@@ -1,5 +1,6 @@
 package com.app.springpowpow.product;
 
+import com.app.springpowpow.domain.CardVO;
 import com.app.springpowpow.service.CardService;
 import com.app.springpowpow.service.CartService;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,7 @@ public class CardTests {
     public void CardTest(){
 //        log.info("cart {}", cardService.getCard(1L));
 //        cardService.remove(1L);
-
+            log.info("cart {}", cardService.getCard(2L));
 
     }
 }

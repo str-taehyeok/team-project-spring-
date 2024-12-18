@@ -18,4 +18,6 @@ public interface DeliveryMapper {
     public void update(ProductDTO productDTO);
 
     public void delete(Long id);
+
+    public void deleteAll(Long productId);
 }

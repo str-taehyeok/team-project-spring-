@@ -33,5 +33,8 @@ public class ReviewDAO {
         reviewMapper.delete(id);
     }
 
+    public void deleteAll(Long productId) {
+        reviewMapper.deleteAll(productId);
+    }
     }
 

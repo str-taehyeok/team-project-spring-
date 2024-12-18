@@ -33,6 +33,6 @@ public class ProductFileServiceImpl implements ProductFileService {
 
     @Override
     public void deleteImage(Long productId) {
-        productFileDAO.deleteImage(productId);
+        productFileDAO.deleteAllImage(productId);
     }
 }

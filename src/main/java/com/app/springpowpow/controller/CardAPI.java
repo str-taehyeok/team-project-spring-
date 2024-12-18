@@ -39,7 +39,7 @@ public class CardAPI {
     }
     //카드 조회
     @Operation(summary = "카드 정보 조회", description = "카드 정보를 조회할 수 있는 API")
-    @Parameter( name = "id", description = "카드 번호", schema = @Schema(type="number"), in = ParameterIn.HEADER, required = true )
+    @Parameter( name = "id", description = "카드 번호", schema = @Schema(type="number"), in = ParameterIn.PATH, required = true )
     @GetMapping("pay/{id}")
     public CardVO getCard(@PathVariable Long id){
         Optional<CardVO> foundCard = cardService.getCard(id);

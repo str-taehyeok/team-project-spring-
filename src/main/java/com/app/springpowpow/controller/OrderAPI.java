@@ -42,11 +42,18 @@ public class OrderAPI {
         return new OrderVO();
     }
 
-    @Operation(summary = "주문 전체 조회", description = "모든 주문을 리스트로 볼수 있는 API")
-    @ApiResponse(responseCode = "200", description = "전체 주문 조회 완료")
-    @GetMapping("order")
-    public List<OrderDTO> orders() {
-        return orderService.selectAllOrders();
+    @Operation(summary = "주문 정보 조회", description = "주문 정보를 전체 조회할 수 있는 API")
+    @Parameters({
+            @Parameter(name = "productId", description = "제품 id", schema = @Schema(type = "number"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "memberId", description = "회원 id", schema = @Schema(type = "number"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "deliveryId", description = "배송종류 id", schema = @Schema(type = "number"), in = ParameterIn.HEADER, required = true),
+            @Parameter(name = "orderNumber", description = "주문번호", schema = @Schema(type = "String"), in = ParameterIn.HEADER),
+            @Parameter(name = "orderAddress", description = "주소", schema = @Schema(type = "String"), in = ParameterIn.HEADER),
+            @Parameter(name = "productCount", description = "제품 개수", schema = @Schema(type = "String"), in = ParameterIn.HEADER)
+    })
+    @GetMapping("{sellerId}")
+    public List<OrderDTO> orders(@PathVariable Long sellerId) {
+        return orderService.selectAllOrders(sellerId);
     }
 
     //  주문 단일
