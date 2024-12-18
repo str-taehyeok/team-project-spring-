@@ -1,6 +1,5 @@
 package com.app.springpowpow.controller;
 
-import com.app.springpowpow.domain.BannerDTO;
 import com.app.springpowpow.domain.MemberVO;
 import com.app.springpowpow.service.MemberService;
 import com.app.springpowpow.service.SnsService;
@@ -13,7 +12,6 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 
 @RestController
 @RequiredArgsConstructor
