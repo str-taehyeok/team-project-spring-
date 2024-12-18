@@ -33,6 +33,8 @@ public class MemberAPI {
     private final SnsService snsService;
 
 
+
+
     //    회원가입
     @Operation(summary = "회원가입", description = "회원가입을 할 수 있는 API")
     @ApiResponse(responseCode = "200", description = "회원가입 완료")
