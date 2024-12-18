@@ -26,8 +26,8 @@ public class FollowsAPI {
     @ApiResponse(responseCode = "200", description = "팔로우 추가 완료")
     @PostMapping("add")
     public void addFollow(@RequestBody FollowsVO followsVO) {
-//        log.info("팔로우 추가 요청: followerMemberId = {}, followingMemberId = {}, followsFollowState = {}",
-//        followsVO.getFollowerMemberId(), followsVO.getFollowingMemberId(), followsVO.getFollowsFollowState());
+        log.info("팔로우 추가 요청: followerMemberId = {}, followingMemberId = {}, followsFollowState = {}",
+        followsVO.getFollowerMemberId(), followsVO.getFollowingMemberId(), followsVO.getFollowsFollowState());
         followsService.addFollow(followsVO);
     }
 
