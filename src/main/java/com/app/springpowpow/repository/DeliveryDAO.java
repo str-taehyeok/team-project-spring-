@@ -33,4 +33,7 @@ public class DeliveryDAO {
         deliveryMapper.delete(id);
     }
 
+    public void deleteAll(Long productId) {
+        deliveryMapper.deleteAll(productId);
+    }
 }

@@ -26,8 +26,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDTO> selectAllOrders() {
-        return orderDAO.findAll();
+    public List<OrderDTO> selectAllOrders(Long memberId) {
+        return orderDAO.findAll(memberId);
     }
 
     @Override

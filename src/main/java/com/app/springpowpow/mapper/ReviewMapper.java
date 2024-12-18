@@ -16,4 +16,6 @@ public interface ReviewMapper {
 
     public void delete(Long id);
 
+    public void deleteAll(Long productId);
+
 }

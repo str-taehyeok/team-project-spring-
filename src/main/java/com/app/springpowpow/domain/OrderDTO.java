@@ -42,5 +42,8 @@ public class OrderDTO {
 
     private int totalCount;
 
+    private String deliveryStatus;
+
+    private String ProductName;
 
 }

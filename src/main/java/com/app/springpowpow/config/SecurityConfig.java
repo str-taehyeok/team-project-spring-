@@ -38,16 +38,33 @@ public class SecurityConfig {
                         .loginPage("/oauth2/authorization/google")
                         .successHandler((request, response, authentication) -> {
                             if (authentication instanceof OAuth2AuthenticationToken) {
+                                String email = "";
+                                String name = "";
+
                                 OAuth2AuthenticationToken authToken = (OAuth2AuthenticationToken) authentication;
                                 OAuth2User user = authToken.getPrincipal();
                                 Map<String, Object> attributes = user.getAttributes();
 
                                 // OAuth2 제공자 정보
                                 String provider = authToken.getAuthorizedClientRegistrationId();  // ex. "google", "kakao", "naver"
-                                String email = (String) attributes.get("email");
-                                String name = (String) attributes.get("name");
                                 Map<String, Object> responseMap = new HashMap<>();
                                 Map<String, Object> claims = new HashMap<>();
+
+
+                                if ("kakao".equals(provider)) {
+                                    Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
+                                    email = (String) kakaoAccount.get("email");
+                                    Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
+                                    name = (String) profile.get("nickname");
+                                } else if ("google".equals(provider)) {
+                                    email = (String) attributes.get("email");
+                                    name = (String) attributes.get("name");
+                                } else if ("naver".equals(provider)) {
+                                    Map<String, Object> responseNaver = (Map<String, Object>) attributes.get("response");
+                                    email = (String) responseNaver.get("email");
+                                    name = (String) responseNaver.get("nickname");
+                                }
+
                                 claims.put("email", email);
                                 claims.put("name", name);
 

@@ -20,8 +20,8 @@ public class OrderDAO {
             orderMapper.insert(orderVO);
         }
 
-        public List<OrderDTO> findAll() {
-            return orderMapper.selectAll();
+        public List<OrderDTO> findAll(Long memberId) {
+            return orderMapper.selectAll(memberId);
         }
 
         public Optional<OrderDTO> findById(Long id) {

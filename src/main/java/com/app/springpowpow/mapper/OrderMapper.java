@@ -12,7 +12,7 @@ public interface OrderMapper {
 
     public void insert(OrderVO orderVO);
 
-    public List<OrderDTO> selectAll();
+    public List<OrderDTO> selectAll(Long memberId);
 
     public Optional<OrderDTO> select(Long id);
 

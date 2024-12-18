@@ -110,12 +110,22 @@ public class ProductAPI {
 
 //    제품 삭제
     @Operation(summary = "제품 삭제", description = "제품을 삭제하는 API")
-    @Parameter(name = "id", description = "제품 삭제", schema = @Schema(type="number"))//DB의 스키마가 아니라, swagger에서 인식하기 위한 타입in = ParameterIn.PATH, //path 로 전달required = true //반드시 전달)
+    @Parameter(name = "id", description = "제품 번호", schema = @Schema(type="number"))//DB의 스키마가 아니라, swagger에서 인식하기 위한 타입in = ParameterIn.PATH, //path 로 전달required = true //반드시 전달)
     @ApiResponse(responseCode = "200", description = "제품 삭제 완료")
     @DeleteMapping("seller-product/{deleteProductId}")
-    public void delete(@PathVariable Long deleteProductId){
+    public void delete(@PathVariable Long deleteProductId) {
+        System.out.println("삭제할 제품 ID: " + deleteProductId); // ID가 정상적으로 출력되는지 확인
         productService.deleteProduct(deleteProductId);
     }
+
+//    멤버나가면 제품다 삭제
+@Operation(summary = "제품 삭제", description = "제품을 삭제하는 API")
+@Parameter(name = "id", description = "제품 번호", schema = @Schema(type="number"))//DB의 스키마가 아니라, swagger에서 인식하기 위한 타입in = ParameterIn.PATH, //path 로 전달required = true //반드시 전달)
+@ApiResponse(responseCode = "200", description = "제품 삭제 완료")
+@DeleteMapping("seller-products/{memberId}")
+public void deleteProductsBySellerId(@PathVariable Long memberId){
+        productService.deleteAllProducts(memberId);
+}
 
 
 // 사진 등록

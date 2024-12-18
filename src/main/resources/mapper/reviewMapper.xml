@@ -42,4 +42,9 @@
         WHERE ID = #{id}
     </delete>
 
+    <delete id="deleteAll" parameterType="Long">
+        DELETE FROM TBL_PRODUCT_REVIEW
+        WHERE PRODUCT_ID = #{productId}
+    </delete>
+
 </mapper>
