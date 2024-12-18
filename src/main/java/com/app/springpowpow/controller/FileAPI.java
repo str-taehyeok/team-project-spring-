@@ -25,9 +25,44 @@ import java.util.UUID;
 public class FileAPI {
     @ResponseBody
     @PostMapping("upload")
-    public List<String> upload(@RequestParam("uploadFile") List<MultipartFile> uploadFiles) throws IOException {
+    public List<String> upload(
+            @RequestParam("deliveryCompany") String deliveryCompany,
+            @RequestParam("deliveryFee") int deliveryFee,
+            @RequestParam("deliveryFeeFree") int deliveryFeeFree,
+            @RequestParam("deliveryFeeKind") String deliveryFeeKind,
+            @RequestParam("deliveryHow") String deliveryHow,
+            @RequestParam("deliveryPayWhen") String deliveryPayWhen,
+            @RequestParam("productAnimal") String productAnimal,
+            @RequestParam("productCategory") String productCategory,
+            @RequestParam("productColor") String productColor,
+            @RequestParam("productDetail") String productDetail,
+            @RequestParam("productName") String productName,
+            @RequestParam("productPrice") int productPrice,
+            @RequestParam("productRealPrice") int productRealPrice,
+            @RequestParam("productSize") String productSize,
+            @RequestParam("productStock") int productStock,
+            @RequestParam("uploadFile") List<MultipartFile> uploadFiles
+    ) throws IOException {
         String rootPath = "C:/upload/" + getPath();
         log.info("upload : {}", rootPath);
+
+//        값 출력
+        log.info("deliveryCompany : {}", deliveryCompany);
+        log.info("deliveryFee : {}", deliveryFee);
+        log.info("deliveryFeeFree : {}", deliveryFeeFree);
+        log.info("deliveryFeeKind : {}", deliveryFeeKind);
+        log.info("deliveryHow : {}", deliveryHow);
+        log.info("deliveryPayWhen : {}", deliveryPayWhen);
+        log.info("productAnimal : {}", productAnimal);
+        log.info("productCategory : {}", productCategory);
+        log.info("productColor : {}", productColor);
+        log.info("productDetail : {}", productDetail);
+        log.info("productName : {}", productName);
+        log.info("productPrice : {}", productPrice);
+        log.info("productRealPrice : {}", productRealPrice);
+        log.info("productSize : {}", productSize);
+        log.info("productStock : {}", productStock);
+        log.info("uploadFiles : {}", uploadFiles);
 
         List<String> uuids = new ArrayList<>();
 
@@ -51,6 +86,7 @@ public class FileAPI {
         log.info("upload path: {}", uuids.toString());
         return uuids;
     }
+
     //    현재 시간을 기준으로 년월일로 관리 할 수 있게 경로를 붙인다.
     private String getPath() {
         return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
