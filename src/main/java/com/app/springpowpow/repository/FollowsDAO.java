@@ -14,22 +14,22 @@ public class FollowsDAO {
     private final FollowsMapper followsMapper;
 
     // 팔로우 추가
-    public void addFollow(FollowsVO followsVO) {
+    public void followMember(FollowsVO followsVO) {
         followsMapper.insertFollow(followsVO);
     }
 
     // 팔로우 취소
-    public void removeFollow(FollowsVO followsVO) {
+    public void unfollowMember(FollowsVO followsVO) {
         followsMapper.deleteFollow(followsVO);
     }
 
-    // 팔로잉 리스트 조회
-    public List<FollowsVO> getFollowingList(Long followerMemberId) {
-        return followsMapper.selectFollowingList(followerMemberId);
+    // 특정 유저의 팔로워 리스트 조회
+    public List<FollowsVO> findFollowerList(Long followerMemberId) {
+        return followsMapper.selectFollowerList(followerMemberId);
     }
 
-    // 팔로워 리스트 조회
-    public List<FollowsVO> getFollowerList(Long followingMemberId) {
-        return followsMapper.selectFollowerList(followingMemberId);}
-
+    // 특정 유저의 팔로잉 리스트 조회
+    public List<FollowsVO> findFollowingList(Long followingMemberId) {
+        return followsMapper.selectFollowingList(followingMemberId);
+    }
 }

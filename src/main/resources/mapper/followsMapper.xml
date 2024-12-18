@@ -14,15 +14,15 @@
         WHERE FOLLOWER_MEMBER_ID = #{followerMemberId} AND FOLLOWING_MEMBER_ID = #{followingMemberId}
     </delete>
 
-    <!-- 특정 유저의 팔로잉 리스트 조회 -->
-    <select id="selectFollowingList" parameterType="Long" resultType="FollowsVO">
+    <!-- 특정 유저의 팔로워 리스트 조회 -->
+    <select id="selectFollowerList" parameterType="Long" resultType="FollowsVO">
         SELECT ID, FOLLOWER_MEMBER_ID, FOLLOWING_MEMBER_ID, FOLLOWS_FOLLOW_STATE
         FROM TBL_FOLLOWS
         WHERE FOLLOWER_MEMBER_ID = #{followerMemberId}
     </select>
 
-    <!-- 특정 유저의 팔로워 리스트 조회 -->
-    <select id="selectFollowerList" parameterType="Long" resultType="FollowsVO">
+    <!-- 특정 유저의 팔로잉 리스트 조회 -->
+    <select id="selectFollowingList" parameterType="Long" resultType="FollowsVO">
         SELECT ID, FOLLOWER_MEMBER_ID, FOLLOWING_MEMBER_ID, FOLLOWS_FOLLOW_STATE
         FROM TBL_FOLLOWS
         WHERE FOLLOWING_MEMBER_ID = #{followingMemberId}

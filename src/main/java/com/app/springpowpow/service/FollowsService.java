@@ -12,10 +12,10 @@ public interface FollowsService {
     // 팔로우 취소
     public void removeFollow(FollowsVO followsVO);
 
-    // 특정 유저의 팔로잉 리스트 조회
-    public List<FollowsVO> getFollowingList(Long memberId);
-
     // 특정 유저의 팔로워 리스트 조회
-    public List<FollowsVO> getFollowerList(Long memberId);
+    public List<FollowsVO> getFollowerList(Long followerMemberId);
+
+    // 특정 유저의 팔로잉 리스트 조회
+    public List<FollowsVO> getFollowingList(Long followingMemberId);
 
 }
