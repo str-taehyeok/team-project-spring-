@@ -1,5 +1,6 @@
 package com.app.springpowpow.service;
 
+import com.app.springpowpow.domain.FollowsDTO;
 import com.app.springpowpow.domain.FollowsVO;
 
 import java.util.List;
@@ -13,9 +14,9 @@ public interface FollowsService {
     public void removeFollow(FollowsVO followsVO);
 
     // 특정 유저의 팔로워 리스트 조회
-    public List<FollowsVO> getFollowerList(Long followerMemberId);
+    public List<FollowsDTO> getFollowerList(Long followerMemberId);
 
     // 특정 유저의 팔로잉 리스트 조회
-    public List<FollowsVO> getFollowingList(Long followingMemberId);
+    public List<FollowsDTO> getFollowingList(Long followingMemberId);
 
 }

@@ -1,5 +1,6 @@
 package com.app.springpowpow.repository;
 
+import com.app.springpowpow.domain.FollowsDTO;
 import com.app.springpowpow.domain.FollowsVO;
 import com.app.springpowpow.mapper.FollowsMapper;
 import lombok.RequiredArgsConstructor;
@@ -24,12 +25,12 @@ public class FollowsDAO {
     }
 
     // 특정 유저의 팔로워 리스트 조회
-    public List<FollowsVO> findFollowerList(Long followerMemberId) {
+    public List<FollowsDTO> findFollowerList(Long followerMemberId) {
         return followsMapper.selectFollowerList(followerMemberId);
     }
 
     // 특정 유저의 팔로잉 리스트 조회
-    public List<FollowsVO> findFollowingList(Long followingMemberId) {
+    public List<FollowsDTO> findFollowingList(Long followingMemberId) {
         return followsMapper.selectFollowingList(followingMemberId);
     }
 }

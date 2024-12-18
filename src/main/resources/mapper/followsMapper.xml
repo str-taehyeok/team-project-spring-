@@ -5,7 +5,7 @@
     <!-- 팔로우 추가 -->
     <insert id="insertFollow" parameterType="FollowsVO">
         INSERT INTO TBL_FOLLOWS (ID, FOLLOWER_MEMBER_ID, FOLLOWING_MEMBER_ID, FOLLOWS_FOLLOW_STATE)
-        VALUES (SEQ_FOLLOWS.NEXTVAL, #{followerMemberId}, #{followingMemberId}, #{followsFollowState})
+        VALUES (SEQ_FOLLOWS.NEXTVAL, #{followerMemberId}, #{followingMemberId}, '1')
     </insert>
 
     <!-- 팔로우 취소 -->
@@ -14,18 +14,22 @@
         WHERE FOLLOWER_MEMBER_ID = #{followerMemberId} AND FOLLOWING_MEMBER_ID = #{followingMemberId}
     </delete>
 
-    <!-- 특정 유저의 팔로워 리스트 조회 -->
-    <select id="selectFollowerList" parameterType="Long" resultType="FollowsVO">
-        SELECT ID, FOLLOWER_MEMBER_ID, FOLLOWING_MEMBER_ID, FOLLOWS_FOLLOW_STATE
-        FROM TBL_FOLLOWS
-        WHERE FOLLOWER_MEMBER_ID = #{followerMemberId}
+    <!-- 팔로잉 리스트 조회 -->
+    <select id="selectFollowerList" parameterType="Long" resultType="FollowsDTO">
+        SELECT TBF.ID, TBF.FOLLOWER_MEMBER_ID, TBF.FOLLOWING_MEMBER_ID, TBF.FOLLOWS_FOLLOW_STATE
+        FROM TBL_FOLLOWS TBF
+        JOIN TBL_MEMBER TBM
+        ON TBF.FOLLOWER_MEMBER_ID = TBM.ID
+        WHERE TBF.FOLLOWING_MEMBER_ID = #{memberId} AND TBF.FOLLOWS_FOLLOW_STATE = '1'
     </select>
 
-    <!-- 특정 유저의 팔로잉 리스트 조회 -->
-    <select id="selectFollowingList" parameterType="Long" resultType="FollowsVO">
-        SELECT ID, FOLLOWER_MEMBER_ID, FOLLOWING_MEMBER_ID, FOLLOWS_FOLLOW_STATE
-        FROM TBL_FOLLOWS
-        WHERE FOLLOWING_MEMBER_ID = #{followingMemberId}
+    <!-- 팔로워 리스트 조회 -->
+    <select id="selectFollowingList" parameterType="Long" resultType="FollowsDTO">
+        SELECT TBF.ID, TBF.FOLLOWER_MEMBER_ID, TBF.FOLLOWING_MEMBER_ID, TBF.FOLLOWS_FOLLOW_STATE
+        FROM TBL_FOLLOWS TBF
+        JOIN TBL_MEMBER TBM
+        ON TBF.FOLLOWING_MEMBER_ID = TBM.ID
+        WHERE TBF.FOLLOWER_MEMBER_ID = #{memberId} AND TBF.FOLLOWS_FOLLOW_STATE = '1'
     </select>
 
 </mapper>
