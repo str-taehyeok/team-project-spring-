@@ -29,6 +29,8 @@ public class OrderDTO {
     @Schema(description = "주문 주소", example = "서울특별시 강남구 테헤란로 123")
     private String orderAddress;
 
+    private String orderMemo;
+
     @Schema(description = "상품 개수", example = "3")
     private Integer productCount;
 

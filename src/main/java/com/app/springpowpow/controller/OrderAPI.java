@@ -34,6 +34,7 @@ public class OrderAPI {
             @Parameter(name = "deliveryId", description = "배송종류 id", schema = @Schema(type = "number"), in = ParameterIn.HEADER, required = true),
             @Parameter(name = "orderNumber", description = "주문번호", schema = @Schema(type = "String"), in = ParameterIn.HEADER),
             @Parameter(name = "orderAddress", description = "주소", schema = @Schema(type = "String"), in = ParameterIn.HEADER),
+            @Parameter(name = "orderMemo", description = "주문메모", schema = @Schema(type = "String"), in = ParameterIn.HEADER),
             @Parameter(name = "productCount", description = "제품 개수", schema = @Schema(type = "String"), in = ParameterIn.HEADER),
     })
     @PostMapping("write")
@@ -49,6 +50,7 @@ public class OrderAPI {
             @Parameter(name = "deliveryId", description = "배송종류 id", schema = @Schema(type = "number"), in = ParameterIn.HEADER, required = true),
             @Parameter(name = "orderNumber", description = "주문번호", schema = @Schema(type = "String"), in = ParameterIn.HEADER),
             @Parameter(name = "orderAddress", description = "주소", schema = @Schema(type = "String"), in = ParameterIn.HEADER),
+            @Parameter(name = "orderMemo", description = "주문메모", schema = @Schema(type = "String"), in = ParameterIn.HEADER),
             @Parameter(name = "productCount", description = "제품 개수", schema = @Schema(type = "String"), in = ParameterIn.HEADER)
     })
     @GetMapping("{sellerId}")
