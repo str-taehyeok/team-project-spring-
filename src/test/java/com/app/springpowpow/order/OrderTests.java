@@ -31,6 +31,7 @@ public class OrderTests {
         orderVO.setOrderNumber("1234556");
         orderVO.setOrderAddress("서초구 방배동 123");
         orderVO.setOrderDate("2024-12-16");
+        orderVO.setOrderMemo("메모에오");
         orderVO.setProductCount(3);
         orderService.insertNewOrder(orderVO);
     }
