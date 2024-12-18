@@ -24,6 +24,10 @@ public class PostDTO {
     private String memberEmail;
     @Schema(description = "회원 닉네임", example = "꼰대 류재은")
     private String memberNickName;
+    @Schema(description = "회원 이미지 이름", example = "test.jpg")
+    private String memberFileName;
+    @Schema(description = "회원 이미지 경로", example = "2024/12/17")
+    private String memberFilePath;
     @Schema(description = "이미지 이름1", example = "test.jpg")
     private String imageName1;
     @Schema(description = "이미지 경로1", example = "2024/12/17")
