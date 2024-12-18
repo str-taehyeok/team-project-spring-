@@ -4,7 +4,6 @@ import com.app.springpowpow.domain.MemberVO;
 import com.app.springpowpow.service.MemberService;
 import com.app.springpowpow.service.SnsService;
 import com.app.springpowpow.util.JwtTokenUtil;
-import com.app.springpowpow.util.SmsUtil;
 import io.jsonwebtoken.Claims;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -31,6 +30,7 @@ public class MemberAPI {
     private final JwtTokenUtil jwtTokenUtil;
     private final MemberService memberService;
     private final SnsService snsService;
+    private final HttpSession session;
 
 
 
