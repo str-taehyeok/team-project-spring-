@@ -1,6 +1,7 @@
 package com.app.springpowpow.service;
 
 import com.app.springpowpow.util.SmsUtil;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ public class SnsServiceImpl implements SnsService {
 
     private final SmsUtil smsUtil;
     private final JavaMailSender emailSender;
+    private final HttpSession session;
 
     // 폰번호로 인증 코드 전송
     @Override
@@ -45,16 +47,14 @@ public class SnsServiceImpl implements SnsService {
     public ResponseEntity<Map<String, Object>> sendEmailVerification(String memberEmail) {
         Map<String, Object> response = new HashMap<>();
 
-        // 6자리 인증 코드 생성
-        String verificationCode = String.format("%06d", (int)(Math.random() * 900000) + 100000);
+        String code = session.getAttribute("verificationCode").toString();
 
         synchronized (this) {
-            authCodeMap.put(memberEmail, verificationCode);
-                log.info("인증코드 이메일코드 확인하기 {}: {}", memberEmail, verificationCode);
+            authCodeMap.put(memberEmail, code);
         }
 
         String emailSubject = "POWPOW 이메일 인증 코드";
-        String emailContent = "안녕하세요, 인증 코드: " + verificationCode + "를 입력해주세요.";
+        String emailContent = "안녕하세요, 인증 코드: " + code + "를 입력해주세요.";
 
         // 이메일 전송
         sendEmail(memberEmail, emailSubject, emailContent);
@@ -62,6 +62,7 @@ public class SnsServiceImpl implements SnsService {
         try {
             // 동기화된 코드 저장
             response.put("message", "인증 코드가 전송되었습니다.");
+            response.put("code", code);
             log.info("인증 코드가 전송되었습니다. {}", memberEmail);
         } catch (Exception e) {
             response.put("message", "인증 코드 전송에 실패했습니다.");
@@ -76,10 +77,6 @@ public class SnsServiceImpl implements SnsService {
     public boolean verifyAuthCode(String memberEmail, String authCode) {
         // 저장된 인증 코드 확인
         String storedAuthCode = authCodeMap.get(memberEmail);
-
-        // 인증 코드가 제대로 저장되었는지 로그로 확인
-        log.info("저장된 인증 코드: {}에 대한 인증 코드: {}", memberEmail, storedAuthCode);
-        log.info("제공된 인증 코드: {}", authCode);
 
         // 저장된 인증 코드와 제공된 인증 코드가 동일한지 비교
         return storedAuthCode != null && storedAuthCode.equals(authCode);
