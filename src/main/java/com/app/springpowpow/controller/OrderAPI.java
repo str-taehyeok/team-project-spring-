@@ -79,7 +79,7 @@ public class OrderAPI {
 
 //    주문 수정
     @Operation(summary = "주문 수정", description = "주문 수정하는 API")
-    @Parameter( name = "id", description = "주문 번호", schema = @Schema(type="number"))
+    @Parameter( name = "id", description = "주문 번호", schema = @Schema(type="number"), in = ParameterIn.HEADER, required = true)
     @ApiResponse(responseCode = "200", description = "주문 수정 완료")
     @PutMapping("order/{id}")
     public OrderVO modify(@PathVariable Long id, @RequestBody OrderVO orderVO){
@@ -88,7 +88,13 @@ public class OrderAPI {
         return orderVO;
     }
 
-//    @Operation(summary = "")
+    @Operation(summary = "특정 멤버 주문 목록", description = "특정 멤버 주문 조회하는 API")
+    @Parameter( name = "id", description = "멤버번호", schema = @Schema(type = "number"), in = ParameterIn.PATH, required = true)
+    @ApiResponse(responseCode = "200", description = "주문 조회 완료")
+    @GetMapping("order/member/{id}")
+    public List<OrderVO> selectByMember(@PathVariable Long id){
+        return orderService.selectOrderByMemberId(id);
+    }
 
 
 

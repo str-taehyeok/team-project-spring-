@@ -1,4 +1,4 @@
-package com.app.springpowpow;
+package com.app.springpowpow.coupon;
 
 import com.app.springpowpow.domain.CouponVO;
 import com.app.springpowpow.mapper.CouponMapper;

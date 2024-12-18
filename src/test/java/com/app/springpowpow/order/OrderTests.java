@@ -3,6 +3,7 @@ package com.app.springpowpow.order;
 
 import com.app.springpowpow.domain.OrderDTO;
 import com.app.springpowpow.domain.OrderVO;
+import com.app.springpowpow.mapper.OrderMapper;
 import com.app.springpowpow.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,8 @@ public class OrderTests {
 
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private OrderMapper orderMapper;
 
     @Test
     public void insertTest() {
@@ -44,4 +47,12 @@ public class OrderTests {
     public void selectOneTest() {
         log.info(orderService.getOrderById(1L).toString());
     }
+
+//    통과
+    @Test
+    public void selectOneByMemberId() {
+        log.info(orderMapper.selectByMemberId(2L).toString());
+    }
 }
+
+
