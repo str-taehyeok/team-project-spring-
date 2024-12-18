@@ -49,10 +49,29 @@ public class ProductAPI {
             @Parameter(name = "productSize", description = "제품 사이즈", schema = @Schema(type = "char"), in = ParameterIn.HEADER),
     })
     @PostMapping("write")
-    public void insert(@RequestBody ProductVO productVO, DeliveryVO deliveryVO) {
+    public void insert(
+            @RequestParam("uuids") String[] uuids,
+            @RequestParam("deliveryCompany") String deliveryCompany,
+            @RequestParam("deliveryFee") int deliveryFee,
+            @RequestParam("deliveryFeeFree") int deliveryFeeFree,
+            @RequestParam("deliveryFeeKind") String deliveryFeeKind,
+            @RequestParam("deliveryHow") String deliveryHow,
+            @RequestParam("deliveryPayWhen") String deliveryPayWhen,
+            @RequestParam("productAnimal") String productAnimal,
+            @RequestParam("productCategory") String productCategory,
+            @RequestParam("productColor") String productColor,
+            @RequestParam("productDetail") String productDetail,
+            @RequestParam("productName") String productName,
+            @RequestParam("productPrice") int productPrice,
+            @RequestParam("productRealPrice") int productRealPrice,
+            @RequestParam("productSize") String productSize,
+            @RequestParam("productStock") int productStock,
+            @RequestParam("uploadFile") List<MultipartFile> uploadFiles
+    ) {
 
-        deliveryService.insertDeliveryInfo(deliveryVO);
-        productService.insertNewProduct(productVO);
+//        vo담아서 작성하면 되잖아요 이 사람아
+
+
     }
 
     @Operation(summary = "제품 전체 조회", description = "모든 제품을 리스트로 볼수 있는 API")
