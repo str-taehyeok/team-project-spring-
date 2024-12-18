@@ -30,7 +30,7 @@ public class PostAPI {
     private final PostFileService postFileService;
 
     //    게시글 전체 조회
-    @Operation(summary = "게시글 정보 조회", description = "게시글 정보를 전체 조회할 수 있는 API")
+    @Operation(summary = "게시글 전체 조회", description = "게시글 정보를 전체 조회할 수 있는 API")
     @Parameters({
             @Parameter(name = "id", description = "게시글 번호", schema = @Schema(type = "number"), in = ParameterIn.HEADER, required = true),
             @Parameter(name = "postContent", description = "게시글 내용", schema = @Schema(type = "string"), in = ParameterIn.HEADER, required = true),
@@ -43,14 +43,14 @@ public class PostAPI {
             @Parameter(name = "memberEmail", description = "회원 이메일", schema = @Schema(type = "string"), in = ParameterIn.HEADER),
             @Parameter(name = "memberName", description = "회원 이름", schema = @Schema(type = "string"), in = ParameterIn.HEADER)
     })
-    @GetMapping("posts")
+    @GetMapping("list")
     public List<PostDTO> getPosts() {
         return postService.getList();
     }
 
 
     //    게시글 전체 조회
-    @Operation(summary = "게시글 인기글 4개 조회", description = "게시글 인기글 4개 조회할 수 있는 API")
+    @Operation(summary = "게시글 인기글 5개 조회", description = "게시글 인기글 5개 조회할 수 있는 API")
     @GetMapping("postsPopular")
     public List<PostDTO> getPostPopular() {
         return postService.getListPopular();

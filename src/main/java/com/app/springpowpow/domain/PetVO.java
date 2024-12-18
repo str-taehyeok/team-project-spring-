@@ -12,6 +12,8 @@ import java.io.Serializable;
 public class PetVO implements Serializable {
     @Schema(description = "마이펫 번호", example = "1", required = true)
     private Long id;
+    @Schema(description = "회원 번호", example = "23")
+    private Long memberId;
     @Schema(description = "반려종류", example = "반려견")
     private String petKind;
     @Schema(description = "반려 이미지 경로", example = "powpow.jpg")
@@ -34,8 +36,6 @@ public class PetVO implements Serializable {
     private String petNeuter;
     @Schema(description = "반려 색상", example = "yellow")
     private String petColor;
-    @Schema(description = "회원 번호", example = "23")
-    private Long memberId;
 
 
 

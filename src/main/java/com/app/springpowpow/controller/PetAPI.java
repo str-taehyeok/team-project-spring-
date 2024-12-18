@@ -1,7 +1,6 @@
 package com.app.springpowpow.controller;
 
-import com.app.springpowpow.domain.PetDTO;
-import com.app.springpowpow.domain.PetVO;
+import com.app.springpowpow.domain.*;
 import com.app.springpowpow.service.PetService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -79,6 +78,7 @@ public class PetAPI {
     @PostMapping("write")
     public ResponseEntity<Map<String, String>> write(
             @RequestParam("uuid") String uuid,
+            @RequestParam("uploadFile") MultipartFile uploadFile,
             @RequestParam("memberId") Long memberId,
             @RequestParam("petName") String petName,
             @RequestParam("petKind") String petKind,
@@ -87,12 +87,9 @@ public class PetAPI {
             @RequestParam("petBirth") String petBirth,
             @RequestParam("petVet") String petVet,
             @RequestParam("petWeight") double petWeight,
-            @RequestParam("petNeuter") String petNeuter,
-            @RequestParam("uploadFile") MultipartFile uploadFile
+            @RequestParam("petNeuter") String petNeuter
     ) {
         Map<String, String> response = new HashMap<>();
-
-        // PetVO 생성 및 저장
         PetVO petVO = new PetVO();
         petVO.setMemberId(memberId);
         petVO.setPetName(petName);
