@@ -3,22 +3,22 @@
 <mapper namespace="com.app.springpowpow.mapper.CartOrderMapper">
 
 <!--    단일 주문 제품과 할인율 조회 -->
-    <select id="select" parameterType="Long" resultType="com.app.springpowpow.domain.CartOrderDTO">
+    <select id="select" resultType="com.app.springpowpow.domain.CartOrderDTO">
         SELECT ID, PRODUCT_ID, MEMBER_ID, CART_PRODUCT_COUNT, PRODUCT_NAME, PRODUCT_FILE_NAME, PRODUCT_FILE_PATH, PRODUCT_REAL_PRICE, PRODUCT_PRICE, PRODUCT_STOCK, COUPON_TITLE
         FROM VIEW_CART
-        WHERE ID = #{id}
+        WHERE MEMBER_ID = #{memberId} AND PRODUCT_ID = #{productId}
     </select>
 
     <select id="selectAll" parameterType="Long" resultType="com.app.springpowpow.domain.CartOrderDTO">
         SELECT ID, PRODUCT_ID, MEMBER_ID, CART_PRODUCT_COUNT, PRODUCT_NAME, PRODUCT_FILE_NAME, PRODUCT_FILE_PATH, PRODUCT_REAL_PRICE, PRODUCT_PRICE, PRODUCT_STOCK, COUPON_TITLE
         FROM VIEW_CART
+        WHERE MEMBER_ID = #{memberId}
     </select>
 
 <!--   장바구니에 담긴 제품 중 하나의 제품 주문 수량, 적용 쿠폰을 바꿔서 디비에 저장 -->
     <update id="update" parameterType="com.app.springpowpow.domain.CartOrderDTO">
         UPDATE VIEW_CART
         SET CART_PRODUCT_COUNT = #{cartProductCount}, COUPON_TITLE = #{couponTitle}, PRODUCT_PRICE = #{productPrice}
-        WHERE ID = #{id}
     </update>
 
     <delete id="delete" parameterType="Long">

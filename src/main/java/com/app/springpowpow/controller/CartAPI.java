@@ -26,6 +26,7 @@ public class CartAPI {
 
 //    제품 전체 조회
     @Operation(summary = "제품 전체 조회", description = "제품 전체 조회 API")
+    @Parameter(name = "memberId", description = "회원 ID", schema = @Schema(type = "number"), in = ParameterIn.QUERY)
     @PostMapping("all-carts")
     public List<CartDTO> getCartById() {
         return cartService.getCartById();

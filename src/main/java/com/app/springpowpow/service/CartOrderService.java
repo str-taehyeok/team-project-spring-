@@ -9,9 +9,9 @@ import java.util.Optional;
 
 public interface CartOrderService {
 
-    public List<CartOrderDTO> getCartOrder(Long id);
+    public List<CartOrderDTO> getCartOrder(Long memberId);
 
-    public Optional<CartOrderDTO> getCartOrderById(Long id);
+    public Optional<CartOrderDTO> getCartOrderById(Long memberId, Long productId);
 
     public void modify(CartOrderDTO cartOrderDTO);
 

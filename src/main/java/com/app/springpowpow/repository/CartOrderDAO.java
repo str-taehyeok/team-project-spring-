@@ -15,12 +15,12 @@ public class CartOrderDAO {
 
     private final CartOrderMapper cartOrderMapper;
 
-    public List<CartOrderDTO> getCartOrder(Long id) {
-        return cartOrderMapper.selectAll(id);
+    public List<CartOrderDTO> getCartOrder(Long memberId) {
+        return cartOrderMapper.selectAll(memberId);
     }
 
-    public Optional<CartOrderDTO> getCartOrderById(Long id) {
-        return cartOrderMapper.select(id);
+    public Optional<CartOrderDTO> getCartOrderById(Long memberId, Long productId) {
+        return cartOrderMapper.select(memberId, productId);
     }
 
     public void addCartOrder(CartOrderDTO cartOrderDTO) {

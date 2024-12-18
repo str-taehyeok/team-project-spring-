@@ -20,13 +20,13 @@ public class CartOrderServiceImpl implements CartOrderService {
     private final CartOrderDAO cartOrderDAO;
 
     @Override
-    public List<CartOrderDTO> getCartOrder(Long id) {
-        return cartOrderDAO.getCartOrder(id);
+    public List<CartOrderDTO> getCartOrder(Long memberId) {
+        return cartOrderDAO.getCartOrder(memberId);
     }
 
     @Override
-    public Optional<CartOrderDTO> getCartOrderById(Long id) {
-        return cartOrderDAO.getCartOrderById(id);
+    public Optional<CartOrderDTO> getCartOrderById(Long memberId, Long productId) {
+        return cartOrderDAO.getCartOrderById(memberId, productId);
     }
 
     @Override
