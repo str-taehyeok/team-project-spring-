@@ -1,6 +1,7 @@
 package com.app.springpowpow.controller;
 
 import com.app.springpowpow.domain.MemberVO;
+import com.app.springpowpow.domain.PetVO;
 import com.app.springpowpow.service.MemberService;
 import com.app.springpowpow.service.SnsService;
 import com.app.springpowpow.util.JwtTokenUtil;
@@ -14,11 +15,18 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.coobird.thumbnailator.Thumbnailator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @RestController
@@ -392,4 +400,94 @@ public class MemberAPI {
 
         return ResponseEntity.ok(response); // 200 OK
     }
+
+//    -- 이미지 업로드--
+
+    @Operation(summary = "이미지 업로드", description = "이미지를 저장하는 API")
+    @ApiResponse(responseCode = "200", description = "이미지 업로드 완료")
+    @PostMapping("upload")
+    public ResponseEntity<Map<String, String>> upload(
+            @RequestParam("memberName") String memberName,
+            @RequestParam("memberNickname") String memberNickname,
+            @RequestParam("memberEmail") String memberEmail,
+            @RequestParam("memberPhone") String memberPhone,
+            @RequestParam("memberZipcode") String memberZipcode,
+            @RequestParam("memberAddress") String memberAddress,
+            @RequestParam("memberAddressDetail") String memberAddressDetail,
+            @RequestParam("uploadFile") MultipartFile uploadFile
+    ) throws IOException {
+
+        Map<String, String> response = new HashMap<>();
+        String rootPath = "C:/upload/" + getPath();
+
+        File file = new File(rootPath);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+
+        //        uuid 생성
+        String uuid = UUID.randomUUID().toString();
+        log.info("Generated UUID: {}", uuid);
+        uploadFile.transferTo(new File(rootPath, uuid + "_" + uploadFile.getOriginalFilename()));
+
+//        썸네일
+        if(uploadFile.getContentType().startsWith("image")){
+            FileOutputStream out = new FileOutputStream(new File(rootPath, "t_" + uuid + "_" + uploadFile.getOriginalFilename()));
+            Thumbnailator.createThumbnail(uploadFile.getInputStream(), out, 100, 100);
+            out.close();
+        }
+
+        log.info("upload path : {}", uuid.toString());
+
+        response.put("uuid", uuid);
+        return ResponseEntity.ok(response);
+    }
+
+    // 유저수정 API
+    @Operation(summary = "유저 수정", description = "유저 수정 API")
+    @ApiResponse(responseCode = "200", description = "유저 수정 완료")
+    @PutMapping("profileEdit/{id}")
+    public ResponseEntity<Map<String, String>> profileEdit(
+            @RequestParam("id") Long id,
+            @RequestParam("uuid") String uuid,
+            @RequestParam("uploadFile") MultipartFile uploadFile,
+            @RequestParam("memberName") String memberName,
+            @RequestParam("memberNickname") String memberNickname,
+            @RequestParam("memberEmail") String memberEmail,
+            @RequestParam("memberPhone") String memberPhone,
+            @RequestParam("memberZipcode") String memberZipcode,
+            @RequestParam("memberAddress") String memberAddress,
+            @RequestParam("memberAddressDetail") String memberAddressDetail
+    ) {
+        Map<String, String> response = new HashMap<>();
+        MemberVO memberVO = new MemberVO();
+        memberVO.setId(id);
+        memberVO.setMemberName(memberName);
+        memberVO.setMemberNickname(memberNickname);
+        memberVO.setMemberEmail(memberEmail);
+        memberVO.setMemberPhone(memberPhone);
+        memberVO.setMemberZipcode(memberZipcode);
+        memberVO.setMemberAddress(memberAddress);
+        memberVO.setMemberAddressDetail(memberAddressDetail);
+        memberVO.setMemberFileName(uuid + "_" + uploadFile.getOriginalFilename());
+        memberVO.setMemberFilePath(getPath());
+        memberService.modify(memberVO);
+
+        response.put("message", "유저 정보 수정 완료");
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("display")
+    public byte[] display(String fileName) throws IOException {
+        return FileCopyUtils.copyToByteArray(new File("C:/upload/" + fileName));
+    }
+
+    //    현재 시간을 기준으로 년월일로 관리할 수 있게 경로를 붙인다.
+    private String getPath() {
+        return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+    }
+
+
+
+
 }
