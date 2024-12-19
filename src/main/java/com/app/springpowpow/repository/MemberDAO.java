@@ -93,4 +93,6 @@ public class MemberDAO {
         memberMapper.updatePassword(memberVO);
     }
 
+    // 비밀번호 확인
+    public int findPassword(MemberVO memberVO) {return memberMapper.selectPasswordByMemberEmail(memberVO);}
 }
