@@ -15,11 +15,11 @@ public class DeliveryVO{
     @Schema(description = "제품 ID", example = "1", required = true)
     private Long productId;
     @Schema(description = "배송 가격", example = "10000")
-    private int deliveryFee;
+    private Integer deliveryFee;
     @Schema(description = "배송비 종류", example = "free")
     private String deliveryFeeKind;
     @Schema(description = "무료배송 금액", example = "20000")
-    private int deliveryFeeFree;
+    private Integer deliveryFeeFree;
     @Schema(description = "배송사 선택", example = "normalDelivery")
     private String deliveryHow;
     @Schema(description = "착불여부 선택", example = "prePay")

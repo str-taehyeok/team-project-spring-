@@ -24,7 +24,6 @@ public class PostFileAPI {
     @ResponseBody
     public List<String> upload(@RequestParam("uploadFile") List<MultipartFile> uploadFiles) throws IOException {
         String rootPath = "C:/upload/" + getPath();
-        log.info("upload : {}", rootPath);
 
         List<String> uuids = new ArrayList<>();
 

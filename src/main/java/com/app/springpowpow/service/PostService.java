@@ -1,6 +1,7 @@
 package com.app.springpowpow.service;
 
 import com.app.springpowpow.domain.PostDTO;
+import com.app.springpowpow.domain.PostFileVO;
 import com.app.springpowpow.domain.PostVO;
 
 import java.util.List;
@@ -18,8 +19,11 @@ public interface PostService {
 //    게시글 단일 조회
     public Optional<PostDTO> getPost(Long id);
 
+    //    최신 등록된 Id 조회
+    public Long getRecentId();
+
 //    게시글 작성
-    public void write(PostVO postVO);
+    public void write(PostVO postVO, List<PostFileVO> postFiles);
 
 //    게시글 수정
     public void modify(PostVO postVO);

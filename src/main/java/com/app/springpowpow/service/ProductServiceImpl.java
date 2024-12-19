@@ -1,7 +1,6 @@
 package com.app.springpowpow.service;
 
-import com.app.springpowpow.domain.ProductDTO;
-import com.app.springpowpow.domain.ProductVO;
+import com.app.springpowpow.domain.*;
 import com.app.springpowpow.repository.DeliveryDAO;
 import com.app.springpowpow.repository.ProductDAO;
 import com.app.springpowpow.repository.ProductFileDAO;
@@ -23,11 +22,20 @@ public class ProductServiceImpl implements ProductService {
     private final DeliveryDAO deliveryDAO;
     private final ReviewDAO reviewDAO;
 
+
     @Override
-    public void insertNewProduct(ProductVO productVO) {
+    public void register(ProductVO productVO, List<ProductFileVO> productFiles, DeliveryVO deliveryVO) {
         productDAO.save(productVO);
+        for (ProductFileVO productFile : productFiles) {
+            productFileDAO.saveImage(productFile);
+        }
+        deliveryDAO.save(deliveryVO);
     }
 
+    @Override
+    public Long getRecentId() {
+        return productDAO.findRecentId();
+    }
 
     @Override
     public Optional<ProductDTO> selectProductById(Long id) {

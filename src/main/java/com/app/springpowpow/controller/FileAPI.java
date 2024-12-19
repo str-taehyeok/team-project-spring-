@@ -44,25 +44,6 @@ public class FileAPI {
             @RequestParam("uploadFile") List<MultipartFile> uploadFiles
     ) throws IOException {
         String rootPath = "C:/upload/" + getPath();
-        log.info("upload : {}", rootPath);
-
-//        값 출력
-        log.info("deliveryCompany : {}", deliveryCompany);
-        log.info("deliveryFee : {}", deliveryFee);
-        log.info("deliveryFeeFree : {}", deliveryFeeFree);
-        log.info("deliveryFeeKind : {}", deliveryFeeKind);
-        log.info("deliveryHow : {}", deliveryHow);
-        log.info("deliveryPayWhen : {}", deliveryPayWhen);
-        log.info("productAnimal : {}", productAnimal);
-        log.info("productCategory : {}", productCategory);
-        log.info("productColor : {}", productColor);
-        log.info("productDetail : {}", productDetail);
-        log.info("productName : {}", productName);
-        log.info("productPrice : {}", productPrice);
-        log.info("productRealPrice : {}", productRealPrice);
-        log.info("productSize : {}", productSize);
-        log.info("productStock : {}", productStock);
-        log.info("uploadFiles : {}", uploadFiles);
 
         List<String> uuids = new ArrayList<>();
 
@@ -83,7 +64,6 @@ public class FileAPI {
                 out.close();
             }
         }
-        log.info("upload path: {}", uuids.toString());
         return uuids;
     }
 

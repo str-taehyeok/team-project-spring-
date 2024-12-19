@@ -3,6 +3,7 @@ package com.app.springpowpow.repository;
 import com.app.springpowpow.domain.ProductDTO;
 import com.app.springpowpow.domain.ProductFileVO;
 import com.app.springpowpow.domain.ProductVO;
+import com.app.springpowpow.mapper.ProductFileMapper;
 import com.app.springpowpow.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -21,6 +22,10 @@ public class ProductDAO {
             productMapper.insert(productVO);
         }
 
+        //    최신 등록된 Id 조회
+        public Long findRecentId(){
+            return productMapper.selectRecentId();
+        }
 
 //        단일 제품
         public Optional<ProductDTO> findProductById(Long id) {

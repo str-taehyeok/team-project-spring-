@@ -25,6 +25,11 @@ public class PostDAO {
         return postMapper.selectAllPopular();
     }
 
+    //    최신 등록된 Id 조회
+    public Long findRecentId(){
+        return postMapper.selectRecentId();
+    }
+
 //    게시글 단일 가져오기
     public Optional<PostDTO> findById(Long id){
         return postMapper.select(id);

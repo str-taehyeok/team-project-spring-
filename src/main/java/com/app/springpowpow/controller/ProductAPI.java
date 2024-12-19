@@ -2,6 +2,7 @@ package com.app.springpowpow.controller;
 
 import com.app.springpowpow.domain.*;
 import com.app.springpowpow.service.DeliveryService;
+import com.app.springpowpow.service.MemberService;
 import com.app.springpowpow.service.ProductFileService;
 import com.app.springpowpow.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,6 +30,7 @@ public class ProductAPI {
     private final ProductService productService;
     private final DeliveryService deliveryService;
     private final ProductFileService productFileService;
+    private final MemberService memberService;
 
 //    제품 등록
     @Operation(summary = "제품 등록", description = "제품등록 API")
@@ -49,11 +51,12 @@ public class ProductAPI {
             @Parameter(name = "productSize", description = "제품 사이즈", schema = @Schema(type = "char"), in = ParameterIn.HEADER),
     })
     @PostMapping("write")
-    public void insert(
-            @RequestParam("uuids") String[] uuids,
+    public ProductDTO insert(
+            @RequestParam("memberId") Long memberId,
+            @RequestParam("uuids") List<String> uuids,
             @RequestParam("deliveryCompany") String deliveryCompany,
-            @RequestParam("deliveryFee") int deliveryFee,
-            @RequestParam("deliveryFeeFree") int deliveryFeeFree,
+            @RequestParam("deliveryFee") Integer deliveryFee,
+            @RequestParam("deliveryFeeFree") Integer deliveryFeeFree,
             @RequestParam("deliveryFeeKind") String deliveryFeeKind,
             @RequestParam("deliveryHow") String deliveryHow,
             @RequestParam("deliveryPayWhen") String deliveryPayWhen,
@@ -62,15 +65,53 @@ public class ProductAPI {
             @RequestParam("productColor") String productColor,
             @RequestParam("productDetail") String productDetail,
             @RequestParam("productName") String productName,
-            @RequestParam("productPrice") int productPrice,
-            @RequestParam("productRealPrice") int productRealPrice,
+            @RequestParam("productPrice") Integer productPrice,
+            @RequestParam("productRealPrice") Integer productRealPrice,
             @RequestParam("productSize") String productSize,
-            @RequestParam("productStock") int productStock,
+            @RequestParam("productStock") Integer productStock,
             @RequestParam("uploadFile") List<MultipartFile> uploadFiles
     ) {
 
-//        vo담아서 작성하면 되잖아요 이 사람아
+        //    상품 등록
+        ProductVO productVO = new ProductVO();
+        productVO.setMemberId(memberId);
+        productVO.setProductName(productName);
+        productVO.setProductPrice(productPrice);
+        productVO.setProductRealPrice(productRealPrice);
+        productVO.setProductCode("codecode");
+        productVO.setProductDetail(productDetail);
+        productVO.setProductAnimal(productAnimal);
+        productVO.setProductCategory(productCategory);
+        productVO.setProductColor(productColor);
+        productVO.setProductSize(productSize);
+        productVO.setProductStock(productStock);
 
+
+        // 파일 업로드 처리
+        Long recentId = productService.getRecentId();
+        List<ProductFileVO> ProductFiles = new ArrayList<>();
+        int count = 0;
+        for(int i = 0; i < uploadFiles.size(); i++) {
+            if(uploadFiles.get(i).isEmpty()) { count++; continue;}
+            ProductFileVO productFileVO = new ProductFileVO();
+            productFileVO.setProductId(recentId);
+            productFileVO.setProductFileName(uuids.get(i - count) + "_" + uploadFiles.get(i).getOriginalFilename());
+            productFileVO.setProductFilePath(getPath());
+            ProductFiles.add(productFileVO);
+        }
+
+        // 배송 등록
+        DeliveryVO deliveryVO = new DeliveryVO();
+        deliveryVO.setProductId(recentId);
+        deliveryVO.setDeliveryFee(deliveryFee);
+        deliveryVO.setDeliveryFeeKind(deliveryFeeKind);
+        deliveryVO.setDeliveryFeeFree(deliveryFeeFree);
+        deliveryVO.setDeliveryHow(deliveryHow);
+        deliveryVO.setDeliveryPayWhen(deliveryPayWhen);
+        deliveryVO.setDeliveryCompany(deliveryCompany);
+        productService.register(productVO, ProductFiles, deliveryVO);
+
+        return new ProductDTO();
 
     }
 

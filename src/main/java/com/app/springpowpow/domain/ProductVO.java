@@ -17,15 +17,15 @@ public class ProductVO{
     @Schema(description = "제품명", example = "덴탈 치약")
     private String productName;
     @Schema(description = "제품가격", example = "25000")
-    private int productPrice;
+    private Integer productPrice;
     @Schema(description = "제품가격", example = "25000")
-    private int productRealPrice;
+    private Integer productRealPrice;
     @Schema(description = "제품 코드", example = "000000")
     private String productCode;
     @Schema(description = "제품 등록일자", example = "2024-01-01")
     private String productDate;
     @Schema(description = "제품 재고", example = "100")
-    private int productStock;
+    private Integer productStock;
     @Schema(description = "제품 수정일자", example = "2024-01-01")
     private String productEditDate;
     @Schema(description = "제품 상세정보", example = "해당 제품은 주문과 동시에 주문제작..")
@@ -37,5 +37,5 @@ public class ProductVO{
     @Schema(description = "상품을 필터링할 컬러", example = "Gold")
     private String productColor;
     @Schema(description = "제품 사이즈", example = "S")
-    private char productSize;
+    private String productSize;
 }

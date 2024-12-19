@@ -17,6 +17,9 @@ public interface ProductMapper {
 //    제품 리스트
     public List<ProductDTO> selectAll();
 
+    //    최신 등록된 Id 조회
+    public Long selectRecentId();
+
 //    종에 따른 리스트
     public List<ProductDTO> selectByAnimal();
 

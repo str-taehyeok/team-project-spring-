@@ -3,11 +3,14 @@
 <mapper namespace="com.app.springpowpow.mapper.PostMapper">
 
     <insert id="insert" parameterType="PostVO">
-        INSERT INTO TBL_POST (
-            ID, MEMBER_ID, POST_CONTENT ,POST_IMAGE1, POST_IMAGE2, POST_IMAGE3, POST_IMAGE4, POST_IMAGE5, POST_COLOR)
-        VALUES (SEQ_POST.NEXTVAL, #{memberId}, #{postContent}, #{postImage1}, #{postImage2}, #{postImage3}, #{postImage4}, #{postImage5}, #{postColor})
+        INSERT INTO TBL_POST (ID, MEMBER_ID, POST_CONTENT, POST_COLOR)
+        VALUES (SEQ_POST.NEXTVAL, #{memberId}, #{postContent}, #{postColor})
     </insert>
 
+    <select id="selectRecentId" resultType="Long">
+        SELECT SEQ_POST.NEXTVAL FROM DUAL
+    </select>
+    
     <select id="selectAll" resultType="PostDTO">
         SELECT
             TP.ID,

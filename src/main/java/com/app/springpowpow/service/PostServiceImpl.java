@@ -1,8 +1,10 @@
 package com.app.springpowpow.service;
 
 import com.app.springpowpow.domain.PostDTO;
+import com.app.springpowpow.domain.PostFileVO;
 import com.app.springpowpow.domain.PostVO;
 import com.app.springpowpow.repository.PostDAO;
+import com.app.springpowpow.repository.PostFileDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +18,7 @@ import java.util.Optional;
 public class PostServiceImpl implements PostService {
 
     private final PostDAO postDAO;
+    private final PostFileDAO postFileDAO;
 
 //    게시글 전체조회
     @Override
@@ -29,6 +32,11 @@ public class PostServiceImpl implements PostService {
         return postDAO.findAllPopular();
     }
 
+    //    최신 등록된 Id 조회
+    public Long getRecentId(){
+        return postDAO.findRecentId();
+    }
+
     //    게시글 단일 조회
     @Override
     public Optional<PostDTO> getPost(Long id) {
@@ -36,8 +44,11 @@ public class PostServiceImpl implements PostService {
     }
 //    게시글 작성
     @Override
-    public void write(PostVO postVO) {
+    public void write(PostVO postVO, List<PostFileVO> postFiles) {
         postDAO.save(postVO);
+        for (PostFileVO postFile : postFiles) {
+            postFileDAO.save(postFile);
+        }
     }
 //    게시글 수정
     @Override

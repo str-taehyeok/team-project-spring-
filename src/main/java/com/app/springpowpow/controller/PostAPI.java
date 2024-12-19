@@ -12,18 +12,21 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/posts/*")
+@Slf4j
 public class PostAPI {
 
     private final PostService postService;
@@ -73,24 +76,34 @@ public class PostAPI {
     @Operation(summary = "게시글 작성", description = "게시글 새로 작성할 수 있는 API")
     @ApiResponse(responseCode = "200", description = "게시글 작성 완료")
     @PostMapping("write")
-    public PostDTO write(@RequestParam("uuid") List<String> uuids, @RequestParam("uploadFile") List<MultipartFile> uploadFiles, @RequestBody PostVO postVO) {
+    public PostDTO write(
+            @RequestParam("memberId") Long memberId,
+            @RequestParam("postContent") String postContent,
+            @RequestParam("postColor") String postColor,
+            @RequestParam("uploadFile") List<MultipartFile> uploadFiles,
+            @RequestParam("uuids") List<String> uuids
+    ) {
+
+//        게시글 등록
+        PostVO postVO = new PostVO();
+        postVO.setPostColor(postColor);
+        postVO.setMemberId(memberId);
+        postVO.setPostContent(postContent);
 
         // 파일 업로드 처리
+        List<PostFileVO> postFiles = new ArrayList<>();
+        Long recentId = postService.getRecentId();
         int count = 0;
         for(int i = 0; i < uploadFiles.size(); i++) {
             if(uploadFiles.get(i).isEmpty()) { count++; continue;}
             PostFileVO postFileVO = new PostFileVO();
+            postFileVO.setPostId(recentId);
             postFileVO.setPostFileName(uuids.get(i - count) + "_" + uploadFiles.get(i).getOriginalFilename());
             postFileVO.setPostFilePath(getPath());
-            postFileService.register(postFileVO);
+            postFiles.add(postFileVO);
         }
 
-        postService.write(postVO);
-
-        Optional<PostDTO> foundPost = postService.getPost(postVO.getId());
-        if(foundPost.isPresent()){
-            return foundPost.get();
-        }
+        postService.write(postVO, postFiles);
         return new PostDTO();
     }
 
