@@ -2,15 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.app.springpowpow.mapper.PostFileMapper">
 
-    <insert id="insert" parameterType="PostFileVO">
-        INSERT INTO TBL_POST_FILE
-        VALUES(SEQ_POST_FILE.NEXTVAL, #{postId}, #{postFileName}, #{postFilePath})
+    <!--    제품 추가-->
+    <insert id="insertImage" parameterType="PostFileVO">
+        INSERT INTO TBL_POST_FILE (ID, POST_ID, POST_FILE_NAME, POST_FILE_PATH)
+        VALUES (SEQ_POST_FILE.NEXTVAL, #{postId}, #{postFileName}, #{postFilePath})
     </insert>
+
+
+    <!--    사진 수정-->
+    <update id="updateImage" parameterType="PostFileVO">
+        UPDATE TBL_POST_FILE
+        SET POST_ID = #{postId}, POST_FILE_NAME = #{postFileName}, POST_FILE_PATH = #{postFilePath}
+    </update>
 
     <select id="selectAll" resultType="PostFileVO">
         SELECT ID, POST_ID, POST_FILE_NAME, POST_FILE_PATH
         FROM TBL_POST_FILE
     </select>
+
+    <delete id="deleteAllImage" parameterType="Long">
+        DELETE FROM TBL_POST_FILE
+        WHERE POST_ID = #{postId}
+    </delete>
 
 
 

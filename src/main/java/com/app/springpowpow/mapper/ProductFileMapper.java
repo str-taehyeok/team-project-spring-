@@ -18,7 +18,7 @@ public interface ProductFileMapper {
     public void updateImage(ProductFileVO productFileVO);
 
 
-    //    제품 삭제시 사진도 삭제
+    //    게시글 삭제시 사진도 삭제
     public void deleteAllImage(Long productId);
 
 }
