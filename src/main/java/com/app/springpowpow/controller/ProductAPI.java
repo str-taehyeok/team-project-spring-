@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -49,7 +50,8 @@ public class ProductAPI {
             @Parameter(name = "productSize", description = "제품 사이즈", schema = @Schema(type = "char"), in = ParameterIn.HEADER),
     })
     @PostMapping("write")
-    public void insert(
+    public ResponseEntity<Map<String, String>> insert(
+            @RequestParam("memberId") Long memberId,
             @RequestParam("uuids") String[] uuids,
             @RequestParam("deliveryCompany") String deliveryCompany,
             @RequestParam("deliveryFee") int deliveryFee,
@@ -60,54 +62,58 @@ public class ProductAPI {
             @RequestParam("productAnimal") String productAnimal,
             @RequestParam("productCategory") String productCategory,
             @RequestParam("productColor") String productColor,
+            @RequestParam("productCode") String productCode,
             @RequestParam("productDetail") String productDetail,
             @RequestParam("productName") String productName,
             @RequestParam("productPrice") int productPrice,
             @RequestParam("productRealPrice") int productRealPrice,
-            @RequestParam("productSize") String productSize,
+            @RequestParam("productSize") char productSize,
             @RequestParam("productStock") int productStock,
             @RequestParam("uploadFile") List<MultipartFile> uploadFiles
 
     ) {
-
 //        vo담아서 작성하면 되잖아요 이 사람아
-        Map<String, String> response = new HashMap<String, String>();
-        ProductVO productVO = new ProductVO();
-        DeliveryVO deliveryVO = new DeliveryVO();
-        ProductFileVO productFileVO = new ProductFileVO();
-        deliveryVO.setDeliveryCompany(deliveryCompany);
-        deliveryVO.setDeliveryFee(deliveryFee);
-        deliveryVO.setDeliveryFeeFree(deliveryFeeFree);
-        deliveryVO.setDeliveryHow(deliveryHow);
-        deliveryVO.setDeliveryPayWhen(deliveryPayWhen);
-        productVO.setProductAnimal(productAnimal);
-        productVO.setProductCategory(productCategory);
-        productVO.setProductColor(productColor);
-        productVO.setProductDetail(productDetail);
-        productVO.setProductName(productName);
-        productVO.setProductPrice(productPrice);
-        productVO.setProductRealPrice(productRealPrice);
-        productVO.setProductStock(productStock);
-//        productFileVO.setProductFileName(uuids[0] + "_" + uploadFiles.get(0).getOriginalFilename());
-//        productFileVO.setProductFilePath(getPath());
-        for (int i = 0; i < uploadFiles.size(); i++) {
-            if (!uploadFiles.get(i).isEmpty()) {
-                productFileVO.setProductFileName(uuids[i] + "_" + uploadFiles.get(i).getOriginalFilename());
-                productFileVO.setProductFilePath(getPath());
-                productFileService.insertNewImage(productFileVO);
+            ProductVO productVO = new ProductVO();
+//        ProductFileVO productFileVO = new ProductFileVO();
+            productVO.setMemberId(memberId);
+            productVO.setProductAnimal(productAnimal);
+            productVO.setProductCategory(productCategory);
+            productVO.setProductColor(productColor);
+            productVO.setProductSize(productSize);
+            productVO.setProductDetail(productDetail);
+            productVO.setProductCode(productCode);
+            productVO.setProductName(productName);
+            productVO.setProductPrice(productPrice);
+            productVO.setProductRealPrice(productRealPrice);
+            productVO.setProductStock(productStock);
+            productService.insertNewProduct(productVO);
+log.info(productVO.toString());
+            DeliveryVO deliveryVO = new DeliveryVO();
+            deliveryVO.setDeliveryCompany(deliveryCompany);
+            deliveryVO.setDeliveryFee(deliveryFee);
+            deliveryVO.setDeliveryFeeFree(deliveryFeeFree);
+            deliveryVO.setDeliveryFeeKind(deliveryFeeKind);
+            deliveryVO.setDeliveryHow(deliveryHow);
+            deliveryVO.setDeliveryPayWhen(deliveryPayWhen);
+            deliveryService.insertDeliveryInfo(deliveryVO);
+log.info(deliveryVO.toString());
+            for (int i = 0; i < uploadFiles.size(); i++) {
+                if (!uploadFiles.get(i).isEmpty()) {
+                    ProductFileVO productFileVO = new ProductFileVO();
+                    productFileVO.setProductId(productVO.getId());
+                    productFileVO.setProductFileName(uuids[i] + "_" + uploadFiles.get(i).getOriginalFilename());
+                    productFileVO.setProductFilePath(getPath());
+                    productFileService.insertNewImage(productFileVO);
+                }
             }
 
-            productService.insertNewProduct(productVO);
-            deliveryService.insertDeliveryInfo(deliveryVO);
-//            productFileService.insertNewImage(productFileVO);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "제품 등록 완료");
+            log.info(response.toString());
 
-        }
-
-        response.put("message", "제품 등록 완료");
-        log.info(response.toString());
-
-
+            return ResponseEntity.ok(response);
     }
+
 
     @Operation(summary = "제품 전체 조회", description = "모든 제품을 리스트로 볼수 있는 API")
     @GetMapping("products")
