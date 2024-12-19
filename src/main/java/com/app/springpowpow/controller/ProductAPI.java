@@ -30,7 +30,7 @@ public class ProductAPI {
     private final DeliveryService deliveryService;
     private final ProductFileService productFileService;
 
-//    제품 등록
+    //    제품 등록
     @Operation(summary = "제품 등록", description = "제품등록 API")
     @ApiResponse(responseCode = "200", description = "제품등록 완료")
     @Parameters({
@@ -67,9 +67,44 @@ public class ProductAPI {
             @RequestParam("productSize") String productSize,
             @RequestParam("productStock") int productStock,
             @RequestParam("uploadFile") List<MultipartFile> uploadFiles
+
     ) {
 
 //        vo담아서 작성하면 되잖아요 이 사람아
+        Map<String, String> response = new HashMap<String, String>();
+        ProductVO productVO = new ProductVO();
+        DeliveryVO deliveryVO = new DeliveryVO();
+        ProductFileVO productFileVO = new ProductFileVO();
+        deliveryVO.setDeliveryCompany(deliveryCompany);
+        deliveryVO.setDeliveryFee(deliveryFee);
+        deliveryVO.setDeliveryFeeFree(deliveryFeeFree);
+        deliveryVO.setDeliveryHow(deliveryHow);
+        deliveryVO.setDeliveryPayWhen(deliveryPayWhen);
+        productVO.setProductAnimal(productAnimal);
+        productVO.setProductCategory(productCategory);
+        productVO.setProductColor(productColor);
+        productVO.setProductDetail(productDetail);
+        productVO.setProductName(productName);
+        productVO.setProductPrice(productPrice);
+        productVO.setProductRealPrice(productRealPrice);
+        productVO.setProductStock(productStock);
+//        productFileVO.setProductFileName(uuids[0] + "_" + uploadFiles.get(0).getOriginalFilename());
+//        productFileVO.setProductFilePath(getPath());
+        for (int i = 0; i < uploadFiles.size(); i++) {
+            if (!uploadFiles.get(i).isEmpty()) {
+                productFileVO.setProductFileName(uuids[i] + "_" + uploadFiles.get(i).getOriginalFilename());
+                productFileVO.setProductFilePath(getPath());
+                productFileService.insertNewImage(productFileVO);
+            }
+
+            productService.insertNewProduct(productVO);
+            deliveryService.insertDeliveryInfo(deliveryVO);
+//            productFileService.insertNewImage(productFileVO);
+
+        }
+
+        response.put("message", "제품 등록 완료");
+        log.info(response.toString());
 
 
     }
