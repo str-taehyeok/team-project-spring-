@@ -1,8 +1,6 @@
 package com.app.springpowpow.controller;
 
-import com.app.springpowpow.domain.PostDTO;
-import com.app.springpowpow.domain.PostFileVO;
-import com.app.springpowpow.domain.PostVO;
+import com.app.springpowpow.domain.*;
 import com.app.springpowpow.service.PostFileService;
 import com.app.springpowpow.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,22 +10,26 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/posts/*")
 public class PostAPI {
 
     private final PostService postService;
     private final PostFileService postFileService;
+    private final PostFileVO postFileVO;
 
     //    게시글 전체 조회
     @Operation(summary = "게시글 전체 조회", description = "게시글 정보를 전체 조회할 수 있는 API")
@@ -73,26 +75,51 @@ public class PostAPI {
     @Operation(summary = "게시글 작성", description = "게시글 새로 작성할 수 있는 API")
     @ApiResponse(responseCode = "200", description = "게시글 작성 완료")
     @PostMapping("write")
-    public PostDTO write(@RequestParam("uuid") List<String> uuids, @RequestParam("uploadFile") List<MultipartFile> uploadFiles, @RequestBody PostVO postVO) {
+    public void insert(
+            @RequestParam("uuids") List<String> uuids,
+            @RequestParam("memberId") Long memberId,
+            @RequestParam("postContent") String postContent,
+            @RequestParam("postColor") String postColor,
+            @RequestParam("uploadFile") List<MultipartFile> uploadFiles
+            ) {
 
-        // 파일 업로드 처리
+
         int count = 0;
-        for(int i = 0; i < uploadFiles.size(); i++) {
-            if(uploadFiles.get(i).isEmpty()) { count++; continue;}
+        for (int i = 0; i < uploadFiles.size(); i++) {
+            if (uploadFiles.get(i).isEmpty()) {
+                count++;
+                continue;
+            }
+        log.info("요청");
+        log.info("a {}", uuids.toString());
+        log.info("b {}", memberId.toString());
+        log.info("c {}", postContent);
+        log.info("d {}", postColor);
+        log.info("e {}", uploadFiles);
+
+            PostVO postVO = new PostVO();
             PostFileVO postFileVO = new PostFileVO();
+
+            postVO.setMemberId(memberId);
+            postVO.setPostContent(postContent);
+            postVO.setPostColor(postColor);
+            postService.save(postVO);
+
+            postFileVO.setPostId(postVO.getId());
             postFileVO.setPostFileName(uuids.get(i - count) + "_" + uploadFiles.get(i).getOriginalFilename());
             postFileVO.setPostFilePath(getPath());
-            postFileService.register(postFileVO);
+            log.info(postVO.toString());
+            log.info(postFileVO.toString());
+            postFileService.insertNewImage(postFileVO);
         }
 
-        postService.write(postVO);
-
-        Optional<PostDTO> foundPost = postService.getPost(postVO.getId());
-        if(foundPost.isPresent()){
-            return foundPost.get();
-        }
-        return new PostDTO();
     }
+
+    //    현재 시간을 기준으로 년월일로 관리 할 수 있게 경로를 붙인다.
+    private String getPath() {
+        return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+    }
+
 
     //    게시글 수정
     @Operation(summary = "게시글 수정", description = "게시글 수정할 수 있는 API")
@@ -109,6 +136,7 @@ public class PostAPI {
         return new PostDTO();
     }
 
+
     //    게시글 삭제
     @Operation(summary = "게시글 삭제", description = "게시글 삭제할 수 있는 API")
     @Parameter(name = "id", description = "게시글 번호", schema = @Schema(type = "number"), in = ParameterIn.PATH, required = true)
@@ -116,11 +144,6 @@ public class PostAPI {
     @DeleteMapping("post/{id}")
     public void delete(@PathVariable Long id) {
         postService.remove(id);
-    }
-
-
-    private String getPath() {
-        return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
     }
 
 }

@@ -1,6 +1,7 @@
 package com.app.springpowpow.service;
 
 import com.app.springpowpow.domain.PostDTO;
+import com.app.springpowpow.domain.PostFileVO;
 import com.app.springpowpow.domain.PostVO;
 import com.app.springpowpow.repository.PostDAO;
 import lombok.RequiredArgsConstructor;
@@ -36,8 +37,8 @@ public class PostServiceImpl implements PostService {
     }
 //    게시글 작성
     @Override
-    public void write(PostVO postVO) {
-        postDAO.save(postVO);
+    public void save(PostVO postVO) {
+        postDAO.write(postVO);
     }
 //    게시글 수정
     @Override

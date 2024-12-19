@@ -19,7 +19,7 @@ public interface PostService {
     public Optional<PostDTO> getPost(Long id);
 
 //    게시글 작성
-    public void write(PostVO postVO);
+    public void save(PostVO postVO);
 
 //    게시글 수정
     public void modify(PostVO postVO);
