@@ -5,7 +5,13 @@
     <!-- 팔로우 추가 -->
     <insert id="insertFollow" parameterType="FollowsVO">
         INSERT INTO TBL_FOLLOWS (ID, FOLLOWER_MEMBER_ID, FOLLOWING_MEMBER_ID, FOLLOWS_FOLLOW_STATE)
-        VALUES (SEQ_FOLLOWS.NEXTVAL, #{followerMemberId}, #{followingMemberId}, #{followsFollowState})
+        VALUES (
+                SEQ_FOLLOWS.NEXTVAL,
+                #{followerMemberId},
+                #{followingMemberId},
+                <if test="followsFollowState != null">#{followsFollowState}</if>
+                <if test="followsFollowState == null">DEFAULT</if>
+                )
     </insert>
 
     <!-- 팔로우 취소 -->
