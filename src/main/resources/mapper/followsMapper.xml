@@ -27,7 +27,7 @@
             TBM.MEMBER_NICKNAME, TBM.MEMBER_FILE_PATH
         FROM TBL_FOLLOWS TBF
          JOIN TBL_MEMBER TBM ON TBF.FOLLOWER_MEMBER_ID = TBM.ID
-        WHERE TBF.FOLLOWING_MEMBER_ID = #{memberId} AND TBF.FOLLOWS_FOLLOW_STATE = #{followsFollowState}
+        WHERE TBF.FOLLOWING_MEMBER_ID = #{memberId}
     </select>
 
     <!-- 팔로워 리스트 조회 -->
@@ -37,7 +37,7 @@
             TBM.MEMBER_NICKNAME, TBM.MEMBER_FILE_PATH
         FROM TBL_FOLLOWS TBF
         JOIN TBL_MEMBER TBM ON TBF.FOLLOWING_MEMBER_ID = TBM.ID
-        WHERE TBF.FOLLOWER_MEMBER_ID = #{memberId} AND TBF.FOLLOWS_FOLLOW_STATE = #{followsFollowState}
+        WHERE TBF.FOLLOWER_MEMBER_ID = #{memberId}
     </select>
 
 </mapper>

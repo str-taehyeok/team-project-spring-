@@ -39,7 +39,7 @@ public class FollowsAPI {
         followsService.removeFollow(followsVO);
     }
 
-    // 팔로워 리스트 조회
+    // 팔로워 리스트
     @Operation(summary = "팔로워 리스트 조회", description = "특정 유저의 팔로워 리스트 조회 API")
     @ApiResponse(responseCode = "200", description = "팔로워 리스트 조회 완료")
     @Parameter(name = "memberId", description = "회원 ID", schema = @Schema(type = "number"))

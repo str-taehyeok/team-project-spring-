@@ -21,12 +21,16 @@ public class FollowsTests {
         FollowsVO followsVO = new FollowsVO();
         FollowsDTO followsDTO = new FollowsDTO();
 
-        followsVO.setId(1L);
         followsVO.setFollowsFollowState("1");
         followsVO.setFollowerMemberId(3L);
         followsVO.setFollowingMemberId(3L);
 
         followsService.addFollow(followsVO);
+    }
+
+    @Test
+    public void getFollowersTest() {
+        followsService.getFollowerList(2L).stream().map(FollowsDTO::toString).forEach(log::info);
     }
 
 }
