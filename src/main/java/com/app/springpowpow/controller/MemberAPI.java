@@ -420,58 +420,68 @@ public class MemberAPI {
         Map<String, String> response = new HashMap<>();
         String rootPath = "C:/upload/" + getPath();
 
-        File file = new File(rootPath);
-        if (!file.exists()) {
-            file.mkdirs();
+        if(!uploadFile.getOriginalFilename().equals("blob")){
+            File file = new File(rootPath);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+
+            //        uuid 생성
+            String uuid = UUID.randomUUID().toString();
+            log.info("Generated UUID: {}", uuid);
+            uploadFile.transferTo(new File(rootPath, uuid + "_" + uploadFile.getOriginalFilename()));
+
+    //        썸네일
+            if(uploadFile.getContentType().startsWith("image")){
+                FileOutputStream out = new FileOutputStream(new File(rootPath, "t_" + uuid + "_" + uploadFile.getOriginalFilename()));
+                Thumbnailator.createThumbnail(uploadFile.getInputStream(), out, 100, 100);
+                out.close();
+            }
+
+            log.info("upload path : {}", uuid.toString());
+
+            response.put("message", "이미지와 함께 업로드 완료");
+            response.put("uuid", uuid);
+            return ResponseEntity.ok(response);
         }
 
-        //        uuid 생성
-        String uuid = UUID.randomUUID().toString();
-        log.info("Generated UUID: {}", uuid);
-        uploadFile.transferTo(new File(rootPath, uuid + "_" + uploadFile.getOriginalFilename()));
-
-//        썸네일
-        if(uploadFile.getContentType().startsWith("image")){
-            FileOutputStream out = new FileOutputStream(new File(rootPath, "t_" + uuid + "_" + uploadFile.getOriginalFilename()));
-            Thumbnailator.createThumbnail(uploadFile.getInputStream(), out, 100, 100);
-            out.close();
-        }
-
-        log.info("upload path : {}", uuid.toString());
-
-        response.put("uuid", uuid);
+        response.put("message", "이미지 없이 업로드 완료");
         return ResponseEntity.ok(response);
     }
 
     // 유저수정 API
     @Operation(summary = "유저 수정", description = "유저 수정 API")
     @ApiResponse(responseCode = "200", description = "유저 수정 완료")
-    @PutMapping("profileEdit/{id}")
+    @PutMapping("profileEdit")
     public ResponseEntity<Map<String, String>> profileEdit(
-            @RequestParam("id") Long id,
-            @RequestParam("uuid") String uuid,
-            @RequestParam("uploadFile") MultipartFile uploadFile,
             @RequestParam("memberName") String memberName,
             @RequestParam("memberNickname") String memberNickname,
             @RequestParam("memberEmail") String memberEmail,
             @RequestParam("memberPhone") String memberPhone,
             @RequestParam("memberZipcode") String memberZipcode,
             @RequestParam("memberAddress") String memberAddress,
-            @RequestParam("memberAddressDetail") String memberAddressDetail
+            @RequestParam("memberAddressDetail") String memberAddressDetail,
+            @RequestParam("uuid") String uuid,
+            @RequestParam("uploadFile") MultipartFile uploadFile
     ) {
         Map<String, String> response = new HashMap<>();
-        MemberVO memberVO = new MemberVO();
-        memberVO.setId(id);
-        memberVO.setMemberName(memberName);
-        memberVO.setMemberNickname(memberNickname);
-        memberVO.setMemberEmail(memberEmail);
-        memberVO.setMemberPhone(memberPhone);
-        memberVO.setMemberZipcode(memberZipcode);
-        memberVO.setMemberAddress(memberAddress);
-        memberVO.setMemberAddressDetail(memberAddressDetail);
-        memberVO.setMemberFileName(uuid + "_" + uploadFile.getOriginalFilename());
-        memberVO.setMemberFilePath(getPath());
-        memberService.modify(memberVO);
+//        유저를 찾아온다.
+        memberService.findMember(memberEmail).ifPresent(memberVO -> {
+            MemberVO foundUser = memberVO;
+            log.info("found user: {}", foundUser);
+            foundUser.setMemberName(memberName);
+            foundUser.setMemberNickname(memberNickname);
+            foundUser.setMemberEmail(memberEmail);
+            foundUser.setMemberPhone(memberPhone);
+            foundUser.setMemberZipcode(memberZipcode);
+            foundUser.setMemberAddress(memberAddress);
+            foundUser.setMemberAddressDetail(memberAddressDetail);
+            if(!uuid.equals("")){
+                foundUser.setMemberFilePath(getPath());
+                foundUser.setMemberFileName(uuid + "_" + uploadFile.getOriginalFilename());
+            }
+            memberService.modify(foundUser);
+        });
 
         response.put("message", "유저 정보 수정 완료");
         return ResponseEntity.ok(response);
