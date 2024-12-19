@@ -107,5 +107,11 @@ public class MemberServiceImpl implements MemberService {
         memberDAO.updatePassword(memberVO);
     }
 
+    // 비밀번호 확인
+    @Override
+    public boolean checkPassword(MemberVO memberVO) {
+        int result = memberDAO.findPassword(memberVO);
+        return result == 1;  // 1이면 true, 0이면 false
+    }
 }
 

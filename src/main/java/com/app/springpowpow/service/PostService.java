@@ -23,7 +23,11 @@ public interface PostService {
     public Long getRecentId();
 
 //    게시글 작성
+<<<<<<< HEAD
     public void write(PostVO postVO, List<PostFileVO> postFiles);
+=======
+    public void save(PostVO postVO);
+>>>>>>> 507af47d77f2728d354ab2a1db9d7ebe704e43c4
 
 //    게시글 수정
     public void modify(PostVO postVO);

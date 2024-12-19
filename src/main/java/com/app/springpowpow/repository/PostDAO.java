@@ -36,7 +36,7 @@ public class PostDAO {
     }
 
 //    게시글 작성
-    public void save(PostVO postVO){
+    public void write(PostVO postVO){
         postMapper.insert(postVO);
     }
 

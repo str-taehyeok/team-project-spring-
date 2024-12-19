@@ -44,11 +44,16 @@ public class PostServiceImpl implements PostService {
     }
 //    게시글 작성
     @Override
+<<<<<<< HEAD
     public void write(PostVO postVO, List<PostFileVO> postFiles) {
         postDAO.save(postVO);
         for (PostFileVO postFile : postFiles) {
             postFileDAO.save(postFile);
         }
+=======
+    public void save(PostVO postVO) {
+        postDAO.write(postVO);
+>>>>>>> 507af47d77f2728d354ab2a1db9d7ebe704e43c4
     }
 //    게시글 수정
     @Override

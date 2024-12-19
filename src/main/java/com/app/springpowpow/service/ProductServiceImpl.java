@@ -1,6 +1,12 @@
 package com.app.springpowpow.service;
 
+<<<<<<< HEAD
 import com.app.springpowpow.domain.*;
+=======
+import com.app.springpowpow.domain.DeliveryVO;
+import com.app.springpowpow.domain.ProductDTO;
+import com.app.springpowpow.domain.ProductVO;
+>>>>>>> 507af47d77f2728d354ab2a1db9d7ebe704e43c4
 import com.app.springpowpow.repository.DeliveryDAO;
 import com.app.springpowpow.repository.ProductDAO;
 import com.app.springpowpow.repository.ProductFileDAO;
@@ -21,6 +27,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductFileDAO productFileDAO;
     private final DeliveryDAO deliveryDAO;
     private final ReviewDAO reviewDAO;
+    private final DeliveryVO deliveryVO;
 
 
     @Override

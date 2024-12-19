@@ -20,43 +20,53 @@ import java.util.UUID;
 @RequestMapping("/postFiles/*")
 public class PostFileAPI {
 
-    @PostMapping("upload")
+    // 파일 업로드 처리
     @ResponseBody
-    public List<String> upload(@RequestParam("uploadFile") List<MultipartFile> uploadFiles) throws IOException {
+    @PostMapping("upload")
+    public List<String> upload(
+            @RequestParam("memberId") Long memberId,
+            @RequestParam("postContent") String postContent,
+            @RequestParam("postColor") String postColor,
+            @RequestParam("uploadFile") List<MultipartFile> uploadFiles
+    ) throws IOException {
         String rootPath = "C:/upload/" + getPath();
 
         List<String> uuids = new ArrayList<>();
 
+        // 없으면 폴더 만들기
         File file = new File(rootPath);
-        if(!file.exists()){
+        if (!file.exists()) {
             file.mkdirs();
         }
 
-        for(int i = 0; i < uploadFiles.size(); i++){
-            uuids.add(UUID.randomUUID().toString());
-            uploadFiles.get(i).transferTo(new File(rootPath, uuids.get(i) + "_" + uploadFiles.get(i).getOriginalFilename()));
+        // 업로드된 파일 처리
+        for (int i = 0; i < uploadFiles.size(); i++) {
+            String uuid = UUID.randomUUID().toString();
+            uuids.add(uuid);
+            File targetFile = new File(rootPath, uuid + "_" + uploadFiles.get(i).getOriginalFilename());
+            uploadFiles.get(i).transferTo(targetFile);
 
-//            썸네일
-            if(uploadFiles.get(i).getContentType().startsWith("image")){
-                FileOutputStream out = new FileOutputStream(new File(rootPath, "t_" + uuids.get(i) + "_" + uploadFiles.get(i).getOriginalFilename()));
+            // 썸네일 생성
+            if (uploadFiles.get(i).getContentType().startsWith("image")) {
+                FileOutputStream out = new FileOutputStream(new File(rootPath, "t_" + uuid + "_" + uploadFiles.get(i).getOriginalFilename()));
                 Thumbnailator.createThumbnail(uploadFiles.get(i).getInputStream(), out, 400, 400);
                 out.close();
             }
         }
-
-        log.info("upload path : {}", uuids.toString());
+        log.info("upload path: {}", uuids.toString());
         return uuids;
     }
 
-    @GetMapping("display")
-    @ResponseBody
-    public byte[] display(String fileName) throws IOException {
-        return FileCopyUtils.copyToByteArray(new File("C:/upload/" + fileName));
-    }
-
-    //    현재 시간을 기준으로 년월일로 관리할 수 있게 경로를 붙인다.
+    // 현재 시간을 기준으로 년월일로 경로 생성
     private String getPath() {
         return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
     }
 
+    // 업로드된 파일의 내용을 바이너리로 반환
+    @GetMapping("display")
+    @ResponseBody
+    public byte[] display(String fileName) throws IOException {
+        String rootPath = "C:/upload/";
+        return FileCopyUtils.copyToByteArray(new File(rootPath + fileName));
+    }
 }

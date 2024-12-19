@@ -32,7 +32,7 @@ public class ProductAPI {
     private final ProductFileService productFileService;
     private final MemberService memberService;
 
-//    제품 등록
+    //    제품 등록
     @Operation(summary = "제품 등록", description = "제품등록 API")
     @ApiResponse(responseCode = "200", description = "제품등록 완료")
     @Parameters({
@@ -148,14 +148,14 @@ public class ProductAPI {
     }
 
 
-//  단일 제품
+    //  단일 제품
     @Operation(summary = "제품 단일 조회", description = "제품 한가지를 볼수 있는 API")
     @GetMapping("product/{id}")
     public Optional<ProductDTO> product(@PathVariable Long id){
         return productService.selectProductById(id);
     }
 
-//    제품 수정
+    //    제품 수정
     @Operation(summary = "제품 수정", description = "제품을 수정하는 API")
     @Parameter(name = "id", description = "제품 수정", schema = @Schema(type="number"))//DB의 스키마가 아니라, swagger에서 인식하기 위한 타입in = ParameterIn.PATH, //path 로 전달required = true //반드시 전달)
     @ApiResponse(responseCode = "200", description = "제품 수정 완료")
@@ -166,7 +166,7 @@ public class ProductAPI {
         return productDTO;
     }
 
-//    제품 삭제
+    //    제품 삭제
     @Operation(summary = "제품 삭제", description = "제품을 삭제하는 API")
     @Parameter(name = "id", description = "제품 번호", schema = @Schema(type="number"))//DB의 스키마가 아니라, swagger에서 인식하기 위한 타입in = ParameterIn.PATH, //path 로 전달required = true //반드시 전달)
     @ApiResponse(responseCode = "200", description = "제품 삭제 완료")
@@ -176,17 +176,17 @@ public class ProductAPI {
         productService.deleteProduct(deleteProductId);
     }
 
-//    멤버나가면 제품다 삭제
-@Operation(summary = "제품 삭제", description = "제품을 삭제하는 API")
-@Parameter(name = "id", description = "제품 번호", schema = @Schema(type="number"))//DB의 스키마가 아니라, swagger에서 인식하기 위한 타입in = ParameterIn.PATH, //path 로 전달required = true //반드시 전달)
-@ApiResponse(responseCode = "200", description = "제품 삭제 완료")
-@DeleteMapping("seller-products/{memberId}")
-public void deleteProductsBySellerId(@PathVariable Long memberId){
+    //    멤버나가면 제품다 삭제
+    @Operation(summary = "제품 삭제", description = "제품을 삭제하는 API")
+    @Parameter(name = "id", description = "제품 번호", schema = @Schema(type="number"))//DB의 스키마가 아니라, swagger에서 인식하기 위한 타입in = ParameterIn.PATH, //path 로 전달required = true //반드시 전달)
+    @ApiResponse(responseCode = "200", description = "제품 삭제 완료")
+    @DeleteMapping("seller-products/{memberId}")
+    public void deleteProductsBySellerId(@PathVariable Long memberId){
         productService.deleteAllProducts(memberId);
-}
+    }
 
 
-// 사진 등록
+    // 사진 등록
     @PostMapping("image-upload")
     public ResponseEntity<Map<String, Object>> fileUpload(
             @RequestParam("title") String title,
@@ -215,7 +215,7 @@ public void deleteProductsBySellerId(@PathVariable Long memberId){
         return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
     }
 
-//    사진 수정
+    //    사진 수정
     @PutMapping("image/{id}")
     public ProductFileVO update(@PathVariable Long id, @RequestBody ProductFileVO productFileVO) {
         productFileVO.setId(id);
@@ -223,7 +223,7 @@ public void deleteProductsBySellerId(@PathVariable Long memberId){
         return productFileVO;
     }
 
-//    제품 삭제시 사진도 삭제
+    //    제품 삭제시 사진도 삭제
     @DeleteMapping("image/{id}")
     public void deleteImage(@PathVariable Long id) {
         productFileService.deleteImage(id);
