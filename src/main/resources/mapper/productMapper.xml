@@ -3,8 +3,15 @@
 <mapper namespace="com.app.springpowpow.mapper.ProductMapper">
 <!--    제품 추가-->
     <insert id="insert" parameterType="ProductVO">
-        INSERT INTO TBL_PRODUCT (ID, MEMBER_ID, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_REAL_PRICE, PRODUCT_CODE, PRODUCT_DETAIL, PRODUCT_ANIMAL, PRODUCT_CATEGORY, PRODUCT_COLOR, PRODUCT_SIZE)
-        VALUES (SEQ_PRODUCT.NEXTVAL, #{memberId}, #{productName}, #{productPrice}, #{productRealPrice}, #{productCode}, #{productDetail}, #{productAnimal}, #{productCategory}, #{productColor}, #{productSize})
+        INSERT INTO TBL_PRODUCT (ID, MEMBER_ID, PRODUCT_NAME, PRODUCT_EDIT_DATE, PRODUCT_DATE, PRODUCT_PRICE, PRODUCT_REAL_PRICE, PRODUCT_CODE, PRODUCT_DETAIL, PRODUCT_ANIMAL, PRODUCT_CATEGORY, PRODUCT_COLOR, PRODUCT_SIZE)
+        VALUES (
+                SEQ_PRODUCT.NEXTVAL, #{memberId}, #{productName},
+                <if test="productEditDate != null">#{productEditDate}</if>
+                <if test="productEditDate == null">DEFAULT</if>,
+                <if test="productDate != null">#{productDate}</if>
+                <if test="productDate == null">DEFAULT</if>,
+                #{productPrice}, #{productRealPrice}, #{productCode}, #{productDetail}, #{productAnimal}, #{productCategory}, #{productColor}, #{productSize}
+        )
     </insert>
 
 
