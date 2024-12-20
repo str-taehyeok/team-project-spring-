@@ -3,16 +3,18 @@
 <mapper namespace="com.app.springpowpow.mapper.PostMapper">
 
     <insert id="insert" parameterType="PostVO">
-<<<<<<< HEAD
         INSERT INTO TBL_POST (ID, MEMBER_ID, POST_CONTENT, POST_COLOR)
-=======
-        INSERT INTO TBL_POST (ID, MEMBER_ID, POST_CONTENT , POST_COLOR)
->>>>>>> 507af47d77f2728d354ab2a1db9d7ebe704e43c4
         VALUES (SEQ_POST.NEXTVAL, #{memberId}, #{postContent}, #{postColor})
     </insert>
 
     <select id="selectRecentId" resultType="Long">
-        SELECT SEQ_POST.NEXTVAL FROM DUAL
+        SELECT ID
+        FROM (
+                 SELECT ID
+                 FROM TBL_POST
+                 ORDER BY ID DESC
+             )
+        WHERE ROWNUM = 1
     </select>
     
     <select id="selectAll" resultType="PostDTO">
