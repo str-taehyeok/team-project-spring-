@@ -5,15 +5,15 @@
 
 <!--    리뷰달기-->
     <insert id="insert" parameterType="ReviewDTO">
-        INSERT INTO TBL_PRODUCT_REVIEW (ID, PRODUCT_ID, MEMBER_ID, REVIEW_STAR, REVIEW_CONTANT)
-        VALUES (SEQ_PRODUCT_REVIEW.NEXTVAL, #{productId}, #{memberId}, #{reviewStar}, #{reviewContant})
+        INSERT INTO TBL_PRODUCT_REVIEW (ID, PRODUCT_ID, MEMBER_ID, REVIEW_STAR, REVIEW_CONTENT)
+        VALUES (SEQ_PRODUCT_REVIEW.NEXTVAL, #{productId}, #{memberId}, #{reviewStar}, #{reviewContent})
     </insert>
 
 
 
 <!--    전체 리뷰 리스트-->
     <select id="selectAll" resultType="ReviewDTO" parameterType="Long">
-        SELECT TPR.ID, TPR.PRODUCT_ID, TPR.MEMBER_ID, TPR.REVIEW_STAR, TPR.REVIEW_CONTANT, TPM.MEMBER_NICKNAME, TPM.MEMBER_IMAGE
+        SELECT TPR.ID, TPR.PRODUCT_ID, TPR.MEMBER_ID, TPR.REVIEW_STAR, TPR.REVIEW_CONTENT, TPM.MEMBER_NICKNAME, TPM.MEMBER_FILE_NAME
         FROM TBL_PRODUCT_REVIEW TPR
         JOIN TBL_MEMBER TPM
         ON TPM.ID = TPR.MEMBER_ID
@@ -32,7 +32,7 @@
 
     <update id="update" parameterType="ReviewDTO">
         UPDATE TBL_PRODUCT_REVIEW
-        SET REVIEW_STAR = #{reviewStar}, REVIEW_DATE = #{reviewDate}, REVIEW_CONTANT = #{reviewContant}
+        SET REVIEW_STAR = #{reviewStar}, REVIEW_DATE = #{reviewDate}, REVIEW_CONTENT = #{reviewContent}
     </update>
 
 <!--    리뷰 삭제하기-->
