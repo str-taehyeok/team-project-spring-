@@ -16,9 +16,6 @@ public class PostVO implements Serializable {
     private Long memberId;
     @Schema(description = "게시물 내용", example = "오늘의 반려동물컬러를 뭘까요?", required = true)
     private String postContent;
-<<<<<<< HEAD
-=======
     @Schema(description = "게시물 색상", example = "orange")
->>>>>>> 507af47d77f2728d354ab2a1db9d7ebe704e43c4
     private String postColor;
 }
