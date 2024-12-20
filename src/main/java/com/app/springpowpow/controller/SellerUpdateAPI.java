@@ -40,7 +40,7 @@ public class SellerUpdateAPI {
         }
         return new MemberVO();
     }
-    
+
 
 //    판매자 정보 단일조회
 //    memberAPI꺼 가져와서 사용
