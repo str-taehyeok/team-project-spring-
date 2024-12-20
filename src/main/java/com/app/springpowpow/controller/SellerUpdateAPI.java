@@ -9,9 +9,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import retrofit2.http.Path;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -37,6 +41,7 @@ public class SellerUpdateAPI {
         return new MemberVO();
     }
 
+
 //    판매자 정보 단일조회
 //    memberAPI꺼 가져와서 사용
     @Operation(summary = "판매자 정보 조회", description = "판매자 정보를 조회할 수 있는 API")
@@ -50,6 +55,15 @@ public class SellerUpdateAPI {
         return new MemberVO();
     }
 
+    //  회원탈퇴(판매자)
+    @Operation(summary = "판매자회원탈퇴", description = "회원정보 탈퇴할 수 있는 API")
+    @Parameter(name = "id", description = "판매자 회원 번호", schema = @Schema(type = "number"), in = ParameterIn.PATH, required = true)
+    @ApiResponse(responseCode = "200", description = "회원정보 탈퇴 완료")
+    @DeleteMapping("/seller-info/{id}")
+    public void deleteSeller(@PathVariable Long id) {
+        memberService.withdrawSeller(id);
+
+    }
 
 
 }
