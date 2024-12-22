@@ -38,20 +38,19 @@
         WHERE ID = #{id}
     </delete>
 
-    <select id="selectAllView" resultType="OrderDTO" parameterType="java.util.Date">
-        SELECT
-            TBO.ID AS ORDER_ID,
-            SUM(TBP.PRODUCT_PRICE * TBO.PRODUCT_COUNT) AS TOTAL_PRICE,
-            SUM(TBO.PRODUCT_COUNT) AS TOTAL_COUNT
-        FROM
-            TBL_ORDER TBO
-                LEFT JOIN
-            TBL_PRODUCT TBP
-            ON
-                TBP.ID = TBO.PRODUCT_ID
-        WHERE
-            TBO.ORDER_DATE = TO_DATE(#{orderDate}, 'YYYY-MM-DD')
-        GROUP BY
-            TBO.ID;
+    <select id="selectAllView" resultType="OrderDTO">
+        SELECT TRUNC(TBO.ORDER_DATE) AS ORDER_DATE,
+               SUM(TBP.PRODUCT_PRICE) AS TOTAL_PRICE,
+               COUNT(TBO.ID) AS TOTAL_COUNT,
+               COUNT(TBC.ID) AS ORDER_CANCEL_COUNT,
+               SUM(NVL(TBC.ORDER_CANCEL_COUNT, 0) * TBP.PRODUCT_PRICE) AS CANCEL_PRICE
+        FROM TBL_ORDER TBO
+                 JOIN TBL_PRODUCT TBP
+                      ON TBO.PRODUCT_ID = TBP.ID
+                 JOIN TBL_MEMBER TBM
+                      ON TBO.MEMBER_ID = TBM.ID
+                 LEFT JOIN TBL_ORDER_CANCEL TBC
+                           ON TBO.PRODUCT_ID = TBP.ID AND TBO.MEMBER_ID = TBM.ID
+        GROUP BY TRUNC(TBO.ORDER_DATE);
     </select>
 </mapper>
