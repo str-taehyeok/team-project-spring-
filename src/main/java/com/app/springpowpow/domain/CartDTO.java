@@ -8,12 +8,12 @@ import org.springframework.stereotype.Component;
 @Component
 @Data
 public class CartDTO {
-    @Schema(description = "카트 번호", example = "1", required = true)
+    @Schema(description = "카트 번호", example = "1")
     private Long id;
-    @Schema(description = "제품 번호", example = "1", required = true)
-    private Long productId;
     @Schema(description = "회원 번호", example = "1", required = true)
     private Long memberId;
+    @Schema(description = "제품 번호", example = "1")
+    private Long productId;
     @Schema(description = "제품명", example = "덴탈 치약")
     private String productName;
     @Schema(description = "제품가격", example = "25000")
@@ -32,14 +32,10 @@ public class CartDTO {
     private String productEditDate;
     @Schema(description = "제품 상세정보", example = "해당 제품은 주문과 동시에 주문제작..")
     private String productDetail;
-    @Schema(description = "제품사진 1", example = "product.png")
-    private String productImage1;
-    @Schema(description = "제품사진 2", example = "product.png")
-    private String productImage2;
-    @Schema(description = "제품사진 3", example = "product.png")
-    private String productImage3;
-    @Schema(description = "제품사진 4", example = "product.png")
-    private String productImage4;
+    @Schema(description = "제품 사진 이름", example = "product.png")
+    private String productFileName;
+    @Schema(description = "제품 사진 경로", example = "product.png")
+    private String productFilePath;
     @Schema(description = "반려동물의 종류", example = "강아지", required = true)
     private String productAnimal;
     @Schema(description = "상품 카테고리", example = "헬스케어")
