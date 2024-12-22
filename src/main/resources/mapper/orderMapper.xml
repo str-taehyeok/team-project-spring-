@@ -38,7 +38,7 @@
         WHERE ID = #{id}
     </delete>
 
-    <select id="selectAllView" resultType="OrderDTO">
+    <select id="selectAllByDate" resultType="OrderDTO">
         SELECT TRUNC(TBO.ORDER_DATE) AS ORDER_DATE,
                SUM(TBP.PRODUCT_PRICE) AS TOTAL_PRICE,
                COUNT(TBO.ID) AS TOTAL_COUNT,
@@ -51,6 +51,6 @@
                       ON TBO.MEMBER_ID = TBM.ID
                  LEFT JOIN TBL_ORDER_CANCEL TBC
                            ON TBO.PRODUCT_ID = TBP.ID AND TBO.MEMBER_ID = TBM.ID
-        GROUP BY TRUNC(TBO.ORDER_DATE);
+        GROUP BY TRUNC(TBO.ORDER_DATE)
     </select>
 </mapper>

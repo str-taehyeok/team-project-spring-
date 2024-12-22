@@ -17,10 +17,12 @@ public class OrderDTO {
     @Schema(description = "회원 ID", example = "501", required = true)
     private Long memberId;
 
+    private Long orderCancelId;
+
     @Schema(description = "배송 ID", example = "301", required = true)
     private Long deliveryId;
 
-    @Schema(description = "주문 번호", example = "01010101")
+    @Schema(description = "주문 번호", example = "1000100")
     private String orderNumber;
 
     @Schema(description = "주문 날짜", example = "2024-06-01")
@@ -47,5 +49,9 @@ public class OrderDTO {
     private String deliveryStatus;
 
     private String ProductName;
+
+    private int orderCancelCount;
+
+    private int cancelPrice;
 
 }
