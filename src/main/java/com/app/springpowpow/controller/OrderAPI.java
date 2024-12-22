@@ -98,6 +98,13 @@ public class OrderAPI {
         return orderService.selectOrderByMemberId(id);
     }
 
+    @Operation(summary = "날짜별 매출목록", description = "날짜별 매출 조회하는 API")
+    @ApiResponse(responseCode = "200", description = "매출 조회 완료")
+    @GetMapping("order/sales")
+    public List<OrderDTO> selectSales(){
+        return orderService.selectOrderByDate();
+    }
+
 
 
 
