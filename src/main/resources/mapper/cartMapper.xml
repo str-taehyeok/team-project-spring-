@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.app.springpowpow.mapper.CartMapper">
-    <select id="selectAll" resultType="com.app.springpowpow.domain.CartDTO">
-        SELECT TP.ID, TC.MEMBER_ID, TP.PRODUCT_NAME, TP.PRODUCT_PRICE,
-               TP.PRODUCT_REAL_PRICE, TP.PRODUCT_CODE, TP.PRODUCT_DATE, TP.PRODUCT_STOCK,
-               TP.PRODUCT_DETAIL, TP.PRODUCT_IMAGE1, TP.PRODUCT_IMAGE2, TP.PRODUCT_IMAGE3,
-               TP.PRODUCT_IMAGE4, TP.PRODUCT_ANIMAL, TP.PRODUCT_CATEGORY, TP.PRODUCT_COLOR,
-               TP.PRODUCT_SIZE
-            FROM TBL_CART TC
-            JOIN TBL_PRODUCT TP
-            ON TC.PRODUCT_ID = TP.ID AND TC.MEMBER_ID = #{memberId}
+    <select id="selectAll" parameterType="Long" resultType="com.app.springpowpow.domain.CartDTO">
+        SELECT TBO.ID, TBO.MEMBER_ID, TBO.PRODUCT_ID, TVP.PRODUCT_PRICE, TVP.PRODUCT_REAL_PRICE, TVP.PRODUCT_DISCOUNT, TVP.PRODUCT_STOCK, TVP.PRODUCT_DATE,
+               TVP.PRODUCT_NAME, TVP.PRODUCT_CODE, TVP.PRODUCT_DETAIL, TVP.PRODUCT_ANIMAL, TVP.PRODUCT_CATEGORY,
+               TVP.PRODUCT_COLOR, TVP.PRODUCT_SIZE, TVP.PRODUCT_FILE_NAME, TVP.PRODUCT_FILE_PATH,
+               TBD.DELIVERY_FEE, TBD.DELIVERY_FEE_KIND, TBD.DELIVERY_FEE_FREE, TBD.DELIVERY_HOW, TBD.DELIVERY_PAY_WHEN, TBD.DELIVERY_COMPANY
+        FROM TBL_ORDER TBO
+        JOIN VIEW_PRODUCT TVP
+        ON TBO.PRODUCT_ID = TVP.ID AND TBO.MEMBER_ID = #{memberId}
+        JOIN TBL_DELIVERY TBD
+        ON TBO.PRODUCT_ID = TBD.ID
     </select>
 
 <!--  단일 상품 선택 조회 -->

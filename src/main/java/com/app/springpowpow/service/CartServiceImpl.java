@@ -20,8 +20,8 @@ public class CartServiceImpl implements CartService {
     private final CartDAO cartDAO;
 
     @Override
-    public List<CartDTO> getCartById() {
-        return cartDAO.getCartById();
+    public List<CartDTO> getCartById(Long memberId) {
+        return cartDAO.getCartById(memberId);
     }
 
     @Override
