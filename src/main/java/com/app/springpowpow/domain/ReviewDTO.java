@@ -27,7 +27,8 @@ public class ReviewDTO {
     private String reviewContent;
 
     @Schema(description = "훠원사진", example = "profile.png")
-    private String memberImage;
+    private String memberFileName;
+    private String memberFilePath;
 
     @Schema(description = "회원 닉네임", example = "징징이")
     private String memberNickname;
