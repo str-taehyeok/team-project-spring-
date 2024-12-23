@@ -25,8 +25,8 @@ public class DeliveryDAO {
         return deliveryMapper.selectAll();
     }
 
-    public void updateDelivery(ProductDTO productDTO) {
-        deliveryMapper.update(productDTO);
+    public void updateDelivery(DeliveryDTO deliveryDTO) {
+        deliveryMapper.update(deliveryDTO);
     }
 
     public void deleteDelivery(Long id) {
