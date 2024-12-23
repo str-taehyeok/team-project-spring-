@@ -71,7 +71,6 @@ public class PostAPI {
         return new PostDTO();
     }
 
-
     // 게시글 작성
     @Operation(summary = "게시글 작성", description = "게시글 새로 작성할 수 있는 API")
     @ApiResponse(responseCode = "200", description = "게시글 작성 완료")

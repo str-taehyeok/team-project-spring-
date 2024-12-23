@@ -43,7 +43,7 @@ public class SmsUtil {
         String toPhoneNumber = to.replace("\"", "");
         log.info("toPhoneNumber {}", toPhoneNumber);
 
-        message.setFrom("01030204067"); // 보내는 사람
+        message.setFrom("01059107212"); // 보내는 사람
         message.setTo(toPhoneNumber); // 받는 사람
         message.setText("[Powpow] 인증번호 [" + verificationCode + "]를 입력해주세요.");
 
