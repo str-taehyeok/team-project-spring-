@@ -128,6 +128,7 @@ public class PostAPI {
     @ApiResponse(responseCode = "200", description = "게시글 삭제 완료")
     @DeleteMapping("post/{id}")
     public void delete(@PathVariable Long id) {
+        postFileService.deleteImage(id);
         postService.remove(id);
     }
 
