@@ -160,11 +160,70 @@ public class ProductAPI {
     @Parameter(name = "id", description = "제품 수정", schema = @Schema(type="number"))//DB의 스키마가 아니라, swagger에서 인식하기 위한 타입in = ParameterIn.PATH, //path 로 전달required = true //반드시 전달)
     @ApiResponse(responseCode = "200", description = "제품 수정 완료")
     @PutMapping("seller-product/{id}")
-    public ProductDTO modify(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
-        productDTO.setId(id);
-        productService.updateProduct(productDTO);
-        return productDTO;
-    }
+    public ProductDTO modify(@PathVariable Long id,
+        @RequestParam("memberId") Long memberId,
+        @RequestParam("uuids") List<String> uuids,
+        @RequestParam("deliveryCompany") String deliveryCompany,
+        @RequestParam("deliveryFee") Integer deliveryFee,
+        @RequestParam("deliveryFeeFree") Integer deliveryFeeFree,
+        @RequestParam("deliveryFeeKind") String deliveryFeeKind,
+        @RequestParam("deliveryHow") String deliveryHow,
+        @RequestParam("deliveryPayWhen") String deliveryPayWhen,
+        @RequestParam("productAnimal") String productAnimal,
+        @RequestParam("productCategory") String productCategory,
+        @RequestParam("productColor") String productColor,
+        @RequestParam("productDetail") String productDetail,
+        @RequestParam("productName") String productName,
+        @RequestParam("productPrice") Integer productPrice,
+        @RequestParam("productRealPrice") Integer productRealPrice,
+        @RequestParam("productSize") Character productSize,
+        @RequestParam("productStock") Integer productStock,
+        @RequestParam("uploadFile") List<MultipartFile> uploadFiles
+    ) {
+
+            //    상품 등록
+            ProductDTO productDTO = new ProductDTO();
+            productDTO.setId(id);
+            productDTO.setMemberId(memberId);
+            productDTO.setProductName(productName);
+            productDTO.setProductPrice(productPrice);
+            productDTO.setProductRealPrice(productRealPrice);
+            productDTO.setProductCode("codecode");
+            productDTO.setProductDetail(productDetail);
+            productDTO.setProductAnimal(productAnimal);
+            productDTO.setProductCategory(productCategory);
+            productDTO.setProductColor(productColor);
+            productDTO.setProductSize(productSize);
+            productDTO.setProductStock(productStock);
+
+
+            // 파일 업로드 처리
+            Long recentId = productService.getRecentId();
+            List<ProductFileVO> ProductFiles = new ArrayList<>();
+            int count = 0;
+            for(int i = 0; i < uploadFiles.size(); i++) {
+                if(uploadFiles.get(i).isEmpty()) { count++; continue;}
+                ProductFileVO productFileVO = new ProductFileVO();
+                productFileVO.setProductId(recentId);
+                productFileVO.setProductFileName(uuids.get(i - count) + "_" + uploadFiles.get(i).getOriginalFilename());
+                productFileVO.setProductFilePath(getPath());
+                ProductFiles.add(productFileVO);
+            }
+
+            // 배송 등록
+            DeliveryDTO deliveryDTO = new DeliveryDTO();
+            deliveryDTO.setProductId(recentId);
+            deliveryDTO.setDeliveryFee(deliveryFee);
+            deliveryDTO.setDeliveryFeeKind(deliveryFeeKind);
+            deliveryDTO.setDeliveryFeeFree(deliveryFeeFree);
+            deliveryDTO.setDeliveryHow(deliveryHow);
+            deliveryDTO.setDeliveryPayWhen(deliveryPayWhen);
+            deliveryDTO.setDeliveryCompany(deliveryCompany);
+            productService.update(productDTO, ProductFiles, deliveryDTO);
+
+            return new ProductDTO();
+
+        }
 
     //    제품 삭제
     @Operation(summary = "제품 삭제", description = "제품을 삭제하는 API")

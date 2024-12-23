@@ -1,9 +1,6 @@
 package com.app.springpowpow.service;
 
-import com.app.springpowpow.domain.DeliveryVO;
-import com.app.springpowpow.domain.ProductDTO;
-import com.app.springpowpow.domain.ProductFileVO;
-import com.app.springpowpow.domain.ProductVO;
+import com.app.springpowpow.domain.*;
 import com.app.springpowpow.repository.DeliveryDAO;
 import com.app.springpowpow.repository.ProductDAO;
 import com.app.springpowpow.repository.ProductFileDAO;
@@ -62,7 +59,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void updateProduct(ProductDTO productDTO) {
+    public void update(ProductDTO productDTO, List<ProductFileVO> productFiles, DeliveryDTO deliveryDTO) {
         productDAO.updateProduct(productDTO);
     }
 

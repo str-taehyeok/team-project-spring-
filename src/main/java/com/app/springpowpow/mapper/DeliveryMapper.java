@@ -15,7 +15,7 @@ public interface DeliveryMapper {
 
     public List<DeliveryDTO> selectAll();
 
-    public void update(ProductDTO productDTO);
+    public void update(DeliveryDTO deliveryDTO);
 
     public void delete(Long id);
 

@@ -30,8 +30,8 @@ public class DeliveryServiceImpl implements DeliveryService {
     }
 
     @Override
-    public void updateDeliveryInfo(ProductDTO productDTO) {
-        deliveryDAO.updateDelivery(productDTO);
+    public void updateDeliveryInfo(DeliveryDTO deliveryDTO) {
+        deliveryDAO.updateDelivery(deliveryDTO);
     }
 
     @Override

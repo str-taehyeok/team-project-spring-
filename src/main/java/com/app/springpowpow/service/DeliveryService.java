@@ -12,7 +12,7 @@ public interface DeliveryService {
 
     public List<DeliveryDTO> selectAllDeliveryInfo();
 
-    public void updateDeliveryInfo(ProductDTO productDTO);
+    public void updateDeliveryInfo(DeliveryDTO deliveryDTO);
 
     public void deleteDeliveryInfo(Long id);
 

@@ -116,9 +116,8 @@
 
 
     <delete id="deleteAll" parameterType="Long">
-        DELETE
-        FROM TBL_POST
-        WHERE MEMBER_ID = #{memberId}
+        DELETE FROM TBL_POST
+        WHERE ID = #{Id}
     </delete>
 
 </mapper>

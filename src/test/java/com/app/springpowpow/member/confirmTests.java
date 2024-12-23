@@ -33,10 +33,11 @@ public class confirmTests {
     private PostMapper postMapper;
     @Autowired
     private PostService postService;
+    @Autowired CartService cartService;
 
     @Test
     public void likeTest(){
-        log.info("유저 {}", postMapper.selectAllPopular());
+        log.info("유저 {}", cartService.getCartById(2L));
     }
 
 }

@@ -46,6 +46,8 @@ public class ProductLikesDTO implements Serializable {
     private String productColor;
     @Schema(description = "제품 사이즈", example = "S / M / L")
     private char productSize;
+    private String productFileName;
+    private String productFilePath;
 
 
 }
