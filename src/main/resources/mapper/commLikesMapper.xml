@@ -23,10 +23,15 @@
 
     <!-- 모든 좋아요 기록 조회 -->
     <select id="selectAllLikes" parameterType="Long" resultType="CommLikesDTO">
-        SELECT TBP.ID, TBP.POST_CONTENT, TBL.MEMBER_ID, TBL.POST_ID
+        SELECT TBL.ID, TBP.POST_CONTENT, TBL.MEMBER_ID, TBL.POST_ID, TBM.MEMBER_FILE_NAME, TBM.MEMBER_FILE_PATH, TBM.MEMBER_NICKNAME,
+               TBF.POST_FILE_NAME, TBF.POST_FILE_PATH, TBP.MEMBER_ID
         FROM TBL_COMM_LIKES TBL
         JOIN TBL_POST TBP
         ON TBL.POST_ID = TBP.ID AND TBL.MEMBER_ID = #{memberId}
+        JOIN TBL_POST_FILE TBF
+        ON TBF.POST_ID = TBP.ID
+        JOIN TBL_MEMBER TBM
+        ON TBP.MEMBER_ID = TBM.ID
     </select>
 
 </mapper>

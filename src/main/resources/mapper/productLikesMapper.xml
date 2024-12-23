@@ -23,9 +23,11 @@
 
 <!-- 내가 누른 좋아요 기록 조회 -->
     <select id="selectAll" parameterType="Long" resultType="com.app.springpowpow.domain.ProductLikesDTO">
-     SELECT TPL.ID, TPL.MEMBER_ID, TPL.PRODUCT_ID, TP.PRODUCT_NAME, TP.PRODUCT_PRICE
+     SELECT TPL.ID, TPL.MEMBER_ID, TPL.PRODUCT_ID, TP.PRODUCT_NAME, TP.PRODUCT_PRICE, TPF.PRODUCT_FILE_NAME, TPF.PRODUCT_FILE_PATH
      FROM TBL_PRODUCT_LIKE TPL
      JOIN TBL_PRODUCT TP
      ON TPL.PRODUCT_ID = TP.ID AND TPL.MEMBER_ID = #{memberId}
+     JOIN TBL_PRODUCT_FILE TPF
+     ON TP.ID = TPF.PRODUCT_ID
     </select>
 </mapper>

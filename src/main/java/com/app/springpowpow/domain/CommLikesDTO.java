@@ -13,11 +13,16 @@ public class CommLikesDTO {
     private Long id;
     private Long memberId;
     private Long postId;
+    private String memberFileName;
+    private String memberFilePath;
     private String postContent;
-    private String postImage1;
-    private String postImage2;
-    private String postImage3;
-    private String postImage4;
-    private String postImage5;
+    private String postFileName;
+    private String postFilePath;
+    private String memberNickName;
+//    private String postImage1;
+//    private String postImage2;
+//    private String postImage3;
+//    private String postImage4;
+//    private String postImage5;
 
 }
