@@ -25,7 +25,7 @@ public interface ProductService {
     public List<ProductDTO> selectAllProductsBySellerId(Long memberId);
 
 //    상품 수정
-    public void updateProduct(ProductDTO productDTO);
+    public void update(ProductDTO productDTO, List<ProductFileVO> productFiles, DeliveryDTO deliveryDTO);
 
 //    상품 삭제
     public void deleteProduct(Long id);

@@ -57,10 +57,10 @@ public class DeliveryAPI {
             @Parameter(name = "deliveryCompany", description = "택배사", schema = @Schema(type = "string"), in = ParameterIn.HEADER),
     })
     @PutMapping("seller-product/{id}")
-    public ProductDTO modify(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
-        productDTO.setId(id);
-        deliveryService.updateDeliveryInfo(productDTO);
-        return productDTO;
+    public DeliveryDTO modify(@PathVariable Long id, @RequestBody DeliveryDTO deliveryDTO) {
+        deliveryDTO.setId(id);
+        deliveryService.updateDeliveryInfo(deliveryDTO);
+        return deliveryDTO;
     }
 
 
