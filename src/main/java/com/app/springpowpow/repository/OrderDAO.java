@@ -39,8 +39,8 @@ public class OrderDAO {
         public List<OrderVO> findByMemberId(Long memberId) {
             return orderMapper.selectByMemberId(memberId);}
 
-        public Optional<OrderDTO> findByOrderDate(String orderDate) {
-            return orderMapper.selectAllByDate(orderDate);
+        public List<OrderDTO> findByOrderDate() {
+            return orderMapper.selectAllByDate();
         }
 
     }

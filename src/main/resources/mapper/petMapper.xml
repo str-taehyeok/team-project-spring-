@@ -24,11 +24,11 @@
 
     <update id="update" parameterType="PetVO">
         UPDATE TBL_PET
-        SET PET_IMAGE = #{petImage}, PET_NAME = #{petName}, PET_KIND = #{petKind}, PET_GENDER = #{petGender}, PET_BREED = #{petBreed}, PET_BIRTH = TO_DATE(#{petBirth}, 'YYYY-MM-DD'), PET_WEIGHT = #{petWeight}, PET_NEUTER = #{petNeuter}, PET_VET = #{petVet}
+        SET MEMBER_ID = #{memberId}, PET_NAME = #{petName}, PET_KIND = #{petKind}, PET_GENDER = #{petGender}, PET_BREED = #{petBreed}, PET_BIRTH = TO_DATE(#{petBirth}, 'YYYY-MM-DD'), PET_WEIGHT = #{petWeight}, PET_NEUTER = #{petNeuter}, PET_VET = #{petVet}, PET_FILE_NAME = #{petFileName}, PET_FILE_PATH = #{petFilePath}
         WHERE ID = #{id}
     </update>
 
-    <update id="updateColor" parameterType="petVO">
+    <update id="updateColor" parameterType="PetVO">
         UPDATE TBL_PET
         SET PET_COLOR = #{petColor}
         WHERE ID = #{id}

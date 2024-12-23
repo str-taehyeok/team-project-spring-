@@ -29,6 +29,7 @@ import java.util.*;
 @RequestMapping("/my-pet/*")
 public class PetAPI {
     private final PetService petService;
+    private final PetVO petVO;
 
     @Operation(summary = "이미지 업로드", description = "이미지를 저장하는 API")
     @ApiResponse(responseCode = "200", description = "이미지 업로드 완료")
@@ -159,15 +160,43 @@ public class PetAPI {
     @Operation(summary = "마이펫 수정", description = "마이펫 수정할 수 있는 API")
     @Parameter( name = "id", description = "마이펫 번호", schema = @Schema(type="number"), in = ParameterIn.PATH, required = true )
     @ApiResponse(responseCode = "200", description = "마이펫 수정 완료")
-    @PutMapping("my-pet/{id}")
-    public PetDTO modify(@PathVariable Long id, @RequestBody PetVO petVO) {
-        petVO.setId(id);
-        petService.modify(petVO);
-        Optional<PetDTO> foundPet = petService.getPet(petVO.getId());
-        if (foundPet.isPresent()) {
-            return foundPet.get();
+    @PutMapping("petEdit")
+    public ResponseEntity<Map<String, String>> petEdit(
+        @RequestParam("memberId") Long memberId,
+        @RequestParam("petKind") String petKind,
+        @RequestParam("petFilePath") String petFilePath,
+        @RequestParam("petFileName") String petFileName,
+        @RequestParam("petName") String petName,
+        @RequestParam("petGender") String petGender,
+        @RequestParam("petBreed") String petBreed,
+        @RequestParam("petBirth") String petBirth,
+        @RequestParam("petVet") String petVet,
+        @RequestParam("petWeight") double petWeight,
+        @RequestParam("petNeuter") String petNeuter,
+        @RequestParam("uuid") String uuid,
+        @RequestParam("uploadFile") MultipartFile uploadFile
+
+    ){
+        Map<String, String> response = new HashMap<>();
+        PetVO petVO = new PetVO();
+        petVO.setPetKind(petKind);
+        petVO.setPetName(petName);
+        petVO.setPetGender(petGender);
+        petVO.setPetBreed(petBreed);
+        petVO.setPetBirth(petBirth);
+        petVO.setPetVet(petVet);
+        petVO.setMemberId(memberId);
+        petVO.setPetWeight(petWeight);
+        petVO.setPetNeuter(petNeuter);
+        if(!uuid.equals("")){
+            petVO.setPetFilePath(getPath());
+            petVO.setPetFileName(uuid + "_" + uploadFile.getOriginalFilename());
         }
-        return new PetDTO();
+        response.put("message", "마이펫 정보 수정 완료");
+
+        petService.modify(petVO);
+        log.info(petVO.toString());
+        return ResponseEntity.ok(response);
     }
 
     //    마이펫 삭제

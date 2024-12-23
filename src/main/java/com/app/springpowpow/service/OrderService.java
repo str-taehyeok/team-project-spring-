@@ -14,5 +14,5 @@ public interface OrderService {
     public void deleteOrderById(Long id);
     public void updateOrderById(OrderVO orderVO);
     public List<OrderVO> selectOrderByMemberId(Long memberId);
-    public Optional<OrderDTO> selectOrderByDate(String orderDate);
+    public List<OrderDTO> selectOrderByDate();
 }

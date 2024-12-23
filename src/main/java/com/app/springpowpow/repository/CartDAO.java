@@ -16,8 +16,8 @@ public class CartDAO {
     private final CartMapper cartMapper;
 
 //    전체 조회
-    public List<CartDTO> getCartById() {
-        return cartMapper.selectAll();
+    public List<CartDTO> getCartById(Long memberId) {
+        return cartMapper.selectAll(memberId);
     }
 
 //    단일 조회

@@ -22,5 +22,5 @@ public interface OrderMapper {
 
     public List<OrderVO> selectByMemberId(Long memberId);
 
-    public Optional<OrderDTO> selectAllByDate(String orderDate);
+    public List<OrderDTO> selectAllByDate();
 }

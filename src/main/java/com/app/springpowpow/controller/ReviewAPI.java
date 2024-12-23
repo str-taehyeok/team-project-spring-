@@ -59,7 +59,7 @@ public class ReviewAPI {
     @Operation(summary = "리뷰 삭제", description = "리뷰 삭제하는 API")
     @Parameter(name = "id", description = "리뷰 삭제", schema = @Schema(type="number"))//DB의 스키마가 아니라, swagger에서 인식하기 위한 타입in = ParameterIn.PATH, //path 로 전달required = true //반드시 전달)
     @ApiResponse(responseCode = "200", description = "리뷰 삭제 완료")
-    @DeleteMapping("review/{id}")
+    @DeleteMapping("delete/{id}")
     public void delete(@PathVariable Long id){
         reviewService.deleteReview(id);
     }

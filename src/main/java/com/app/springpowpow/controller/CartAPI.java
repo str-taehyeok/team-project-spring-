@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -28,8 +29,11 @@ public class CartAPI {
     @Operation(summary = "제품 전체 조회", description = "제품 전체 조회 API")
     @Parameter(name = "memberId", description = "회원 ID", schema = @Schema(type = "number"), in = ParameterIn.QUERY)
     @PostMapping("all-carts")
-    public List<CartDTO> getCartById() {
-        return cartService.getCartById();
+    public List<CartDTO> getCartById(@RequestBody Map<String, Long> request) {
+        Long memberId = request.get("memberId");
+        log.info("{}", memberId);
+        log.info("{}", cartService.getCartById(memberId));
+        return cartService.getCartById(memberId);
     }
 
 //   제품 단일 조회
