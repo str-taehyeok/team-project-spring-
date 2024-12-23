@@ -55,7 +55,6 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void withdraw(Long id) {
         couponDAO.deleteById(id);
-        postDAO.removeAll(id);
         petDAO.deleteAll(id);
         cartDAO.removeMember(id);
         memberDAO.delete(id);
