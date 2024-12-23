@@ -250,10 +250,10 @@ public class MemberAPI {
     }
 
     // SMS 전송
-    @PostMapping("/sms/find-id")
-    public ResponseEntity<Map<String, Object>> transferSmsForFindId(@RequestBody String memberPhone) throws IOException {
-        return snsService.transferMessage(memberPhone);
-    }
+//    @PostMapping("/sms/find-id")
+//    public ResponseEntity<Map<String, Object>> transferSmsForFindId(@RequestBody String memberPhone) throws IOException {
+//        return snsService.transferMessage(memberPhone);
+//    }
 
 
     // 회원 조회 API
