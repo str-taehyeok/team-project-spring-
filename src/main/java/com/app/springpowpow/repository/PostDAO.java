@@ -30,6 +30,11 @@ public class PostDAO {
         return postMapper.selectRecentId();
     }
 
+//    멤버별 게시글 가져오기
+    public List<PostDTO> findAllByMemberId(Long memberId){
+        return postMapper.selectAllByMember(memberId);
+    }
+
 //    게시글 단일 가져오기
     public Optional<PostDTO> findById(Long id){
         return postMapper.select(id);

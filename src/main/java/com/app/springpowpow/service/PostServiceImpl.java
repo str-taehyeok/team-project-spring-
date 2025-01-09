@@ -37,6 +37,12 @@ public class PostServiceImpl implements PostService {
         return postDAO.findRecentId();
     }
 
+//    멤버별 게시글 가져오기
+    @Override
+    public List<PostDTO> getListByMember(Long memberId) {
+        return postDAO.findAllByMemberId(memberId);
+    }
+
     //    게시글 단일 조회
     @Override
     public Optional<PostDTO> getPost(Long id) {

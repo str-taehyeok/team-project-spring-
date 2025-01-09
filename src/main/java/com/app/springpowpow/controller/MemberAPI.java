@@ -206,10 +206,10 @@ public class MemberAPI {
             in = ParameterIn.PATH, // path로 전달
             required = true
     )
-    @GetMapping("member/{id}")
-    public MemberVO getMember(@PathVariable Long id) {
+    @GetMapping("/member/{memberId}")
+    public MemberVO getMember(@PathVariable Long memberId) {
 
-        Optional<MemberVO> foundUser = memberService.getMemberById(id);
+        Optional<MemberVO> foundUser = memberService.getMemberById(memberId);
         if (foundUser.isPresent()) {
             return foundUser.get();
         }

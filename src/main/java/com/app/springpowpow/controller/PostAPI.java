@@ -71,6 +71,21 @@ public class PostAPI {
         return new PostDTO();
     }
 
+    // 회원별 게시글 조회
+    @Operation(summary = "회원별 게시글 정보 조회", description = "회원별 게시글 정보를 조회할 수 있는 API")
+    @Parameter(name = "memberId", description = "회원 번호", schema = @Schema(type = "number"), in = ParameterIn.PATH, required = true)
+    @GetMapping("post/{memberId}")
+    public List<PostDTO> getPostsByMemberId(@PathVariable Long memberId) {
+        List<PostDTO> foundPosts = postService.getListByMember(memberId);
+
+        if (foundPosts == null || foundPosts.isEmpty()) {
+            throw new RuntimeException("게시글을 찾을 수 없습니다. 회원 ID: " + memberId);
+        }
+
+        return foundPosts;
+    }
+
+
     // 게시글 작성
     @Operation(summary = "게시글 작성", description = "게시글 새로 작성할 수 있는 API")
     @ApiResponse(responseCode = "200", description = "게시글 작성 완료")

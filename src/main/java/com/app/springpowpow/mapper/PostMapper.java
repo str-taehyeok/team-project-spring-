@@ -19,6 +19,9 @@ public interface PostMapper {
 //    최신 등록된 Id 조회
     public Long selectRecentId();
 
+//    멤버별 전체 조회
+    public List<PostDTO> selectAllByMember(Long memberId);
+
 //   단일 조회
     public Optional<PostDTO> select(Long id);
 

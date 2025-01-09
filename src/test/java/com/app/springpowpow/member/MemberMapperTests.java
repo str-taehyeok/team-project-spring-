@@ -16,6 +16,8 @@ public class MemberMapperTests {
 
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private MemberMapper memberMapper;
 
     @Test
     public void buyerInsertTest(){
@@ -42,7 +44,7 @@ public class MemberMapperTests {
 
     @Test
     public void getMemberTest(){
-        memberService.getMemberById(24L).map(MemberVO::toString).ifPresent(log::info);
+        memberService.getMemberById(41L).map(MemberVO::toString).ifPresent(log::info);
     }
 
     @Test

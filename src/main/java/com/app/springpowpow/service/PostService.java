@@ -22,6 +22,9 @@ public interface PostService {
     //    최신 등록된 Id 조회
     public Long getRecentId();
 
+//    멤버별 게시글 가져오기
+    public List<PostDTO> getListByMember(Long memberId);
+
 //    게시글 작성
     public void write(PostVO postVO, List<PostFileVO> postFiles);
 
