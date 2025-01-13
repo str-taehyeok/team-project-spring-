@@ -50,26 +50,32 @@ public class PetAPI {
         Map<String, String> response = new HashMap<>();
         String rootPath = "C:/upload/" + getPath();
 
-        File file = new File(rootPath);
-        if (!file.exists()) {
-            file.mkdirs();
+        if(!uploadFile.getOriginalFilename().equals("blob")){
+            File file = new File(rootPath);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+
+            //        uuid 생성
+            String uuid = UUID.randomUUID().toString();
+            log.info("Generated UUID: {}", uuid);
+            uploadFile.transferTo(new File(rootPath, uuid + "_" + uploadFile.getOriginalFilename()));
+
+            //        썸네일
+            if(uploadFile.getContentType().startsWith("image")){
+                FileOutputStream out = new FileOutputStream(new File(rootPath, "t_" + uuid + "_" + uploadFile.getOriginalFilename()));
+                Thumbnailator.createThumbnail(uploadFile.getInputStream(), out, 100, 100);
+                out.close();
+            }
+
+            log.info("upload path : {}", uuid.toString());
+
+            response.put("message", "이미지와 함께 업로드 완료");
+            response.put("uuid", uuid);
+            return ResponseEntity.ok(response);
         }
 
-        //        uuid 생성
-        String uuid = UUID.randomUUID().toString();
-        log.info("Generated UUID: {}", uuid);
-        uploadFile.transferTo(new File(rootPath, uuid + "_" + uploadFile.getOriginalFilename()));
-
-//        썸네일
-        if(uploadFile.getContentType().startsWith("image")){
-            FileOutputStream out = new FileOutputStream(new File(rootPath, "t_" + uuid + "_" + uploadFile.getOriginalFilename()));
-            Thumbnailator.createThumbnail(uploadFile.getInputStream(), out, 100, 100);
-            out.close();
-        }
-
-        log.info("upload path : {}", uuid.toString());
-
-        response.put("uuid", uuid);
+        response.put("message", "이미지 없이 업로드 완료");
         return ResponseEntity.ok(response);
     }
 
@@ -164,8 +170,6 @@ public class PetAPI {
     public ResponseEntity<Map<String, String>> petEdit(
         @RequestParam("memberId") Long memberId,
         @RequestParam("petKind") String petKind,
-        @RequestParam("petFilePath") String petFilePath,
-        @RequestParam("petFileName") String petFileName,
         @RequestParam("petName") String petName,
         @RequestParam("petGender") String petGender,
         @RequestParam("petBreed") String petBreed,
@@ -178,6 +182,7 @@ public class PetAPI {
 
     ){
         Map<String, String> response = new HashMap<>();
+
         PetVO petVO = new PetVO();
         petVO.setPetKind(petKind);
         petVO.setPetName(petName);
@@ -192,10 +197,9 @@ public class PetAPI {
             petVO.setPetFilePath(getPath());
             petVO.setPetFileName(uuid + "_" + uploadFile.getOriginalFilename());
         }
-        response.put("message", "마이펫 정보 수정 완료");
 
         petService.modify(petVO);
-        log.info(petVO.toString());
+        response.put("message", "마이펫 정보 수정 완료");
         return ResponseEntity.ok(response);
     }
 

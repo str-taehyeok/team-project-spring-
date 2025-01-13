@@ -24,4 +24,8 @@ public class PostMapperTests {
         postService.getListByMember(memberId).stream().map(PostDTO::toString).forEach(log::info);
     }
 
+    @Test
+    public void getPostsTest(){
+        postService.getList().stream().map(PostDTO::toString).forEach(log::info);
+    }
 }
