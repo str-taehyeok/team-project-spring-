@@ -28,26 +28,6 @@ public class PostDTO {
     private String memberFileName;
     @Schema(description = "회원 이미지 경로", example = "2024/12/17")
     private String memberFilePath;
-    @Schema(description = "이미지 이름1", example = "test.jpg")
-    private String imageName1;
-    @Schema(description = "이미지 경로1", example = "2024/12/17")
-    private String imagePath1;
-    @Schema(description = "이미지 이름2", example = "test.jpg")
-    private String imageName2;
-    @Schema(description = "이미지 경로2", example = "2024/12/17")
-    private String imagePath2;
-    @Schema(description = "이미지 이름3", example = "test.jpg")
-    private String imageName3;
-    @Schema(description = "이미지 경로3", example = "2024/12/17")
-    private String imagePath3;
-    @Schema(description = "이미지 이름4", example = "test.jpg")
-    private String imageName4;
-    @Schema(description = "이미지 경로4", example = "2024/12/17")
-    private String imagePath4;
-    @Schema(description = "이미지 이름5", example = "test.jpg")
-    private String imageName5;
-    @Schema(description = "이미지 경로5", example = "2024/12/17")
-    private String imagePath5;
     @Schema(description = "좋아요 수", example = "999")
     private int postLikeCount;
 }
